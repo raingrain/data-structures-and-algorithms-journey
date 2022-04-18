@@ -1,0 +1,20 @@
+# [汉诺塔问题](https://leetcode-cn.com/problems/hanota-lcci)
+
+### 解题思路
+1. ABC对应的参数分别代表起始盘，中间盘和中点盘；
+2. 该问题转化为先将前n-1个盘子从A盘移动到B盘，再将第n个盘子从A盘移动到C盘，再将前n-1个盘子从B盘移动到C盘的问题没有盘子则不移动
+
+### 代码
+
+```python3
+# python递归
+class Solution:
+    def hanota(self, A: List[int], B: List[int], C: List[int]) -> None:
+        self.move(len(A), A, B, C)
+        
+    def move(self, n, A, B, C):
+        if n >= 1:
+            self.move(n-1, A, C, B)
+            C.append(A.pop())
+            self.move(n-1, B, A, C)
+```
