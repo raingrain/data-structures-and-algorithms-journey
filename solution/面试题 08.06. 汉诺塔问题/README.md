@@ -8,6 +8,7 @@
 
 ```python3
 # python递归
+
 class Solution:
     def hanota(self, A: List[int], B: List[int], C: List[int]) -> None:
         self.move(len(A), A, B, C)
