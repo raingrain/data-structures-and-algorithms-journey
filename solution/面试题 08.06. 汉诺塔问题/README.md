@@ -1,4 +1,4 @@
-# [汉诺塔问题](https://leetcode-cn.com/problems/hanota-lcci)
+# [汉诺塔问题](https://leetcode-cn.com/problems/hanota-lcci/)
 
 ### 解题思路
 1. ABC对应的参数分别代表起始盘，中间盘和中点盘；
