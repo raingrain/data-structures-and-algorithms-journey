@@ -7,6 +7,7 @@
 
 ```python3 []
 # python非递归版本
+
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         left = 0
@@ -25,6 +26,7 @@ class Solution:
 
 ```python3 []
 # python递归版本
+
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         return self.recursion(nums, target, 0, len(nums) - 1)
