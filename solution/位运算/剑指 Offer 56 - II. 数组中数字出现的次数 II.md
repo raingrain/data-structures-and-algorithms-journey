@@ -58,7 +58,7 @@ class Solution {
 ```
 
 ```java
-// 假如是必定有一些数字出现了m次，而剩下的那个数字未必出现了k次，如果出现的不是k次就返回-1，不然返回它本身
+// 假如是必定有一些数字出现了m次，而剩下的那个数字未必出现了k次（k<m），如果出现的不是k次就返回-1，不然返回它本身
 class Solution {
     public int singleNumber(int[] nums) {
         int[] arr = new int[32];
