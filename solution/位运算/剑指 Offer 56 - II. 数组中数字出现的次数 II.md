@@ -1,6 +1,6 @@
 # [剑指 Offer 56 - II. 数组中数字出现的次数 II](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/)
 
-### 解题思路
+### 解题思路1
 1. 如果要求时间复杂度为O(n),额外空间复杂度为O(1)的话就用位运算，不然哈希表也可以
 2. 我们设置一个长为32的数组arr，因为java中int为32位整型，我们遍历nums中的每一个数，把每一个数字变成32位二进制数组存储的形式，并将这个数组加到arr中
 3. 我们知道，nums中的数，分为出现m次和出现k次，出现m次的数中，其在某个位置上有可能是0也可能是1，但是1的数加起来必然导致arr中对应位置的结果是7的倍数，那么假如你要找的数ans对应位置数是0，那么显然arr中对应结果就是7的倍数，如果是1，那么对应位置的结果吗模7就会等于k，k<m。所以遍历arr，如果arr某个位置上的数模m等于0，那么ans在这一位置上等于0，否则等于1。
@@ -26,33 +26,6 @@ class Solution {
             }
         }
         return ans;
-    }
-}
-```
-
-```java
-// java哈希表
-class Solution {
-    public int singleNumber(int[] nums) {
-        int tmp = 0;
-        // 一个词频统计表
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for (int num : nums) {
-            if (map.containsKey(num)) {
-                // 有就词频加1
-                map.put(num, map.get(num)+ 1);
-            } else {
-                // 没有就往表里面加词
-                map.put(num, 1);
-            }
-        }
-        for (int num : map.keySet()) {
-            // 有没有等于词频等于k的词
-            if (map.get(num) == 1) {
-                tmp = num;
-            }
-        }
-        return tmp;
     }
 }
 ```
@@ -96,6 +69,11 @@ class Solution {
 }
 ```
 
+### 解题思路2
+1. 两个相同的k进制数a和b在i位上无进位相加的结果为（(a[i] + b[i]) % k），那么k个相同的k进制数x无进位相加就等于0
+2. 那么我们设置一个长度为32位的数组，存储数组中所有数字转换成m进制数后无进位相加的结果，那么出现了m次的数在k进制下无进位相加一定等于0，在数组中一定表现为0，那数组到最后存储的结果一定是那个只出现了一次的数，再把它从m进制转回十进制即可
+
+### 代码
 ```java
 // java无进位相加
 class Solution {
@@ -134,6 +112,37 @@ class Solution {
             ans = ans * m + eor[i];
         }
         return ans;
+    }
+}
+```
+
+### 解题思路3
+1. 哈希表容器
+
+### 代码
+```java
+// java哈希表
+class Solution {
+    public int singleNumber(int[] nums) {
+        int tmp = 0;
+        // 一个词频统计表
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            if (map.containsKey(num)) {
+                // 有就词频加1
+                map.put(num, map.get(num)+ 1);
+            } else {
+                // 没有就往表里面加词
+                map.put(num, 1);
+            }
+        }
+        for (int num : map.keySet()) {
+            // 有没有等于词频等于k的词
+            if (map.get(num) == 1) {
+                tmp = num;
+            }
+        }
+        return tmp;
     }
 }
 ```
