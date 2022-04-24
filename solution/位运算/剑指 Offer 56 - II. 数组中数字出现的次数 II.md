@@ -95,3 +95,45 @@ class Solution {
     }
 }
 ```
+
+```java
+// java无进位相加
+class Solution {
+    public int singleNumber(int[] nums) {
+        int[] eor = new int[32];
+        for (int num : nums) {
+            setEor(eor, num, 3);
+        }
+        int ans = getAns(eor, 3);
+        return ans; 
+    }
+
+    // 把数组中的数以m进制的形式无进位加到eor上
+    public void setEor(int[] eor, int num, int m) {
+        int[] mNum = getmNum(num, m);
+        for (int i = 0; i < eor.length; i++) {
+            eor[i] = (eor[i] + mNum[i]) % m;
+        }
+    }
+
+    // 转成m进制
+    public int[] getmNum(int num, int m) {
+        int[] ans = new int[32];
+        int index = 0;
+        while (num != 0) {
+            ans[index++] = num % m;
+            num = num / m;
+        }
+        return ans;
+    }
+
+    // 转回十进制
+    public int getAns(int[] eor, int m) {
+        int ans = 0;
+        for (int i = eor.length - 1; i >= 0; i--) {
+            ans = ans * m + eor[i];
+        }
+        return ans;
+    }
+}
+```
