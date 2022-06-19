@@ -1,3 +1,8 @@
-# Data-Structure-and-Algorithm
+# [Data-Structure-and-Algorithm]()
 
-本仓库用于记录学习数据结构与算法过程中在leetcode以及其他刷题网站上的刷题笔记以及一些常用的代码模板或有意思的题目等等
+本仓库用于记录：
+- leetcode和其他网站的刷题笔记
+- 代码模板
+- 大厂题目
+- GIS相关的数据结构（课堂讲授）
+> 刷题语言包括：Java、JavaScript、Python、C#
