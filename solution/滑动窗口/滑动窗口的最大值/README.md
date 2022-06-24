@@ -1,11 +1,11 @@
-### 题目链接
+### 题目
 
 - [239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)
 - [剑指 Offer 59 - I. 滑动窗口的最大值](https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/)
 
 ---
 
-### 题目描述
+### 题意
 
 ![image](https://user-images.githubusercontent.com/75558694/175205477-c5b2e56e-4237-47a0-9691-5365d2aa83b8.png)
 
@@ -13,7 +13,7 @@
 
 ### Java实现
 
-#### <em>解题思路</em>
+#### *思路*
 
 > 1. 暴力循环
 >    - 暴力方法就是遍历数组中的所有窗口，然后在每个窗口中遍历寻找最大值，会超时
@@ -21,7 +21,7 @@
 >    - 首先我们的双端队列需要自己处理窗口长度，我们采用检查过期元素的方式省去了对left的限制，只专注于right
 >    - 由于题目中窗口长度固定为k，不同于暴力方法中最开始的窗口是从0到k-1，我们通过判断什么时候往res中填答案来解决最开始队列不完整的问题（双端队列法从没有值开始扩张窗口），即只有当 `right >= k - 1` 时才开始往res中填答案
 
-#### <em>代码</em>
+#### *代码*
 
 ```java
 // java暴力循环或双端队列
