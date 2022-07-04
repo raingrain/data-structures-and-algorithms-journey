@@ -92,3 +92,63 @@ class Solution {
 ```
 
 ---
+
+### JavaScript重写
+
+#### *思路*
+
+> 参考**Java实现**
+
+#### *代码*
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var maxSlidingWindow = function(nums, k) {
+    return maxSlidingWindowByDeque(nums, k);
+    // return maxSlidingWindowByViolence(nums, k);
+};
+
+function maxSlidingWindowByDeque(nums, k) {
+    if (nums == null || k < 1 || nums.length < k) {
+        return [];
+    } else {
+        const maxDeque = [];
+        const res = [];
+        let index = 0;
+        for (let right = 0; right < nums.length; right++) {
+            while (maxDeque.length !== 0 && nums[maxDeque[maxDeque.length - 1]] <= nums[right]) {
+                maxDeque.pop();
+            }
+            maxDeque.push(right);
+            if (maxDeque[0] === right - k) {
+                maxDeque.shift();
+            }
+            if (right >= k - 1) {
+                res[index++] = nums[maxDeque[0]];
+            }
+        }
+        return res;
+    }
+}
+
+function maxSlidingWindowByViolence (nums, k) {
+    let res = [];
+    let index = 0;
+    let left = 0;
+    let right = k - 1; 
+    while (right < nums.length) {
+        res[index] = nums[left];
+        for (let i = left + 1; i <= right; i++) {
+            res[index] = Math.max(res[index], nums[i]);
+        }
+        index++; 
+        left++;
+        right++;
+    }
+    return res;
+}
+```
