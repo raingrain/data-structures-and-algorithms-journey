@@ -152,3 +152,46 @@ function maxSlidingWindowByViolence (nums, k) {
     return res;
 }
 ```
+
+---
+
+### Python重写
+
+#### *思路*
+
+> 参考**Java实现**
+
+#### *代码*
+
+```python3
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        return self.maxSlidingWindowByDeque(nums, k)
+        # return self.maxSlidingWindowByViolence(nums, k)
+    
+    def maxSlidingWindowByDeque(self, nums, k) -> List[int]:
+        if nums == None or k < 1 or len(nums) < k:
+            return []
+        else:
+            maxDeque = collections.deque()
+            res = []
+            for right in range(len(nums)):
+                while len(maxDeque) != 0 and nums[maxDeque[-1]] <= nums[right]:
+                    maxDeque.pop()
+                maxDeque.append(right)
+                if maxDeque[0] == right - k:
+                    maxDeque.popleft()
+                if right >= k - 1:
+                    res.append(nums[maxDeque[0]])
+            return res
+
+    def maxSlidingWindowByViolence(self, nums, k) -> List[int]:
+        res = []
+        left = 0
+        for right in range(k - 1, len(nums)):
+            res.append(nums[left])
+            for i in range(left + 1, right + 1):
+                res[-1] = max(res[-1], nums[i])
+            left += 1
+        return res
+```
