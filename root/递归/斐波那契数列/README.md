@@ -19,7 +19,7 @@
 >   
 > ---
 >
-> - **前缀和加单调栈法**
+> - **通项公式法**
 >   ---
 >   ![image](https://user-images.githubusercontent.com/75558694/178434052-128eb8eb-e677-455b-848c-1e4a0ddc7998.png)
 >   
