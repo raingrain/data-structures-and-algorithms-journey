@@ -1,0 +1,95 @@
+### 题目
+
+- [剑指 Offer 10- II. 青蛙跳台阶问题](https://leetcode.cn/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/)
+- [70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)
+
+### 题意
+
+![image](https://user-images.githubusercontent.com/75558694/178645044-2784f1b9-2b3b-4a01-a53e-5e581ad650e3.png)
+
+---
+
+### Java实现
+
+#### *思路*
+
+> 参考[斐波那契数列]()
+
+#### *代码*
+
+```java
+class Solution {
+    public int numWays(int n) {
+        if (n == 0 || n == 1) {
+            return 1;
+        } else if (n == 2) {
+            return 2;
+        } else {
+            // return formula(n);
+            return FastExponentiation(n);
+            // return DPByScrollArray(n);
+        }
+    }
+
+    // 100左右的就不行了，精度有问题
+    public int formula(int n) {
+        double sqrt5 = Math.sqrt(5);
+        double fibn = (Math.pow((1 + sqrt5) / 2, n + 1) - Math.pow((1 - sqrt5) / 2, n + 1));
+        return (int) Math.round(fibn / sqrt5) ;
+    }
+
+    public int FastExponentiation(int n) {
+        int[][] base = {{1, 1}, {1, 0}};
+        // 由
+        // |F(3), F(2)| = |F(2), F(1)| * |1 1|
+        //                               |1 0|    
+        // 推得
+        // |F(n), F(n - 1)| = |F(1), F(0)| * (|1 1| ^ (n - 1))
+        //                                    |1 0|    
+        int[][] res = matrixPower(base, n - 1);
+        // 选n - 2阶处理数据越界很麻烦
+        return (res[0][0] + res[1][0]) % 1000000007;
+    }
+
+    public int[][] matrixPower(int[][] matrix, int power) {
+        int[][] res = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            res[i][i] = 1;
+        }
+        for (; power > 0; power >>= 1) {
+            if ((power & 1) == 1) {
+                res = muliMatrix(res, matrix);
+            }
+            matrix = muliMatrix(matrix, matrix);
+        }
+        return res;
+    }
+
+    public int[][] muliMatrix(int[][] A, int[][] B) {
+        int[][] res = new int[A.length][A[0].length];
+        for (int i = 0; i < A.length; i++) {
+            for (int j = 0; j < A[0].length; j++) {
+                long temp = 0;
+                for (int k = 0; k < A.length; k++) {
+                    temp += (((long) A[i][k] * B[k][j]) % 1000000007);
+                }
+                res[i][j] = (int) (temp % 1000000007);
+            }
+        }
+        return res;
+    }
+
+    public int DPByScrollArray(int n) {
+        int p = 1;
+        int q = 1;
+        int r = 2;
+        for (int i = 3; i <= n; i++) {
+            p = q;
+            q = r;
+            // 不取模时就去掉
+            r = (p + q) % 1000000007;
+        }
+        return r;
+    }
+}
+```
