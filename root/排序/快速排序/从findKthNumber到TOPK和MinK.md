@@ -21,11 +21,32 @@
 ```java
 class Solution {
 
+    // 从findKth到TOPK & MinK
+    // 给定一个整数数组A（数组中元素为互不相同的整数）及它的大小n，同时给定k，请返回其中最小的k个数，顺序与原数组中元素顺序一致。
+    public int[] findKthNumbers(int[] A, int n, int k) {
+        // 不要求顺序互不相同可以不用
+        int[] B = A.clone();
+        int KthLeast = findKthLeast(A, k);
+        int[] ans = new int[k];
+        int index = 0;
+        // 由于数组中元素互不相同，我们可以一遍遍历过
+        // 如果数组中有相同元素，我们需要先遍历一遍计算出比第k小的数的值小的数有几个，假定k为100，找到了90个比第k小的数小的数，那么剩下10个全为k
+        // 再遍历一遍，只取前10个k即可
+        for (int i = 0; i < B.length; i++) {
+            if (B[i] <= KthLeast) {
+                ans[index++] = B[i];
+            }
+        }
+        return ans;
+        // write code here
+    }
+
     // 找到第k大的数 -> 找到第len-k+1小的数字
     public static int findKthLargest(int[] arr, int k) {
         return findKthLeast(arr, arr.length - k + 1);
     }
 
+    // 找到第k小的数字
     public static int findKthLeast(int[] arr, int k) {
         // return quickSortBybfprt(arr, 0, arr.length - 1, k - 1);
         return quickSortByLoop(arr, 0, arr.length - 1, k - 1);
