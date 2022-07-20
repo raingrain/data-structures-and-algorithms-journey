@@ -22,6 +22,7 @@
 class Solution {
 
     // 从findKth到TOPK & MinK
+    // 直接遍历一遍的时间复杂度再找是O(N*logN)，自底向上建堆再遍历一遍的时间复杂度是O(N+K*logN)，用bfprt+快排搞就是O(N+K*logK)
     // 给定一个整数数组A（数组中元素为互不相同的整数）及它的大小n，同时给定k，请返回其中最小的k个数，顺序与原数组中元素顺序一致。
     public int[] findKthNumbers(int[] A, int n, int k) {
         // 不要求顺序互不相同可以不用
