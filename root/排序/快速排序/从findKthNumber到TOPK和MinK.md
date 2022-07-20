@@ -26,6 +26,10 @@ class Solution {
     // 给定一个整数数组A（数组中元素为互不相同的整数）及它的大小n，同时给定k，请返回其中最小的k个数，顺序与原数组中元素顺序一致。
     public int[] findKthNumbers(int[] A, int n, int k) {
         // 不要求顺序互不相同可以不用
+        // 数组深拷贝的方式：
+        // System.arraycopy(arr1, 0, arr2, 0, arr1.length)
+        // arr1.clone()
+        // Arrays.copyOf(a, a.length)
         int[] B = A.clone();
         int KthLeast = findKthLeast(A, k);
         int[] ans = new int[k];
