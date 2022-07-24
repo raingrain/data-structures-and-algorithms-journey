@@ -17,7 +17,7 @@
 >   - 树状数组的形状可以直接参考百度上的；
 >   - 树状数组选择从1开始是为了与改变某个位置的值时能够迅速找到受影响的位置二进制规律相结合的；
 >   - 对于通过对和与自己的相反数得到的数进行相加减得到的二进制规律不要深究；
->   - 保存一份原始数组，并在update和add时同时保持更新，树状数组的修改在addInIndexTree()上。
+>   - 保存一份原始数组，并在update和add时同时保持更新，树状数组的修改在addInIndexTree()上。 
 
 ```java
 // 以下为一维数组的实现
@@ -91,15 +91,80 @@ class NumArray {
  * int param_2 = obj.sumRange(left,right);
  */
 ```
-
+ 
 > - ***二维数组的树状数组***
->   
->   
->   
->   
->   
-
+>   - 直接将一维数组中的二进制规律推广到二维矩阵中的行和列上；
+>   - 算一个区域的和需要用到一些几何方面的知识，即大减小再把多减的一份加回来；
+>   - 记得初次更新要在addInIndexTree中更新，在update中更新会有全0的错误；
+>   - 其他步骤和一维数组一致。
+ 
 ```java
 // 以下为二维数组的实现
+class NumMatrix {
 
+    public int[][] matrix;
+    public int[][] tree;
+    private final int hang;
+    private final int lie;
+
+    public NumMatrix(int[][] matrix) {
+        this.matrix = matrix;
+        hang = matrix.length;
+        lie = matrix[0].length;
+        tree = new int[hang + 1][lie + 1];
+        for (int i = 0; i < hang; i++) {
+            for (int j = 0; j < lie; j++) {
+                // 不能调用update，否则由于this.matrix已经赋值导致val - matrix[row][col]等于0进而使结果全为0
+                addInInterVal(i + 1, j + 1, matrix[i][j]);
+            }
+        }
+    }
+
+    public void update(int row, int col, int val) {
+        addInInterVal(row + 1, col + 1, val - matrix[row][col]);
+        matrix[row][col] = val;
+    }
+
+    // 获取由index所对应的二进制数的最后一个1及其右边所有0组成的数
+    private int getRightMostOne(int index) {
+        // 一个数与上自己的相反数（取反 + 1）
+        return index & -index;
+    }
+
+    public void add(int row, int col, int val) {
+        addInInterVal(row + 1, col + 1, val);
+        matrix[row][col] += val;
+    }
+
+    // 下面两个传的都是树中的位置
+    private void addInInterVal(int row, int col, int val) {
+        for (int i = row; i <= hang; i += getRightMostOne(i)) {
+            for (int j = col; j <= lie; j += getRightMostOne(j)) {
+                tree[i][j] += val;
+            }
+        }
+    }
+
+    private int preFixSum(int row, int col) {
+        int ans = 0;
+        for (int i = row; i > 0; i -= getRightMostOne(i)) {
+            for (int j = col; j > 0; j -= getRightMostOne(j)) {
+                ans += tree[i][j];
+            }
+        }
+        return ans;
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        // 避免因为左上角的越界而判空
+        return preFixSum(row2 + 1, col2 + 1) - preFixSum(row1, col2 + 1) - preFixSum(row2 + 1, col1) + preFixSum(row1, col1);
+    }
+}
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * obj.update(index,val);
+ * int param_2 = obj.sumRange(left,right);
+ */
 ```
