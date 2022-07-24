@@ -9,18 +9,18 @@
 
 ### *Java*
 
-> - ***一维前缀和数组***
+> - ***一维前缀和及区间和数组递推公式***
 >   - `preSum[0] = arr[0]`
 >   - `preSum[i] = preSum[i - 1] + arr[i]`
 >   - `Sum[i ~ j] = preSum[j] - preSum[i - 1]` (i > 0)
 >   
-> - ***二维前缀和数组***
+> - ***二维前缀和及区间和数组递推公式***
 >   - sum[(0, 0) ~ (i, j)] = `preSum[i][j] = preSum[i − 1][j]+preSum[i][j−1] − preSum[i − 1][j − 1] + matrix[i][j]`
 >   - sum[(row1, col1) ~ (row2, col2)] = `preSum[row2][col2] − preSum[row2][col1 − 1] − preSum[row1 − 1][col2] + preSum[row1 − 1][col1 − 1]`
 >   - 为避免0时的讨论，请将二维数组的preSum数组行列增加1且从(1, 1)开始
 
 ```java
-// 一维前缀和数组
+// 一维
 class NumArray {
 
     private int[] prefix;
@@ -45,7 +45,7 @@ class NumArray {
  */
  
  
-// 二维前缀和数组
+// 二维
 class NumMatrix {
 
     private int[][] preSum;
