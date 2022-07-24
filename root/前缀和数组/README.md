@@ -7,6 +7,8 @@
 
 ![image](https://user-images.githubusercontent.com/75558694/180642793-ac58ea12-a0d8-4e6b-88f8-5ee57fce82ef.png)
 
+---
+
 ### *Java*
 
 > - ***一维前缀和及区间和数组递推公式***
