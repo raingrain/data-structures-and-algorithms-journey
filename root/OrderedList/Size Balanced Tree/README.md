@@ -1,6 +1,10 @@
 # [SB树]()
 
 > - ***节点类实现SB树***
+>   - SB树与AVL树的不同在于：
+>     - SB树的平衡条件不如AVL树严苛，对于一个节点来说，它只要保证它的儿子节点和孙子节点之间满足以叔叔节点为头的整棵树的节点数要大于以其任一侄子节点为头的整棵树的节点的条件即可，
+>     - 两种树之间都是四种违规类型，SB树的违规看的是那个侄子违规（即侄子树的节点数大于其叔叔树的节点数），例如左儿子的左儿子大于其右叔叔，那就是LL型违规，其他同理
+>     - 不同的违规类型，SB树的旋转与AVL树的相同，但SB树还会递归地调用maintain，即在一次maintain使得节点发生旋转后，再对受影响的节点（即子树变了）调用maintain，这种操作使得SB树可能一次改好多次但可能很久都不改，降低的操作频率（这种模糊平衡性的树都有利于减少磁盘IO），即使雪崩时操作多其时间复杂度均摊下来也才O(logN)
 
 ```java
 // 有序表接口
@@ -50,6 +54,7 @@ class SBNode<K extends Comparable<K>, V> {
     public V value;
     public SBNode<K, V> left;
     public SBNode<K, V> right;
+    // 平衡因子：节点数
     public int size;
 
     public SBNode(K key, V value) {
