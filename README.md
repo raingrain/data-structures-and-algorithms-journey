@@ -32,8 +32,8 @@
 >   - test
 > 
 > - ***方法2***
->   1. test
->   2. test
+>   - test
+>   - test
 
 ```java
 代码块
