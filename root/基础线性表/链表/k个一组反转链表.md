@@ -1,4 +1,4 @@
-# [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)
+## [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)
 
 > - ***Question***
 >   - 给你链表的头节点 `head` ，每 `k` 个节点一组进行翻转，请你返回修改后的链表 
@@ -13,7 +13,7 @@
 
 ---
 
-## *Java*
+### *Java*
 
 > - ***模拟***
 >   - 将问题分成 `3` 部分：
@@ -99,6 +99,6 @@ class Solution {
 
 ---
 
-> ***last change: 2022/9/26***
+> ***last change: 2022/10/7***
 
 ---
