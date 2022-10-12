@@ -1,4 +1,7 @@
+# 合并k个升序链表
+
 ## [23. 合并K个升序链表](https://leetcode.cn/problems/merge-k-sorted-lists/)
+
 ## [剑指 Offer II 078. 合并排序链表](https://leetcode.cn/problems/vvXgSW/)
 
 > - ***Question***
@@ -14,7 +17,7 @@
 
 ---
 
-### *Java*
+## *Java*
 
 > - ***小根堆***
 >   - 准备一个小根堆，存储元素为 `ListNode` ，以 `ListNode` 的 `val` 作为比较基准
@@ -87,6 +90,6 @@ class Solution {
 
 ---
 
-> ***last change: 2022/10/7***
+> ***last change: 2022/10/12***
 
 ---
