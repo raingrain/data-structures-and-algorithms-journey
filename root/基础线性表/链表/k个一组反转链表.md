@@ -1,3 +1,5 @@
+# k个一组反转链表
+
 ## [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)
 
 > - ***Question***
@@ -13,7 +15,7 @@
 
 ---
 
-### *Java*
+## *Java*
 
 > - ***模拟***
 >   - 将问题分成 `3` 部分：
@@ -99,6 +101,6 @@ class Solution {
 
 ---
 
-> ***last change: 2022/10/7***
+> ***last change: 2022/10/12***
 
 ---
