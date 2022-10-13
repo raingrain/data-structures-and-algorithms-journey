@@ -1,12 +1,12 @@
 # 查找并删除单链表的倒数第n个节点
 
-# [面试题 02.02. 返回倒数第 k 个节点](https://leetcode.cn/problems/kth-node-from-end-of-list-lcci/)
+## [面试题 02.02. 返回倒数第 k 个节点](https://leetcode.cn/problems/kth-node-from-end-of-list-lcci/)
 
-# [剑指 Offer 22. 链表中倒数第k个节点](https://leetcode.cn/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/)
+## [剑指 Offer 22. 链表中倒数第k个节点](https://leetcode.cn/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/)
 
-# [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
+## [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
 
-# [剑指 Offer II 021. 删除链表的倒数第 n 个结点](https://leetcode.cn/problems/SLwz0R/)
+## [剑指 Offer II 021. 删除链表的倒数第 n 个结点](https://leetcode.cn/problems/SLwz0R/)
 
 > - ***Question 1***
 >   - 输入一个链表，输出该链表中倒数第 `k` 个节点
@@ -18,7 +18,7 @@
 >   - 尾节点是倒数第一个节点
 >   - 链表中节点的数目为 `sz`
 >   - `1 <= sz <= 30`
->   - `0 <= Node.val <= 100` 
+>   - `0 <= Node.val <= 100`  
 >   - `1 <= n <= sz`
 
 ---
@@ -35,7 +35,6 @@
 >   - 我们将第一个指针 `fast` 指向链表的第 `n + 1` 个节点，第二个指针 `slow` 指向链表的第一个节点，此时指针 `fast` 与 `slow` 二者之间刚好间隔 `n` 个节点。
 >   - 此时两个指针同步向后走，当第一个指针 `fast` 走到链表的尾部空节点时，则此时 `slow` 指针刚好指向链表的倒数第 `n` 个节点
 >   - 将 `slow` 初始为哨兵守卫，可以得到倒数第 `n` 个节点的前一个节点，利于删除操作（可以避免形如 `cur.next = cur.next.next` 中右边是否不存在的错误）
-
 
 ```java
 /**
