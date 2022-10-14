@@ -5,4 +5,4 @@
 > - 当前节点的下一个节点 `next`
 > - 慢指针 `slow`
 > - 快指针 `fast`
-> - 哨兵守卫 `dummy` / `sentryGuard`
+> - 哨兵守卫 `dummy` / `sentryGuard` / `dummyHead` 
