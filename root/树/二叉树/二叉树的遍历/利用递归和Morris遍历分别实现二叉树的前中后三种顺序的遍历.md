@@ -245,6 +245,7 @@ class Solution {
         operationStack.push(root);
         while (!operationStack.isEmpty()) {
             root = operationStack.pop();
+            // 先加入到结果栈
             resultStack.push(root);
             if (root.left != null) {
                 operationStack.push(root.left);
