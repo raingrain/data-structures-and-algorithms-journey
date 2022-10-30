@@ -386,6 +386,6 @@ class SBTree<K extends Comparable<K>, V> implements OrderedList<K, V> {
 
 ---
 
-> ***last change: 2022/10/28***
+> ***last change: 2022/10/30***
 
 ---
