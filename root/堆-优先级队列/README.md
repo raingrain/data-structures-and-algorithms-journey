@@ -5,10 +5,10 @@
 ## *Java*
 
 > - ***堆重要属性和方法***
->   - `indexMap` 反向索引表
->   - `heapInsert()` 看看元素可否向上移动
->   - `heapIFY()` 看看元素可否下沉
->   - `resign()` 对一个元素进行修改后调整它在堆中的位置
+>   - `HashMap<T, Integer> indexMap` 反向索引表
+>   - `void heapInsert(int index)` 看看元素可否向上移动
+>   - `void heapIFY(int index)` 看看元素可否下沉
+>   - `void resign(Node<T> node)` 对一个元素进行修改后调整它在堆中的位置
 
 ```java
 // 用于对数组升序排序的简单版大根堆
