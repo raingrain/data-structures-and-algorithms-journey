@@ -11,13 +11,13 @@
 >   - 路径压缩（扁平化）
 >   - 集合合并时小挂大
 > - ***并查集的主要属性和方法***
->   - `nodes` 元素-节点对应关系哈希表
->   - `father` 并查集中的元素-所在集合代表节点哈希表
->   - `size` 并查集中的子集合-集合大小哈希表
->   - `sets()` 并查集中的总集合个数
->   - `find()` 找到一个元素所在集合的代表节点
->   - `union()` 合并两个元素
->   - `isInSameSet()` 两个元素是否在同一个集合中
+>   - `HashMap<V, Node<V>> nodes` 元素-节点对应关系哈希表
+>   - `HashMap<Node<V>, Node<V>> father` 并查集中的元素-所在集合代表节点哈希表
+>   - `HashMap<Node<V>, Integer> size` 并查集中的子集合-集合大小哈希表
+>   - `int sets()` 并查集中的总集合个数
+>   - `Node<V> find(Node<V> node)` 找到一个元素所在集合的代表节点
+>   - `void union(V a, V b)` 合并两个元素
+>   - `boolean isInSameSet(V a, V b)` 两个元素是否在同一个集合中
 
 ```java
 // 将元素包装成集合
