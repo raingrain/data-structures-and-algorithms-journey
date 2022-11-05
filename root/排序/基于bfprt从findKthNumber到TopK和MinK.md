@@ -235,7 +235,7 @@ class Solution {
     
 }
 
-// 系统堆实现
+// 系统堆实现找到数据流中第k大的元素
 class KthLargest {
     
     private PriorityQueue<Integer> heap;
@@ -260,7 +260,7 @@ class KthLargest {
     
 }
 
-// 手写堆
+// 手写堆实现找到数据流中第k大的元素
 class KthLargest {
     
     private final int[] heap;
@@ -330,6 +330,6 @@ class KthLargest {
 
 ---
 
-> ***last change: 2022/11/4***
+> ***last change: 2022/11/5***
 
 ---
