@@ -166,7 +166,7 @@ class GraphAlgorithms {
         return ans;
     }
     
-    
+    // 拓扑排序
     public static List<Node> topologicalSort(Graph graph) {
         // key为节点，value为入度
         HashMap<Node, Integer> inMap = new HashMap<>();
@@ -334,6 +334,7 @@ class GraphAlgorithms {
         return minNode;
     }
     
+    // 最短路径
     public static HashMap<Node, Integer> dijkstra(Node start) {
         // 结果表
         HashMap<Node, Integer> distanceMap = new HashMap<>();
@@ -526,6 +527,6 @@ class GraphAlgorithms {
 
 ---
 
-> ***last change: 2022/10/30***
+> ***last change: 2022/11/7***
 
 ---
