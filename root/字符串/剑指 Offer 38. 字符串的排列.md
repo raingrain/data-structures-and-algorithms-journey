@@ -1,5 +1,9 @@
 # [剑指 Offer 38. 字符串的排列](https://leetcode.cn/problems/zi-fu-chuan-de-pai-lie-lcof/)
 
+# [面试题 08.07. 无重复字符串的排列组合](https://leetcode.cn/problems/permutation-i-lcci/)
+
+# [面试题 08.08. 有重复字符串的排列组合](https://leetcode.cn/problems/permutation-ii-lcci/)
+
 ### 解题思路
 1. 暴力递归就直接准备一个保存未选过的字符的数组，然后每次递归从中选一个，同时往path中加入选中的字符，然后进下一层递归，要求没有重复值在主函数内用集合处理一下就可以了
 2. 剪枝的话是准备一个char数组，然后由于是全排列，每一个位置上的字符只能与自己及之后的字符进行交换，同时利用一个剪枝数组，遇到相同值就不交换了，交换就会有重复值，最后用了和暴力递归一样的set处理，但似乎不用，不管了
