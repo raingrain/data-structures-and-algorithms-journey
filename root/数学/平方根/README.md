@@ -1,4 +1,4 @@
-# 不用库函数求平方根
+# 如何不用库函数求平方根
 
 ## [69. x 的平方根](https://leetcode.cn/problems/sqrtx/)
 
