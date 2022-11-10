@@ -70,9 +70,79 @@ class Solution {
 }
 ```
 
-> - ***方法***
+> - ***滚动数组 + 单调栈***
+>   - 遍历矩阵中的每一行，把每一行看作一个直方图的 `x` 轴，有 `1` 的列就是一根柱子，但遇上 `0` 时直方图对应列归 `0` ，采用数组压缩技巧，每一次遍历基于当前行对数组进行改动。
+>   - 改动后将直方图数组传入上一题直方图中最大矩形的面积的解题函数中，直接获取以当前行作为基底的直方图（方向向上）中矩形面积最大值。
+>   - 不要有遇 `0` 时直方图列消失了导致上面矩形被遗忘的疑问，上面矩形的面积在没遇到 `0` 之前的基底中已经被计算过了。
 
 ```java
+class Solution {
+    
+    // 第85题的输入参数为二维字符数组
+    public int maximalRectangle(char[][] matrix) {
+        return toHistogramArray(matrix);
+    }
+    
+    // 剑指offer的输入参数为一维字符串数组，需要手动转成二维字符数组
+    // 并且这题还会有空数组的情况，注意判断
+    public int maximalRectangle(String[] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length() == 0) {
+            return 0;
+        } else {
+            // 一维字符串数组转二维字符数组
+            char[][] map = new char[matrix.length][matrix[0].length()];
+            for (int i = 0; i < matrix.length; i++) {
+                map[i] = matrix[i].toCharArray();
+            }
+            return toHistogramArray(map);
+        }
+    }
+    
+    public int toHistogramArray(char[][] matrix) {
+        // 滚动数组，也是直方图高度数组
+        int[] heights = new int[matrix[0].length];
+        int maxArea = 0;
+        // 获取每一行的直方图高度数组
+        for (char[] chars : matrix) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                // 遇上0就删除直方图中的列，遇上1列长度加1
+                heights[j] = chars[j] == '0' ? 0 : heights[j] + 1;
+            }
+            // 某个符合答案的矩形必定以矩阵中的某行作为基底，答案不会遗漏的
+            maxArea = Math.max(maxArea, largestRectangleArea(heights));
+        }
+        return maxArea;
+    }
+    
+    // 上一题不做改动直接抄
+    public int largestRectangleArea(int[] heights) {
+        return largestRectangleAreaByMonotoneStack(heights);
+    }
+    
+    // 求直方图中矩形面积最大值
+    private int largestRectangleAreaByMonotoneStack(int[] heights) {
+        // 面积不可能为负数，设置整数最小值也行
+        int max = -1;
+        int[] stack = new int[heights.length];
+        int peek = -1;
+        for (int i = 0; i < heights.length; ++i) {
+            while (peek != -1 && heights[stack[peek]] >= heights[i]) {
+                int popIndex = stack[peek--];
+                // 核心改动
+                // 如果没有左边最近小值，那么矩形长为i，不包括i，即便相等，相等的话后面相等的再计算正确答案
+                // 乘以数组值（矩形高）然后比较谁的面积大
+                max = Math.max(max, (peek == -1 ? i : i - stack[peek] - 1) * heights[popIndex]);
+            }
+            stack[++peek] = i;
+        }
+        while (peek != -1) {
+            int popIndex = stack[peek--];
+            max = Math.max(max, (peek == -1 ? heights.length : heights.length - stack[peek] - 1) * heights[popIndex]);
+        }
+        return max;
+    }
+    
+}
 ```
 
 > - ***方法***
