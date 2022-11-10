@@ -1,0 +1,86 @@
+# 从直方图中最大矩形的面积到矩阵中全1矩形相关问题
+
+## [84. 柱状图中最大的矩形](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
+
+## [剑指 Offer II 039. 直方图最大矩形面积](https://leetcode.cn/problems/0ynMMM/)
+
+> - ***Question 1***
+>   - 给定非负整数数组 `heights` ，数组中的数字用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 `1` 。
+>   - 求在该柱状图中，能够勾勒出来的矩形的最大面积。
+>   - ***tips:***
+>     - `1 <= heights.length <=10 ^ 5`
+>     - `0 <= heights[i] <= 10 ^ 4`
+
+## [85. 最大矩形](https://leetcode.cn/problems/maximal-rectangle/)
+
+## [剑指 Offer II 040. 矩阵中最大的矩形](https://leetcode.cn/problems/PLYXKQ/)
+
+> - ***Question 2***
+>   - 给定一个仅包含 `0` 和 `1` 、大小为 `rows x cols` 的二维二进制矩阵，找出只包含 `1` 的最大矩形，并返回其面积（即矩形中 `1` 的个数）。
+>   - ***tips:***
+>     - `rows == matrix.length`
+>     - `cols == matrix[0].length`
+>     - `1 <= row, cols <= 200`
+>     - `matrix[i][j]` 为 `'0'` 或 `'1'`
+
+## [1504. 统计全 1 子矩形](https://leetcode.cn/problems/count-submatrices-with-all-ones/)
+
+> - ***Question 3***
+>   - 给你一个 `m x n` 的二进制矩阵 `mat` ，请你返回有多少个 子矩形的元素全部都是 `1` 。
+>   - ***tips:***
+>     - `1 <= m, n <= 150`
+>     - `mat[i][j]` 仅包含 `0` 或 `1`
+
+---
+
+## *Java*
+
+> - ***数组实现单调栈求直方图中最大矩形面积***
+>   - 参考[从子数组最小乘积的最大值看连通性的本质](从子数组最小乘积的最大值看连通性的本质.md)的思路，在计算结果时变成数组值（矩形高）乘以区间长度（矩形宽）即可。
+
+```java
+class Solution {
+    
+    public int largestRectangleArea(int[] heights) {
+        return largestRectangleAreaByMonotoneStack(heights);
+    }
+    
+    private int largestRectangleAreaByMonotoneStack(int[] heights) {
+        int max = -1;
+        int[] stack = new int[heights.length];
+        int peek = -1;
+        for (int i = 0; i < heights.length; ++i) {
+            while (peek != -1 && heights[stack[peek]] >= heights[i]) {
+                int popIndex = stack[peek--];
+                // 核心改动
+                // 如果没有左边最近小值，那么矩形长为i，不包括i，即便相等，相等的话后面相等的再计算正确答案
+                // 乘以数组值（矩形高）然后比较谁的面积大
+                max = Math.max(max, (peek == -1 ? i : i - stack[peek] - 1) * heights[popIndex]);
+            }
+            stack[++peek] = i;
+        }
+        while (peek != -1) {
+            int popIndex = stack[peek--];
+            max = Math.max(max, (peek == -1 ? heights.length : heights.length - stack[peek] - 1) * heights[popIndex]);
+        }
+        return max;
+    }
+    
+}
+```
+
+> - ***方法***
+
+```java
+```
+
+> - ***方法***
+
+```java
+```
+
+---
+
+> ***last change: 2022/11/11***
+
+---
