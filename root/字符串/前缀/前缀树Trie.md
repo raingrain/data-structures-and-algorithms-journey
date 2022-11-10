@@ -1,4 +1,4 @@
-# 数组或哈希表实现前缀树
+# 前缀树Trie
 
 ## [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
 
