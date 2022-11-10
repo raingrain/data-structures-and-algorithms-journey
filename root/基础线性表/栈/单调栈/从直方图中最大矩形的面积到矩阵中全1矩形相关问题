@@ -46,6 +46,7 @@ class Solution {
     }
     
     private int largestRectangleAreaByMonotoneStack(int[] heights) {
+        // 面积不可能为负数，设置整数最小值也行
         int max = -1;
         int[] stack = new int[heights.length];
         int peek = -1;
