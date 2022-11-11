@@ -1,4 +1,4 @@
-# 线段树代码模板
+# 线段树SegmentTree代码模板
 
 ## [303. 区域和检索 - 数组不可变](https://leetcode.cn/problems/range-sum-query-immutable/)
 
@@ -53,18 +53,18 @@ class NumArray {
         System.arraycopy(nums, 0, this.arr, 1, size - 1);
         // 算上各种不需要的节点树的所有层的满节点数不超过4N
         // 用来支持脑补概念中，某一个范围的累加和信息
-        this.sum = new int[size << 2];
+        this.sum = new int[size * 4];
         // 用来支持脑补概念中，某一个范围沒有往下傳遞的纍加任務
-        this.lazy = new int[size << 2];
+        this.lazy = new int[size * 4];
         // 用来支持脑补概念中，某一个范围有没有更新操作的任务
-        this.change = new int[size << 2];
+        this.change = new int[size * 4];
         // 用来支持脑补概念中，某一个范围更新任务，更新成了什么
-        this.isUpdate = new boolean[size << 2];
+        this.isUpdate = new boolean[size * 4];
         build(1, nums.length, 1);
     }
     
     private void getSum(int head) {
-        sum[head] = sum[head << 1] + sum[head << 1 | 1];
+        sum[head] = sum[head * 2] + sum[head * 2 + 1];
     }
     
     // 在初始化阶段，先把sum数组，填好
@@ -78,8 +78,8 @@ class NumArray {
             return;
         }
         int mid = (left + right) >> 1;
-        build(left, mid, head << 1);
-        build(mid + 1, right, head << 1 | 1);
+        build(left, mid, head * 2);
+        build(mid + 1, right, head * 2 + 1);
         getSum(head);
     }
     
@@ -89,28 +89,28 @@ class NumArray {
         // 更新的优先级高于加数
         if (isUpdate[head]) {
             // 把确定更新的信息推送到下一层
-            isUpdate[head << 1] = true;
-            isUpdate[head << 1 | 1] = true;
+            isUpdate[head * 2] = true;
+            isUpdate[head * 2 + 1] = true;
             // 把要更新成的数字推送到下一层
-            change[head << 1] = change[head];
-            change[head << 1 | 1] = change[head];
+            change[head * 2] = change[head];
+            change[head * 2 + 1] = change[head];
             // 因为需要更新，所以要add的数据直接被清空
-            lazy[head << 1] = 0;
-            lazy[head << 1 | 1] = 0;
+            lazy[head * 2] = 0;
+            lazy[head * 2 + 1] = 0;
             // 因为对应范围内全部都更新了，那么累加和自然就变成更新后的值乘以范围
-            sum[head << 1] = change[head] * numOfLeftTree;
-            sum[head << 1 | 1] = change[head] * numOfRightTree;
+            sum[head * 2] = change[head] * numOfLeftTree;
+            sum[head * 2 + 1] = change[head] * numOfRightTree;
             isUpdate[head] = false;
         }
         // 需要对add数据进行懒更新
         // 刚更新完是不会有add数据存在的，在更新时都被清理了
         if (lazy[head] != 0) {
             // 懒加载信息被推送而来
-            lazy[head << 1] = lazy[head];
-            lazy[head << 1 | 1] = lazy[head];
+            lazy[head * 2] = lazy[head];
+            lazy[head * 2 + 1] = lazy[head];
             // 对应的区间和增加
-            sum[head << 1] += lazy[head] * numOfLeftTree;
-            sum[head << 1 | 1] += lazy[head] * numOfRightTree;
+            sum[head * 2] += lazy[head] * numOfLeftTree;
+            sum[head * 2 + 1] += lazy[head] * numOfRightTree;
             // 懒加载信息已经推送到下一层，本层懒加载信息归0
             lazy[head] = 0;
         }
@@ -135,10 +135,10 @@ class NumArray {
         // 然后再把新来的任务下发（因为新来的也不能被拦截）
         pushDown(head, mid - left + 1, right - mid);
         if (L <= mid) {
-            update(L, R, val, left, mid, head << 1);
+            update(L, R, val, left, mid, head * 2);
         }
         if (mid + 1 <= R) {
-            update(L, R, val, mid + 1, right, head << 1 | 1);
+            update(L, R, val, mid + 1, right, head * 2 + 1);
         }
         getSum(head);
     }
@@ -153,10 +153,10 @@ class NumArray {
         int mid = (left + right) >> 1;
         pushDown(head, mid - left + 1, right - mid);
         if (L <= mid) {
-            update(L, R, val, left, mid, head << 1);
+            update(L, R, val, left, mid, head * 2);
         }
         if (mid + 1 <= R) {
-            update(L, R, val, mid + 1, right, head << 1 | 1);
+            update(L, R, val, mid + 1, right, head * 2 + 1);
         }
         getSum(head);
     }
@@ -172,10 +172,10 @@ class NumArray {
         pushDown(head, mid - left + 1, right - mid);
         int ans = 0;
         if (L <= mid) {
-            ans += sumRange(L, R, left, mid, head << 1);
+            ans += sumRange(L, R, left, mid, head * 2);
         }
         if (mid + 1 <= R) {
-            ans += sumRange(L, R, mid + 1, right, head << 1 | 1);
+            ans += sumRange(L, R, mid + 1, right, head * 2 + 1);
         }
         return ans;
     }
