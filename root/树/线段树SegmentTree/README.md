@@ -1,4 +1,4 @@
-# 线段树SegmentTree代码模板
+# SegmentTree线段树代码模板
 
 ## [303. 区域和检索 - 数组不可变](https://leetcode.cn/problems/range-sum-query-immutable/)
 
@@ -27,7 +27,8 @@
 ## *Java*
 
 > - ***数组实现线段树***
->   - 本题采用数组实现线段树的方式，可直接作为模板，流程看代码。
+>   - 线段树用于处理左右半区获得的信息不用处理就可以加工出整个区域的正确信息的问题，如区间最值查询等。
+>   - 线段树快的核心在于信息的懒处理。
 
 ```java
 class NumArray {
