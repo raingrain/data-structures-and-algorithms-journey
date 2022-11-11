@@ -1,0 +1,229 @@
+# 树状数组BIT代码模板
+
+## [303. 区域和检索 - 数组不可变](https://leetcode.cn/problems/range-sum-query-immutable/)
+
+## [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/)
+
+## [304. 二维区域和检索 - 矩阵不可变](https://leetcode.cn/problems/range-sum-query-2d-immutable/)
+
+## [308. 二维区域和检索 - 可变](https://leetcode.cn/problems/range-sum-query-2d-mutable/)
+
+## 题目
+
+> - ***Question 1***
+>   - 给你一个数组 `nums` ，请你完成三类查询：
+>     - 一类查询要求更新数组 `nums` 下标对应的值。
+>     - 一类查询要求数组 `nums` 下标对应的值全部加上一个新的值。
+>     - 一类查询要求返回数组 `nums` 中索引 `left` 和 `right` 之间（包含边界）的 `nums` 元素的和。
+>   - 实现 `NumArray` 类（线段树的功能）：
+>     - `NumArray(int[] nums)` 用整数数组 `nums` 初始化对象。
+>     - `void update(int index, int val)` / `void update(int left, int right, int val)` 将对应区间内的值更新为 `val` 。
+>     - `void add(int index, int val)` / `void add(int left, int right, int val)` 将对应区间内的值全部加上 `val` 。
+>     - `int sumRange(int left, int right)` 返回数组 `nums` 中索引 `left` 和索引 `right` 之间的 `nums` 元素的和。
+>   - ***tips:***
+>     - `1 <= nums.length <= 3 * 10^4`
+>     - `-10^5 <= nums[i] <= 10^5`
+>     - `0 <= index < nums.length`
+>     - `-100 <= val <= 100`
+>     - `0 <= left <= right < nums.length`
+>     - 调用 `update` 和 `add` 和 `sumRange` 方法次数不大于 `3 * 10^4`
+> - ***Question 2***
+>   - 给定一个二维矩阵 `matrix` ，实现 NumMatrix 类：
+>     - `NumMatrix(int[][] matrix)` 给定整数矩阵 `matrix` 进行初始化。
+>     - `int sumRegion(int row1, int col1, int row2, int col2)` 返回左上角 `(row1, col1)` 、右下角 `(row2, col2)` 所描述的子矩阵的元素总和。
+>     - `void update(int row, int col, int val)` / `void update(int row1, int col1, int row2, int col2, int val)` 更新指定元素。
+>     - `void add(int row, int col, int val)` / `void add(int row1, int col1, int row2, int col2, int val)` 指定范围内的元素都加上某个值。
+>   - ***tips:***
+>     - `m == matrix.length`
+>     - `n == matrix[i].length`
+>     - `1 <= m, n <= 200`
+>     - `-10^5 <= matrix[i][j] <= 10^5`
+>     - `0 <= row1 <= row2 < m`
+>     - `0 <= col1 <= col2 < n`
+>     - 最多调用 `10^4` 次 `sumRegion` 方法
+
+---
+
+## *Java*
+
+> - ***一维BIT***
+>   - 对于一个树状数组来说，其核心在于下标变换：
+>     - 树状数组中的某个位置 `index` ，它存储 `index` 二进制中扔掉最后一个 `1` 然后再加上一个 `1` 到 `index` 之间的范围的数的总和。
+>     - 原数组中一个位置 `index` 发生变动，从它开始树状数组后面 `index` 加上 `index` 二进制中最后一个 `1` （循环往复直到越界）的位置都变动。
+>     - 原数组中 `index` 位置的前缀和从自己开始累加上树状数组中 `index` 减去 `index` 二进制中最后一个 `1` （循环往复直到越界）的位置的和（加上分前缀和）。
+>   - 关键代码 `index & -index` 得到最后一个 `1` 。
+>   - 一次查询、删除、更新操作的时间复杂度都是 `O(logn)` ，其中 `n` 是数组 `nums` 的大小。
+>   - 空间复杂度： `O(n)` 。保存 `tree` 需要 `O(n)` 的空间。
+
+```java
+class NumArray {
+    
+    private final int[] nums;
+    private final int size;
+    private final int[] tree;
+    
+    public NumArray(int[] nums) {
+        this.nums = nums;
+        this.size = nums.length + 1;
+        this.tree = new int[size];
+        // 初始化树状数组
+        for (int i = 0; i < nums.length; ++i) {
+            addNumAndChangeTree(i + 1, nums[i]);
+        }
+    }
+    
+    // 获取由index所对应的二进制数的最后一个1及其右边所有0组成的数
+    private int getRightMostOne(int index) {
+        // 一个数与上自己的相反数（取反 + 1）
+        return index & -index;
+    }
+    
+    // 当数组中的某一个位置的值执行了添加操作时调用该函数以调整树状数组
+    private void addNumAndChangeTree(int index, int val) {
+        // 更改index位置变动后树状数组中受影响的位置
+        while (index < size) {
+            tree[index] += val;
+            // 和自己最后一个1相加，改变后再相加，加到越界为止
+            // 其中所得到的位置就是包括了index位置的累加和
+            index += getRightMostOne(index);
+        }
+    }
+    
+    // 求原数组中0 ~ index-1位置的前缀和
+    private int getPrefixSum(int index) {
+        int sum = 0;
+        while (index > 0) {
+            sum += tree[index];
+            // 和add同理，只不过换成减法，找到我前面的所有分前缀和
+            index -= getRightMostOne(index);
+        }
+        return sum;
+    }
+    
+    public void update(int index, int val) {
+        // 更新成val相当于原来的数加上与val的差值
+        addNumAndChangeTree(index + 1, val - nums[index]);
+        nums[index] = val;
+    }
+    
+    public void update(int left, int right, int val) {
+        for (int index = left; index <= right; ++index) {
+            update(index, val);
+        }
+    }
+    
+    public void add(int index, int val) {
+        addNumAndChangeTree(index + 1, val);
+        nums[index] += val;
+    }
+    
+    public void add(int left, int right, int val) {
+        for (int index = left; index <= right; ++index) {
+            add(index, val);
+        }
+    }
+    
+    // 求原数组中left-right的前缀和
+    public int sumRange(int left, int right) {
+        // 由于树状数组往后推移1位的特性，不需要考虑left等于0时的越界问题
+        // 本来应该是getPrefixSum(right) - getPrefixSum(left - 1)
+        return getPrefixSum(right + 1) - getPrefixSum(left);
+    }
+    
+}
+```
+
+> - ***二维BIT***
+>   - 和一维BIT一模一样，处理的范围变了而已，看 `addNumAndChangeTree` 方法注释。
+>   - 不像线段树改二维非常难。
+
+```java
+class NumMatrix {
+    
+    private int[][] matrix;
+    private int[][] tree;
+    
+    public NumMatrix(int[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        this.matrix = matrix;
+        this.tree = new int[matrix.length + 1][matrix[0].length + 1];
+        for (int i = 0; i < matrix.length; ++i) {
+            for (int j = 0; j < matrix[0].length; ++j) {
+                addNumAndChangeTree(i, j, matrix[i][j]);
+            }
+        }
+    }
+    
+    private int getRightMostOne(int index) {
+        return index & -index;
+    }
+    
+    private void addNumAndChangeTree(int row, int col, int val) {
+        // i和j的取值是因为传入的是原始矩阵中的位置，要加1才对于树中位置
+        // 右下角区域所有满足的位置全改变
+        for (int i = row + 1; i <= matrix.length; i += getRightMostOne(i)) {
+            for (int j = col + 1; j <= matrix[0].length; j += getRightMostOne(j)) {
+                tree[i][j] += val;
+            }
+        }
+    }
+    
+    private int getPrefixSum(int row, int col) {
+        int sum = 0;
+        // 左上角满足的区域全获取
+        for (int i = row + 1; i >= 1; i -= getRightMostOne(i)) {
+            for (int j = col + 1; j >= 1; j -= getRightMostOne(j)) {
+                sum += tree[i][j];
+            }
+        }
+        return sum;
+    }
+    
+    public void update(int row, int col, int val) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        addNumAndChangeTree(row, col, val - matrix[row][col]);
+        matrix[row][col] = val;
+    }
+    
+    public void update(int row1, int col1, int row2, int col2, int val) {
+        // 区域内的值都改变
+        for (int i = row1; i <= row2; ++i) {
+            for (int j = col1; j <= col2; ++j) {
+                update(i, j, val);
+            }
+        }
+    }
+    
+    public void add(int row, int col, int val) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        addNumAndChangeTree(row, col, val);
+        matrix[row][col] += val;
+    }
+    
+    public void add(int row1, int col1, int row2, int col2, int val) {
+        for (int i = row1; i <= row2; ++i) {
+            for (int j = col1; j <= col2; ++j) {
+                add(i, j, val);
+            }
+        }
+    }
+    
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        // 典中典计算公式
+        return getPrefixSum(row2, col2) - getPrefixSum(row2, col1 - 1) - getPrefixSum(row1 - 1, col2) + getPrefixSum(row1 - 1, col1 - 1);
+    }
+    
+}
+```
+
+---
+
+> ***last change: 2022/11/11***
+
+---
