@@ -1,4 +1,4 @@
-# 树状数组BIT代码模板
+# 二叉索引树（树状数组）BIT代码模板
 
 ## [303. 区域和检索 - 数组不可变](https://leetcode.cn/problems/range-sum-query-immutable/)
 
@@ -53,6 +53,9 @@
 >     - 原数组中一个位置 `index` 发生变动，从它开始树状数组后面 `index` 加上 `index` 二进制中最后一个 `1` （循环往复直到越界）的位置都变动。
 >     - 原数组中 `index` 位置的前缀和从自己开始累加上树状数组中 `index` 减去 `index` 二进制中最后一个 `1` （循环往复直到越界）的位置的和（加上分前缀和）。
 >   - 关键代码 `index & -index` 得到最后一个 `1` 。
+>   - 树状数组选择从 `1` 开始是为了与改变某个位置的值时能够迅速找到受影响的位置二进制规律相结合的；
+>   - 对于通过对和与自己的相反数得到的数进行相加减得到的二进制规律不要深究。
+>   - 保存一份原始数组，并在 `update` 和 `add` 时同时保持更新，树状数组的修改在 `addNumAndChangeTree()` 上。
 >   - 一次查询、删除、更新操作的时间复杂度都是 `O(logn)` ，其中 `n` 是数组 `nums` 的大小。
 >   - 空间复杂度： `O(n)` 。保存 `tree` 需要 `O(n)` 的空间。
 
@@ -135,7 +138,10 @@ class NumArray {
 ```
 
 > - ***二维BIT***
->   - 和一维BIT一模一样，处理的范围变了而已，看 `addNumAndChangeTree` 方法注释。
+>   - 直接将一维数组中的二进制规律推广到二维矩阵中的行和列上。
+>   - 算一个区域的和需要用到一些几何方面的知识，即大减小再把多减的一份加回来。
+>   - 记得初次更新要在 `addNumAndChangeTree` 中更新，在 `update` 中更新会有全 `0` 的错误。
+>   - 其他步骤和一维树状数组一致，处理的范围变了而已，看 `addNumAndChangeTree` 方法注释。
 >   - 不像线段树改二维非常难。
 
 ```java
@@ -152,6 +158,7 @@ class NumMatrix {
         this.tree = new int[matrix.length + 1][matrix[0].length + 1];
         for (int i = 0; i < matrix.length; ++i) {
             for (int j = 0; j < matrix[0].length; ++j) {
+                // 不能调用update，否则由于this.matrix已经赋值导致val - matrix[row][col]等于0进而使结果全为0
                 addNumAndChangeTree(i, j, matrix[i][j]);
             }
         }
@@ -161,6 +168,7 @@ class NumMatrix {
         return index & -index;
     }
     
+    // 下面两个函数传的都是树中的位置
     private void addNumAndChangeTree(int row, int col, int val) {
         // i和j的取值是因为传入的是原始矩阵中的位置，要加1才对于树中位置
         // 右下角区域所有满足的位置全改变
@@ -217,6 +225,7 @@ class NumMatrix {
     
     public int sumRegion(int row1, int col1, int row2, int col2) {
         // 典中典计算公式
+        // 避免因为左上角的越界而判空
         return getPrefixSum(row2, col2) - getPrefixSum(row2, col1 - 1) - getPrefixSum(row1 - 1, col2) + getPrefixSum(row1 - 1, col1 - 1);
     }
     
