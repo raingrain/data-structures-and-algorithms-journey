@@ -21,11 +21,6 @@
 >   - 乘法公式可用于给定节点组成二叉树问题。
 >   - 还可以解决凸多边形划分三角形问题，在 `n x n` 格点中不越过对角线的单调路径的个数问题，有 `n + 1` 个叶子的满二叉树的个数。
 >   - 如果题目解题时用到的公式和卡特兰数通项公式一样，那就直接根据题目给定的项数，直接返回卡特兰数列对应位置的值即可。
->   - 一些题目到卡特兰数思路：
->     ![image](出栈序列.png)
->     ![image](括号匹配.png)
->     ![image](构造满二叉树.png)
->     ![image](电影购票.png)
 
 ```java
 class Solution {
@@ -33,6 +28,7 @@ class Solution {
     // 打表
     private final int[] CatalanNumber = {1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900, 2674440, 9694845, 35357670, 129644790, 477638700, 1767263190};
     
+    // 树的个数
     public int numTrees(int n) {
         // return CatalanNumber[n];
         return (int) getCatalanNumber(n);
@@ -51,6 +47,13 @@ class Solution {
     
 }
 ```
+
+> - ***一些题目的卡特兰数思路***
+
+![image](出栈序列.png)
+![image](括号匹配.png)
+![image](构造满二叉树.png)
+![image](电影购票.png)
 
 ---
 
