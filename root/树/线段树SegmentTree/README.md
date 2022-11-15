@@ -1,10 +1,18 @@
 # SegmentTree线段树代码模板
 
+## [2236. 判断根结点是否等于子结点之和](https://leetcode.cn/problems/root-equals-sum-of-children/)
+
+> - ***Question***
+>   - 给你一个二叉树的根结点 `root` ，该二叉树由恰好 `3` 个结点组成：根结点、左子结点和右子结点。如果根结点值等于两个子结点值之和，返回 `true` ，否则返回 `false` 。
+>   - ***tips:***
+>     - 树只包含根结点、左子结点和右子结点
+>     - `-100 <= Node.val <= 100`
+
 ## [303. 区域和检索 - 数组不可变](https://leetcode.cn/problems/range-sum-query-immutable/)
 
 ## [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/)
 
-> - ***Question***
+> - ***Question 2***
 >   - 给你一个数组 `nums` ，请你完成三类查询：
 >     - 一类查询要求更新数组 `nums` 下标对应的值。
 >     - 一类查询要求数组 `nums` 下标对应的值全部加上一个新的值。
@@ -25,6 +33,19 @@
 ---
 
 ## *Java*
+
+> - ***线段树每个节点的性质***
+>   - 根节点代表区域和，左右子节点代表分区域和。
+
+```java
+class Solution {
+
+    public boolean checkTree(TreeNode root) {
+        return root.val == root.left.val + root.right.val;
+    }
+
+}
+```
 
 > - ***数组实现线段树***
 >   - 线段树用于处理左右半区获得的信息不用处理就可以加工出整个区域的正确信息的问题，如区间最值查询等。
