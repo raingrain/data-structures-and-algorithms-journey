@@ -26,6 +26,64 @@
 >     - 那么一个节点第 `1` 次出现在递归序中的时候就打印，生成的序列为先序遍历序列 `1 2 3` 。
 >     - 那么一个节点第 `2` 次出现在递归序中的时候就打印，生成的序列为中序遍历序列 `2 1 3` 。
 >     - 那么一个节点第 `3` 次出现在递归序中的时候就打印，生成的序列为后序遍历序列 `2 3 1` 。
+
+```java
+class Solution {
+
+    // 先序遍历
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        preorderTraversalByRecursion(root, ans);
+        return ans;
+    }
+    
+    // 递归生成先序序列
+    public void preorderTraversalByRecursion(TreeNode root, List<Integer> ans) {
+        if (root == null) {
+            return;
+        }
+        ans.add(root.val);
+        preorderTraversalByRecursion(root.left, ans);
+        preorderTraversalByRecursion(root.right, ans);
+    }
+
+    // 中序遍历
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<Integer>();
+        inorderTraversalByRecursion(root, ans);
+        return ans;
+    }
+    
+    // 递归生成中序序列
+    public void inorderTraversalByRecursion(TreeNode root, List<Integer> ans) {
+        if (root == null) {
+            return;
+        }
+        inorderTraversalByRecursion(root.left, ans);
+        ans.add(root.val);
+        inorderTraversalByRecursion(root.right, ans);
+    }
+
+    // 后序遍历
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<Integer>();
+        postorderTraversalByRecursion(root, ans);
+        return ans;
+    }
+    
+    // 递归生成后序序列
+    public void postorderTraversalByRecursion(TreeNode root, List<Integer> ans) {
+        if (root == null) {
+            return;
+        }
+        postorderTraversalByRecursion(root.left, ans);
+        postorderTraversalByRecursion(root.right, ans);
+        ans.add(root.val);
+    }
+
+}
+```
+
 > - ***迭代***
 >   - 时间复杂度与空间复杂度都为 `O(n)` , `n` 为二叉树中的节点数。
 >   - 经典名言：任何递归都可以改成非递归。
@@ -45,79 +103,17 @@
 >   - 中序遍历的本质是二叉树可以被平行线从右上到左下划分为多组，对于一个节点来说，我们先处理它的左树（它的左树在栈中一定比它高，先被处理），处理完后再回来处理它，然后把它的右孩子入栈：
 >     - 准备一个栈进入循环：
 >       - 如果当前节点不为空，就把它入栈，它变成它的左孩子。
->       - 如果当前节点为空，我们就把 `root` 变成栈顶，然后往结果中加入 `root的值` ， `root` 变成它的右孩子。
+>       - 如果当前节点为空，我们就把 `root` 变成栈顶，然后往结果中加入 `root` 的值， `root` 变成它的右孩子。
 >       - 当栈不为空或者用于循环的节点 `root` 不为空时继续循环。
-> - ***Morris遍历***
->   - 时间复杂度为 `O(n)` , 空间复杂度为 `O(1)` ， `n` 为二叉树中的节点数。
->   - 在一次循环中，我们来到当前节点 `cur` ，开始时 `cur` 是头节点：
->     - 如果 `cur` 没有左孩子， `cur` 变成它的右孩子（即没有左子树的节点只被访问一次，有左子树的节点被访问两次）。
->     - 如果 `cur` 有左孩子：
->       - 先找到它左子树的最右节点（左子树右边界上的最后一个节点）。
->       - 如果左子树最右节点的右指针指向空，则说明其第一次来到 `cur` 节点，让其指向 `cur` ，然后 `cur` 等于它的左孩子。
->       - 如果左子树最右节点的右指针指向 `cur` ，则说明其第二次来到 `cur` 节点，让其指向空，然后 `cur` 等于它的右孩子。
->   - Morris遍历的本质是使用叶子节点的空闲右指针来指向将其作为左树最右节点的树的头节点，也就是实现了回溯的功能，并且Morris遍历会生成Morris序，我们对这个序列进行改造同样可以生成先序、中序、后序序列：
->     - 对于树 `4 <- 2 <- 1 -> 3 -> 5` ，其Morris序为 `1 2 4 2 1 3 5` 。
->     - 一个节点第一次出现在Morris序中的时候打印它，可以生成先序序列 `1 2 4 3 5` 。
->     - 一个节点最后一次出现在Morris序中的时候打印它，可以生成中序序列 `4 2 1 3 5` 。
->     - 对于可以出现两次的节点，在其第二次出现时逆序（逆序可以通过链表反转来实现，用栈实现会破坏空间复杂度）打印其左树右边界，并在循环结束后逆序打印整棵树的右边界，这样可以生成后序序列 `4 2 5 3 1` 。
-> - 对于 `N` 叉树来说，层序遍历不能使用Morris遍历，且其没有中序遍历，其前序和后序遍历除了加节点的过程需要循环遍历 `children` 列表外，其他和二叉树相同。
 
 ```java
-class Node {
-    
-    public int val;
-    public List<Node> children;
-    
-    public Node() {}
-    
-    public Node(int _val) {
-        val = _val;
-    }
-    
-    public Node(int _val, List<Node> _children) {
-        val = _val;
-        children = _children;
-    }
-    
-}
-
-class TreeNode {
-    
-    int val;
-    TreeNode left;
-    TreeNode right;
-    
-    TreeNode() {}
-    TreeNode(int val) {this.val = val;}
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-    
-}
-
 class Solution {
-    
+
     // 先序遍历
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
-        
-        preorderTraversalByRecursion(root, ans);
-        // preorderTraversalByIteration(root, ans);
-        // preorderTraversalByMorris(root, ans);
-        
+        preorderTraversalByIteration(root, ans);
         return ans;
-    }
-    
-    // 递归生成先序序列
-    public void preorderTraversalByRecursion(TreeNode root, List<Integer> ans) {
-        if (root == null) {
-            return;
-        }
-        ans.add(root.val);
-        preorderTraversalByRecursion(root.left, ans);
-        preorderTraversalByRecursion(root.right, ans);
     }
     
     // 迭代生成先序序列
@@ -138,6 +134,93 @@ class Solution {
                 stack.push(root.left);
             }
         }
+    }
+
+    // 中序遍历
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<Integer>();
+        inorderTraversalByIteration(root, ans);
+        return ans;
+    }
+    
+    // 迭代生成中序序列
+    public void inorderTraversalByIteration(TreeNode root, List<Integer> ans) {
+        if (root == null) {
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        while (!stack.isEmpty() || root != null) {
+            if (root != null) {
+                // 有左子树就先处理左子树
+                stack.push(root);
+                root = root.left;
+            } else {
+                // 处理完左子树了，处理右子树
+                root = stack.pop();
+                ans.add(root.val);
+                root = root.right;
+            }
+        }
+    }
+
+    // 后序遍历
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<Integer>();
+        postorderTraversalByRecursion(root, ans);
+        return ans;
+    }
+    
+    // 迭代生成后序序列
+    public void postorderTraversalByIteration(TreeNode root, List<Integer> ans) {
+        if (root == null) {
+            return;
+        }
+        // 操作栈与结果栈
+        Stack<TreeNode> operationStack = new Stack<>();
+        Stack<TreeNode> resultStack = new Stack<>();
+        operationStack.push(root);
+        while (!operationStack.isEmpty()) {
+            root = operationStack.pop();
+            // 先加入到结果栈
+            resultStack.push(root);
+            if (root.left != null) {
+                operationStack.push(root.left);
+            }
+            if (root.right != null) {
+                operationStack.push(root.right);
+            }
+        }
+        // 中右左 -> 左右中
+        while (!resultStack.isEmpty()) {
+            ans.add(resultStack.pop().val);
+        }
+    }
+    
+}
+```
+
+> - ***Morris遍历***
+>   - 时间复杂度为 `O(n)` , 空间复杂度为 `O(1)` ， `n` 为二叉树中的节点数。
+>   - 在一次循环中，我们来到当前节点 `cur` ，开始时 `cur` 是头节点：
+>     - 如果 `cur` 没有左孩子， `cur` 变成它的右孩子（即没有左子树的节点只被访问一次，有左子树的节点被访问两次）。
+>     - 如果 `cur` 有左孩子：
+>       - 先找到它左子树的最右节点（左子树右边界上的最后一个节点）。
+>       - 如果左子树最右节点的右指针指向空，则说明其第一次来到 `cur` 节点，让其指向 `cur` ，然后 `cur` 等于它的左孩子。
+>       - 如果左子树最右节点的右指针指向 `cur` ，则说明其第二次来到 `cur` 节点，让其指向空，然后 `cur` 等于它的右孩子。
+>   - Morris遍历的本质是使用叶子节点的空闲右指针来指向将其作为左树最右节点的树的头节点，也就是实现了回溯的功能，并且Morris遍历会生成Morris序，我们对这个序列进行改造同样可以生成先序、中序、后序序列：
+>     - 对于树 `4 <- 2 <- 1 -> 3 -> 5` ，其Morris序为 `1 2 4 2 1 3 5` 。
+>     - 一个节点第一次出现在Morris序中的时候打印它，可以生成先序序列 `1 2 4 3 5` 。
+>     - 一个节点最后一次出现在Morris序中的时候打印它，可以生成中序序列 `4 2 1 3 5` 。
+>     - 对于可以出现两次的节点，在其第二次出现时逆序（逆序可以通过链表反转来实现，用栈实现会破坏空间复杂度）打印其左树右边界，并在循环结束后逆序打印整棵树的右边界，这样可以生成后序序列 `4 2 5 3 1` 。
+
+```java
+class Solution {
+
+    // 先序遍历
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        preorderTraversalByMorris(root, ans);
+        return ans;
     }
     
     // Morris遍历生成先序序列
@@ -168,45 +251,12 @@ class Solution {
             }
         }
     }
-    
-     // 中序遍历
+
+    // 中序遍历
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<Integer>();
-        
-        inorderTraversalByRecursion(root, ans);
-        // inorderTraversalByIteration(root, ans);
-        // inorderTraversalByMorris(root, ans);
+        inorderTraversalByMorris(root, ans);
         return ans;
-    }
-    
-    // 递归生成中序序列
-    public void inorderTraversalByRecursion(TreeNode root, List<Integer> ans) {
-        if (root == null) {
-            return;
-        }
-        inorderTraversalByRecursion(root.left, ans);
-        ans.add(root.val);
-        inorderTraversalByRecursion(root.right, ans);
-    }
-    
-    // 迭代生成中序序列
-    public void inorderTraversalByIteration(TreeNode root, List<Integer> ans) {
-        if (root == null) {
-            return;
-        }
-        Stack<TreeNode> stack = new Stack<>();
-        while (!stack.isEmpty() || root != null) {
-            if (root != null) {
-                // 有左子树就先处理左子树
-                stack.push(root);
-                root = root.left;
-            } else {
-                // 处理完左子树了，处理右子树
-                root = stack.pop();
-                ans.add(root.val);
-                root = root.right;
-            }
-        }
     }
     
     // Morris遍历生成中序序列
@@ -241,48 +291,8 @@ class Solution {
     // 后序遍历
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<Integer>();
-        
-        postorderTraversalByRecursion(root, ans);
-        // postorderTraversalByIteration(root, ans);
-        // postorderTraversalByRecursion(root, ans);
-        
+        postorderTraversalByMorris(root, ans);
         return ans;
-    }
-    
-    // 递归生成后序序列
-    public void postorderTraversalByRecursion(TreeNode root, List<Integer> ans) {
-        if (root == null) {
-            return;
-        }
-        postorderTraversalByRecursion(root.left, ans);
-        postorderTraversalByRecursion(root.right, ans);
-        ans.add(root.val);
-    }
-    
-    // 迭代生成后序序列
-    public void postorderTraversalByIteration(TreeNode root, List<Integer> ans) {
-        if (root == null) {
-            return;
-        }
-        // 操作栈与结果栈
-        Stack<TreeNode> operationStack = new Stack<>();
-        Stack<TreeNode> resultStack = new Stack<>();
-        operationStack.push(root);
-        while (!operationStack.isEmpty()) {
-            root = operationStack.pop();
-            // 先加入到结果栈
-            resultStack.push(root);
-            if (root.left != null) {
-                operationStack.push(root.left);
-            }
-            if (root.right != null) {
-                operationStack.push(root.right);
-            }
-        }
-        // 中右左 -> 左右中
-        while (!resultStack.isEmpty()) {
-            ans.add(resultStack.pop().val);
-        }
     }
     
     // Morris遍历生成后序序列
@@ -338,6 +348,33 @@ class Solution {
         }
         return pre;
     }
+    
+}
+```
+
+> - 对于 `N` 叉树来说，层序遍历不能使用Morris遍历，且其没有中序遍历，其前序和后序遍历除了加节点的过程需要循环遍历 `children` 列表外，其他和二叉树相同。
+
+```java
+// N叉树节点
+class Node {
+    
+    public int val;
+    public List<Node> children;
+    
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+    
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+    
+}
+
+class Solution {
     
     // N叉树的前序遍历
     public List<Integer> preorder(Node root) {
@@ -453,6 +490,6 @@ class Solution {
 
 ---
 
-> ***last change: 2022/10/28***
+> ***last change: 2022/11/18***
 
 ---
