@@ -2,6 +2,15 @@
 
 ## 通过AVL树实现有序表
 
+## [1382. 将二叉搜索树变平衡](https://leetcode.cn/problems/balance-a-binary-search-tree/)
+
+> - ***Question***
+>   - 给你一棵二叉搜索树，请你返回一棵平衡后的二叉搜索树，新生成的树应该与原来的树有着相同的节点值。如果有多种构造方法，请你返回任意一种。
+>   - 如果一棵二叉搜索树中，每个节点的两棵子树高度差不超过 `1` ，我们就称这棵二叉搜索树是平衡的。
+>   - ***tips:***
+>     - 树节点的数目在 `[1, 10^4]` 范围内
+>     - `1 <= Node.val <= 10^5`
+
 ---
 
 ## *Java*
@@ -368,8 +377,171 @@ class AVLTree<K extends Comparable<K>, V> implements OrderedList<K, V> {
 }
 ```
 
+> - ***贪心 + 中序遍历 + 二分使树变平衡***
+>   - 贪心策略：我们可以选择树的中序遍历序列的中间位置作为二叉搜索树的根节点，这样分给左右子树的数字个数相同或只相差 `1` ，可以使得树保持平衡。
+>   - 先获取中序序列，然后取中点或者上中节点作为根节点，递归构建左树和右树即可。
+>   - 获得中序遍历的时间代价是 `O(n)` ，建立平衡二叉树的时建立每个点的时间代价为 `O(1)` ，总时间也是 `O(n)` 。故渐进时间复杂度为 `O(n)` 。这里使用了一个数组作为辅助空间，存放中序遍历后的有序序列，故渐进空间复杂度为 `O(n)` 。
+> - ***暴力旋转***
+>   - 注意节点类型不同，对高度的处理不同。
+>   - 注意要像SB树一样递归看子孩子平衡否？
+
+```java
+class TreeNode {
+    
+    int val;
+    TreeNode left;
+    TreeNode right;
+    
+    TreeNode() {}
+    
+    TreeNode(int val) {this.val = val;}
+    
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+    
+}
+
+
+class Solution {
+    
+    public TreeNode balanceBST(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        
+        // return balanceBSTByRotate(root);
+        return balanceBSTByInorder(root);
+    }
+    
+    // 中序遍历序列
+    private final ArrayList<TreeNode> inorderList = new ArrayList<>();
+    
+    // 贪心
+    private TreeNode balanceBSTByInorder(TreeNode root) {
+        getInorder(root);
+        return inorder(0, inorderList.size() - 1);
+    }
+    
+    // 获取中序遍历序列
+    private void getInorder(TreeNode head) {
+        if (head.left != null) {
+            getInorder(head.left);
+        }
+        inorderList.add(head);
+        if (head.right != null) {
+            getInorder(head.right);
+        }
+    }
+    
+    // 重新建树
+    private TreeNode inorder(int left, int right) {
+        int mid = (left + right) / 2;
+        TreeNode head = inorderList.get(mid);
+        // 注意，如果来到了叶子节点，要把之前树中的指向断开并设为空
+        head.left = left <= mid - 1 ? inorder(left, mid - 1) : null;
+        head.right = mid + 1 <= right ? inorder(mid + 1, right) : null;
+        return head;
+    }
+    
+    // 高度缓存表
+    private final HashMap<TreeNode, Integer> height = new HashMap<>();
+    
+    // 旋转
+    private TreeNode balanceBSTByRotate(TreeNode root) {
+        getHeight(root);
+        return changeTree(root);
+    }
+    
+    // 自底向上调整平衡
+    private TreeNode changeTree(TreeNode head) {
+        if (head == null) {
+            return null;
+        }
+        head.left = changeTree(head.left);
+        head.right = changeTree(head.right);
+        changeHeight(head);
+        return keepBalance(head);
+    }
+    
+    // 获取一个节点的高度
+    // 整棵树各个节点的高度加入缓存表，题目要求的代码中没有高度属性
+    private int getHeight(TreeNode head) {
+        if (head == null) {
+            return 0;
+        }
+        int leftHeight = getHeight(head.left);
+        int rightHeight = getHeight(head.right);
+        int headHeight = Math.max(leftHeight, rightHeight) + 1;
+        height.put(head, headHeight);
+        return headHeight;
+    }
+    
+    // 改变一个节点的高度
+    private void changeHeight(TreeNode head) {
+        height.put(head, 1 + Math.max(head.left != null ? height.get(head.left) : 0, head.right != null ? height.get(head.right) : 0));
+    }
+    
+    private TreeNode leftRotate(TreeNode head) {
+        TreeNode right = head.right;
+        head.right = right.left;
+        right.left = head;
+        changeHeight(head);
+        changeHeight(right);
+        return right;
+    }
+    
+    private TreeNode rightRotate(TreeNode head) {
+        TreeNode left = head.left;
+        head.left = left.right;
+        left.right = head;
+        changeHeight(head);
+        changeHeight(left);
+        return left;
+    }
+    
+    private TreeNode keepBalance(TreeNode head) {
+        if (head == null) {
+            return null;
+        }
+        int leftHeight = head.left != null ? height.get(head.left) : 0;
+        int rightHeight = head.right != null ? height.get(head.right) : 0;
+        int leftLeftHeight = head.left != null && head.left.left != null ? height.get(head.left.left) : 0;
+        int leftRightHeight = head.left != null && head.left.right != null ? height.get(head.left.right) : 0;
+        int rightRightHeight = head.right != null && head.right.right != null ? height.get(head.right.right) : 0;
+        int rightLeftHeight = head.right != null && head.right.left != null ? height.get(head.right.left) : 0;
+        if (Math.abs(leftHeight - rightHeight) > 1) {
+            if (leftHeight > rightHeight) {
+                if (leftLeftHeight >= leftRightHeight) {
+                    head = rightRotate(head);
+                } else {
+                    head.left = leftRotate(head.left);
+                    head = rightRotate(head);
+                }
+            } else {
+                if (rightRightHeight >= rightLeftHeight) {
+                    head = leftRotate(head);
+                } else {
+                    head.right = rightRotate(head.right);
+                    head = leftRotate(head);
+                }
+            }
+        }
+        // 和代码模板不一样，因为add只会影响插入位置开始上面的树的平衡，它下面的位置是平衡的
+        // 如果直接自底向上调整平衡，每次调完一个节点要像sb树一样递归看孩子有没有平衡
+        head.left = keepBalance(head.left);
+        head.right = keepBalance(head.right);
+        changeHeight(head);
+        return head;
+    }
+    
+}
+```
+
 ---
 
-> ***last change: 2022/10/30***
+> ***last change: 2022/11/21***
 
 ---
