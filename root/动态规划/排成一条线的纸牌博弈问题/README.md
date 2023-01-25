@@ -20,6 +20,7 @@
 
 > - ***暴力递归***
 >   - ![image](暴力递归.jpg)
+>   - 范围尝试模型。
 
 ```java
 class Solution {
