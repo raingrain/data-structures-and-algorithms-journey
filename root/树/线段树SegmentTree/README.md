@@ -76,7 +76,7 @@ class NumArray {
         // 算上各种不需要的节点树的所有层的满节点数不超过4N
         // 用来支持脑补概念中，某一个范围的累加和信息
         this.sum = new int[size * 4];
-        // 用来支持脑补概念中，某一个范围沒有往下傳遞的纍加任務
+        // 用来支持脑补概念中，某一个范围沒有往下传递的累加任务
         this.lazy = new int[size * 4];
         // 用来支持脑补概念中，某一个范围有没有更新操作的任务
         this.change = new int[size * 4];
@@ -230,6 +230,6 @@ class NumArray {
 
 ---
 
-> ***last change: 2022/11/11***
+> ***last change: 2023/3/4***
 
 ---
