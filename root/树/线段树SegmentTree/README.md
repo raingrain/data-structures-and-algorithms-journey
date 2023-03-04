@@ -128,8 +128,8 @@ class NumArray {
         // 刚更新完是不会有add数据存在的，在更新时都被清理了
         if (lazy[head] != 0) {
             // 懒加载信息被推送而来
-            lazy[head * 2] = lazy[head];
-            lazy[head * 2 + 1] = lazy[head];
+            lazy[head * 2] += lazy[head];
+            lazy[head * 2 + 1] += lazy[head];
             // 对应的区间和增加
             sum[head * 2] += lazy[head] * numOfLeftTree;
             sum[head * 2 + 1] += lazy[head] * numOfRightTree;
@@ -175,10 +175,10 @@ class NumArray {
         int mid = (left + right) >> 1;
         pushDown(head, mid - left + 1, right - mid);
         if (L <= mid) {
-            update(L, R, val, left, mid, head * 2);
+            add(L, R, val, left, mid, head * 2);
         }
         if (mid + 1 <= R) {
-            update(L, R, val, mid + 1, right, head * 2 + 1);
+            add(L, R, val, mid + 1, right, head * 2 + 1);
         }
         getSum(head);
     }
