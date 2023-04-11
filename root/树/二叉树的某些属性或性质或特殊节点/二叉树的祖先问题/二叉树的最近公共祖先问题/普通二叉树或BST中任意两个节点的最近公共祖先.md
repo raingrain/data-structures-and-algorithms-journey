@@ -22,6 +22,16 @@
 >   - `p != q`
 >   - `p` 和 `q` 均存在于给定的二叉树/BST中
 
+## 程序员代码面试指南：IT名企算法与数据结构题目最优解（第二版） 第3章 二叉树问题 Tarjan算法与并查集解决二叉树节点间最近公共祖先的批量查询问题
+
+> - ***Question 2***
+>   - 实现离线批量查询两个节点的最近公共祖先。
+
+## 左老师课堂讲述
+
+> - ***Question 3***
+>   - 实现在线批量查询两个节点的最近公共祖先。
+
 ---
 
 ## *Java*
@@ -206,8 +216,265 @@ class Solution {
 }
 ```
 
+> - ***Question 2: Tarjan算法 + 并查集***
+>   - ![images](images/Tarjan算法与并查集解决二叉树节点间最近公共祖先的批量查询问题.jpg)
+
+```java
+class Solution {
+    
+    // 离线批量查询最优解 -> Tarjan + 并查集
+    // 如果有M条查询，时间复杂度O(N + M)
+    // 但是必须把M条查询一次给全，不支持在线查询
+    public static int[] query2(int[] father, int[][] queries) {
+        int N = father.length;
+        int M = queries.length;
+        int[] help = new int[N];
+        int head = 0;
+        for (int i = 0; i < N; i++) {
+            if (father[i] == i) {
+                head = i;
+            } else {
+                help[father[i]]++;
+            }
+        }
+        // 这是生成树的代码
+        int[][] tree = new int[N][];
+        for (int i = 0; i < N; i++) {
+            tree[i] = new int[help[i]];
+        }
+        for (int i = 0; i < N; i++) {
+            if (i != head) {
+                tree[father[i]][--help[father[i]]] = i;
+            }
+        }
+        // 查询数组转成另外一种形式
+        for (int[] query : queries) {
+            if (query[0] != query[1]) {
+                help[query[0]]++;
+                help[query[1]]++;
+            }
+        }
+        int[][] mq = new int[N][];
+        int[][] ansIndex = new int[N][];
+        for (int i = 0; i < N; i++) {
+            mq[i] = new int[help[i]];
+            ansIndex[i] = new int[help[i]];
+        }
+        for (int i = 0; i < M; i++) {
+            if (queries[i][0] != queries[i][1]) {
+                mq[queries[i][0]][--help[queries[i][0]]] = queries[i][1];
+                ansIndex[queries[i][0]][help[queries[i][0]]] = i;
+                mq[queries[i][1]][--help[queries[i][1]]] = queries[i][0];
+                ansIndex[queries[i][1]][help[queries[i][1]]] = i;
+            }
+        }
+        int[] ans = new int[M];
+        UnionFind unionFind = new UnionFind(N);
+        recursion(head, tree, mq, ansIndex, unionFind, ans);
+        for (int i = 0; i < M; i++) {
+            if (queries[i][0] == queries[i][1]) {
+                ans[i] = queries[i][0];
+            }
+        }
+        return ans;
+    }
+    
+    // 当前来到head点
+    // mt是整棵树 head下方有哪些点 tree[head] = {a,b,c,d} head的孩子是abcd
+    // mq问题列表 head有哪些问题 queries[head] = {x,y,z} (head，x) (head，y) (head z)
+    // mi得到问题的答案，填在ans的什么地方 {6,12,34}
+    // unionFind 并查集
+    public static void recursion(int head, int[][] tree, int[][] queries, int[][] ansIndex, UnionFind unionFind, int[] ans) {
+        for (int next : tree[head]) { // head有哪些孩子，都遍历去吧！
+            recursion(next, tree, queries, ansIndex, unionFind, ans);
+            unionFind.union(head, next);
+            unionFind.setTag(head, head);
+        }
+        // 解决head的问题！
+        int[] query = queries[head];
+        int[] index = ansIndex[head];
+        for (int k = 0; k < query.length; k++) {
+            // head和谁有问题 query[k] 答案填哪 index[k]
+            int tag = unionFind.getTag(query[k]);
+            if (tag != -1) {
+                ans[index[k]] = tag;
+            }
+        }
+    }
+    
+    private static class UnionFind {
+        
+        private final int[] father; // father -> 并查集里面father信息，i -> i的father
+        private final int[] size; // size[] -> 集合 --> i size[i]
+        private final int[] tag; // tag[] -> 集合 ---> tag[i] = ?
+        private final int[] stack; // 栈？并查集搞扁平化
+        
+        public UnionFind(int N) {
+            father = new int[N];
+            size = new int[N];
+            tag = new int[N];
+            stack = new int[N];
+            for (int i = 0; i < N; i++) {
+                father[i] = i;
+                size[i] = 1;
+                tag[i] = -1;
+            }
+        }
+        
+        private int find(int i) {
+            int stackIndex = 0;
+            while (i != father[i]) {
+                stack[stackIndex++] = i;
+                i = father[i];
+            }
+            while (stackIndex > 0) {
+                stack[--stackIndex] = i;
+            }
+            return i;
+        }
+        
+        public void union(int i, int j) {
+            int father1 = find(i);
+            int father2 = find(j);
+            if (father1 != father2) {
+                int size1 = size[father1];
+                int size2 = size[father2];
+                int big = size1 >= size2 ? father1 : father2;
+                int small = big == father1 ? father2 : father1;
+                father[small] = big;
+                size[big] += size[small];
+            }
+        }
+        
+        // 集合的某个元素是i，请把整个集合打上统一的标签，tag
+        public void setTag(int i, int tag) {
+            this.tag[find(i)] = tag;
+        }
+        
+        // 集合的某个元素是i，请把整个集合的tag信息返回
+        public int getTag(int i) {
+            return tag[find(i)];
+        }
+        
+    }
+    
+}
+```
+
+> - ***Question 3: 树链剖分***
+>   - 沿重链不断往上跳转查找即可，来到同一条重链时，谁的层级小谁就是公共祖先节点。
+>   - 树链剖分代码查看以下章节：[树链剖分](../../../线段树SegmentTree/树链剖分.md)。
+
+```java
+class Solution {
+    
+    // 在线查询最优解 -> 树链剖分
+    // 空间复杂度O(N), 支持在线查询，单次查询时间复杂度O(logN)
+    // 如果有M次查询，时间复杂度O(N + M * logN)
+    public static int[] query(int[] father, int[][] queries) {
+        TreeChain treeChain = new TreeChain(father);
+        int M = queries.length;
+        int[] ans = new int[M];
+        for (int i = 0; i < M; i++) {
+            if (queries[i][0] == queries[i][1]) {
+                ans[i] = queries[i][0];
+            } else {
+                ans[i] = treeChain.lca(queries[i][0], queries[i][1]);
+            }
+        }
+        return ans;
+    }
+    
+    public static class TreeChain {
+        
+        private int head;
+        private int[][] tree;
+        private int[] father;
+        private int[] deep;
+        private int[] son;
+        private int[] childSize;
+        private int[] top;
+        
+        public TreeChain(int[] father) {
+            initTree(father);
+            dfs1(head, 0);
+            dfs2(head, head);
+        }
+        
+        private void initTree(int[] father) {
+            int n = father.length + 1;
+            tree = new int[n][];
+            this.father = new int[n];
+            deep = new int[n];
+            son = new int[n];
+            childSize = new int[n];
+            top = new int[n--];
+            int[] cnum = new int[n];
+            for (int i = 0; i < n; i++) {
+                if (father[i] == i) {
+                    head = i + 1;
+                } else {
+                    cnum[father[i]]++;
+                }
+            }
+            tree[0] = new int[0];
+            for (int i = 0; i < n; i++) {
+                tree[i + 1] = new int[cnum[i]];
+            }
+            for (int i = 0; i < n; i++) {
+                if (i + 1 != head) {
+                    tree[father[i] + 1][--cnum[father[i]]] = i + 1;
+                }
+            }
+        }
+        
+        private void dfs1(int u, int f) {
+            father[u] = f;
+            deep[u] = deep[f] + 1;
+            childSize[u] = 1;
+            int maxSize = -1;
+            for (int v : tree[u]) {
+                dfs1(v, u);
+                childSize[u] += childSize[v];
+                if (childSize[v] > maxSize) {
+                    maxSize = childSize[v];
+                    son[u] = v;
+                }
+            }
+        }
+        
+        private void dfs2(int u, int t) {
+            top[u] = t;
+            if (son[u] != 0) {
+                dfs2(son[u], t);
+                for (int v : tree[u]) {
+                    if (v != son[u]) {
+                        dfs2(v, v);
+                    }
+                }
+            }
+        }
+        
+        public int lca(int a, int b) {
+            a++;
+            b++;
+            while (top[a] != top[b]) {
+                if (deep[top[a]] > deep[top[b]]) {
+                    a = father[top[a]];
+                } else {
+                    b = father[top[b]];
+                }
+            }
+            return (deep[a] < deep[b] ? a : b) - 1;
+        }
+        
+    }
+    
+}
+```
+
 ---
 
-> ***last change: 2022/10/28***
+> ***last change: 2023/4/11***
 
 ---
