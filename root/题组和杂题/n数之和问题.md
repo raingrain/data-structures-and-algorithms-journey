@@ -1,8 +1,20 @@
 # n数之和问题
 
-## [15. 三数之和](https://leetcode.cn/problems/3sum/)
+## [1. 两数之和](https://leetcode.cn/problems/two-sum/)
 
 > - ***Question 1***
+>   - 给定一个整数数组 `nums` 和一个整数目标值 `target` ，请你在该数组中找出和为目标值 `target` 的那两个整数，并返回它们的数组下标。
+>   - 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
+>   - 你可以按任意顺序返回答案。
+>   - ***tips:***
+>     - `2 <= nums.length <= 10^4`
+>     - `-10^9 <= nums[i] <= 10^9`
+>     - `-10^9 <= target <= 10^9`
+>     - 只会存在一个有效答案
+
+## [15. 三数之和](https://leetcode.cn/problems/3sum/)
+
+> - ***Question 2***
 >   - 给你一个整数数组 `nums` ，判断是否存在三元组 `[nums[i], nums[j], nums[k]]` 满足 `i != j, i != k` 且 `j != k` ，同时还满足 `nums[i] + nums[j] + nums[k] == 0` 。
 >   - 请你返回所有和为 `0` 且不重复的三元组。
 >   - ***tips:***
@@ -13,7 +25,29 @@
 
 ## *Java*
 
-> - ***Question 1: 双指针 + 两数之和***
+> - ***Question 1: 哈希表***
+>   - 这样我们创建一个哈希表，对于每一个 `x` ，我们首先查询哈希表中是否存在 `target - x` ，然后将 `x` 插入到哈希表中，即可保证不会让 `x` 和自己匹配。
+>   - 如果哈希表中有 `target - x` ，返回索引结果即可。
+
+```java
+class Solution {
+    
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[]{map.get(target - nums[i]), i};
+            }
+            map.put(nums[i], i);
+        }
+        return new int[]{-1, -1};
+    }
+    
+}
+```
+
+> - ***Question 2: 双指针 + 两数之和***
+>   - 注意这个两数之和不是 `Question 1` 的。
 
 ```java
 class Solution {
@@ -70,6 +104,6 @@ class Solution {
 
 ---
 
-> ***last change: 2023/4/13***
+> ***last change: 2023/4/14***
 
 ---
