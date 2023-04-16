@@ -45,6 +45,12 @@ class Solution {
     }
     
     private int mySqrtByBinarySearch(int x) {
+        if (x == 0) {
+            return 0;
+        }
+        if (x <= 3) {
+            return 1;
+        }
         int left = 0, right = x, ans = -1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
