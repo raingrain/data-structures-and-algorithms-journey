@@ -2,28 +2,44 @@
 
 ## [剑指 Offer 32 - I. 从上到下打印二叉树](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/)
 
+> - ***Question 1***
+>   - 实现二叉树的层序遍历，返回一个存储全部节点的数组。
+
 ## [102. 二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/)
+
+> - ***Question 2***
+>   - 实现二叉树的层序遍历，每一层的节点用一个链表来存储，返回由每层链表的头节点组成的链表（二维链表）。
 
 ## [剑指 Offer 32 - II. 从上到下打印二叉树 II](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/)
 
 ## [107. 二叉树的层序遍历 II](https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/)
 
+> - ***Question 3***
+>   - 实现二叉树的逆层序遍历（即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历），返回和 `Question 2` 相同的结构。
+
 ## [103. 二叉树的锯齿形层序遍历](https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/)
 
 ## [剑指 Offer 32 - III. 从上到下打印二叉树 III](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/)
 
-## [429. N 叉树的层序遍历](https://leetcode.cn/problems/n-ary-tree-level-order-traversal/)
-
-> - ***Question 1***
->   - 实现二叉树的层序遍历，返回一个存储全部节点的数组。
-> - ***Question 2***
->   - 实现二叉树的层序遍历，每一层的节点用一个链表来存储，返回由每层链表的头节点组成的链表（二维链表）。
-> - ***Question 3***
->   - 实现二叉树的逆层序遍历（即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历），返回和***Question 2***相同的结构。
 > - ***Question 4***
 >   - 实现二叉树的锯齿形层序遍历（之字形顺序）（即先从左往右（根节点所在层），再从右往左进行下一层遍历，以此类推，层与层之间交替进行），返回和***Question 2***相同的结构。
+
+## [429. N 叉树的层序遍历](https://leetcode.cn/problems/n-ary-tree-level-order-traversal/)
+
 > - ***Question 5***
 >   - 给定一个 `N` 叉树，返回其节点值的层序遍历。
+
+## [116. 填充每个节点的下一个右侧节点指针](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/)
+
+## [117. 填充每个节点的下一个右侧节点指针 II](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/)
+
+> - ***Question 6***
+>   - 给定一个二叉树，结构如代码中所示，填充它的每个 `next` 指针，让这个指针指向其下一个右侧节点（层序遍历中的下一个节点）。如果找不到下一个右侧节点（层序遍历中每一层的最后一个节点），则将 `next` 指针设置为 `null` 。
+>   - 初始状态下，所有 `next` 指针都被设置为 `null` 。
+>   - ***tips:***
+>     - 树中的节点数在范围 `[0, 6000]` 内
+>     - `-100 <= Node.val <= 100`
+>     - 你只能使用常量级额外空间
 
 ---
 
@@ -222,8 +238,84 @@ class Solution {
 }
 ```
 
+> - ***Question 6: 二叉树的层序遍历***
+
+```java
+class Solution {
+    
+    // 我们使用next指针来实现链表的连接，然后用链表模拟队列
+    private static class MyQueue {
+        
+        public Node head;
+        public Node tail;
+        public int size;
+        
+        public MyQueue() {
+            head = null;
+            tail = null;
+            size = 0;
+        }
+        
+        public boolean isEmpty() {
+            return size == 0;
+        }
+        
+        public void offer(Node node) {
+            size++;
+            if (head == null) {
+                head = node;
+                tail = node;
+            } else {
+                tail.next = node;
+                tail = node;
+            }
+        }
+        
+        public Node poll() {
+            size--;
+            Node ans = head;
+            head = head.next;
+            // 在树上连接next指针时，节点已经弹出了，一定要销毁
+            ans.next = null;
+            return ans;
+        }
+        
+    }
+    
+    public Node connect(Node root) {
+        if (root == null) {
+            return null;
+        }
+        MyQueue queue = new MyQueue();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            Node pre = null;
+            int size = queue.size;
+            for (int i = 0; i < size; i++) {
+                Node cur = queue.poll();
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+                if (pre != null) {
+                    // 不是第一个节点就连接
+                    // 而且将之前的节点pre去连接现在的节点
+                    // 因此最后一个节点不会有机会连接
+                    pre.next = cur;
+                }
+                pre = cur;
+            }
+        }
+        return root;
+    }
+    
+}
+```
+
 ---
 
-> ***last change: 2022/10/28***
+> ***last change: 2023/4/16***
 
 ---
