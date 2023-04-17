@@ -15,6 +15,22 @@
 > - ***Question 2***
 >   - 给定一个 `n` 叉树的根节点 `root` ，返回其节点值的前序和后序遍历序列。
 
+## [230. 二叉搜索树中第K小的元素](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/)
+
+> - ***Question 3***
+>   - 给定一个二叉搜索树的根节点 `root` ，和一个整数 `k` ，请你设计一个算法查找其中第 `k` 个最小元素（从 `1` 开始计数）。
+>   - ***tips:***
+>     - 树中的节点数为 `n`
+>     - `1 <= k <= n <= 10^4
+>     - `0 <= Node.val <= 10^4
+
+## [剑指 Offer 54. 二叉搜索树的第k大节点](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/)
+
+> - ***Question 4***
+>   - 给定一棵二叉搜索树，请找出其中第 `k` 大的节点的值。
+>   - ***tips:***
+>     - `1 <= k <= 二叉搜索树元素个数`
+
 ---
 
 ## *Java*
@@ -485,11 +501,78 @@ class Solution {
     }
     
 }
+```
 
+> - ***Question 3 & Question 4: 二叉树的中序遍历***
+>   - 因为二叉搜索树和中序遍历的性质，所以二叉搜索树的中序遍历是按照键增加的顺序进行的。于是，我们可以通过中序遍历找到第 `k` 个最小元素，并且在找到答案时退出遍历。
+>   - 第 `k` 个最大元素相当于右中左的遍历顺序，中序遍历迭代版把入栈顺序调整一下即可。
+
+```java
+class TreeNode {
+    
+    int val;
+    TreeNode left;
+    TreeNode right;
+    
+    TreeNode() {}
+    
+    TreeNode(int val) {this.val = val;}
+    
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+    
+}
+
+class Solution {
+    
+    // 第k小
+    public int kthSmallest(TreeNode root, int k) {
+        ArrayDeque<TreeNode> stack = new ArrayDeque<>();
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            // 从左树回溯时
+            --k;
+            if (k == 0) {
+                // 找到答案
+                break;
+            }
+            root = root.right;
+        }
+        return root.val;
+    }
+    
+    // 第k大
+    public int kthLargest(TreeNode root, int k) {
+        ArrayDeque<TreeNode> stack = new ArrayDeque<>();
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                // 先入右树
+                root = root.right;
+            }
+            root = stack.pop();
+            --k;
+            if (k == 0) {
+                break;
+            }
+            // 再入左树
+            root = root.left;
+        }
+        return root.val;
+    }
+    
+}
 ```
 
 ---
 
-> ***last change: 2022/11/18***
+> ***last change: 2023/4/17***
 
 ---
