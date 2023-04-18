@@ -2,18 +2,19 @@
 
 ## [480. 滑动窗口中位数](https://leetcode.cn/problems/sliding-window-median/)
 
-## [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/)
-
-## [面试题 17.20. 连续中值](https://leetcode.cn/problems/continuous-median-lcci/)
-
-## [剑指 Offer 41. 数据流中的中位数](https://leetcode.cn/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/)
-
 > - ***Question 1***
 >   - 给你一个数组 `nums` ，有一个长度为 `k` 的窗口从最左端滑动到最右端。窗口中有 `k` 个数，每次窗口向右移动 `1` 位。
 >   - 请找出每次窗口移动后得到的新窗口中元素的中位数，并输出由它们组成的数组。
 >   - ***tips:***
 >     - 你可以假设 `k` 始终有效，即 `k` 始终小于等于输入的非空数组的元素个数。
 >     - 与真实值误差在 `10 ^ -5` 以内的答案将被视作正确答案。
+
+## [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/)
+
+## [面试题 17.20. 连续中值](https://leetcode.cn/problems/continuous-median-lcci/)
+
+## [剑指 Offer 41. 数据流中的中位数](https://leetcode.cn/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/)
+
 > - ***Question 2***
 >   - 设计一个支持以下两种操作的数据结构：
 >     - `void addNum(int num)` - 从数据流中添加一个整数到数据结构中。
@@ -28,7 +29,7 @@
 
 ## *Java*
 
-> - ***SB树的改写***
+> - ***Question 1 & Question 2: SB树的改写***
 >   - 这种问题的特点就是，求解答案时需要的数据是范围确定且有序的，求解的过程有容易理解的暴力解但时间复杂度高。这时候我们可以利用SB树改写容易的特点，用改写的SB树来存储范围内的数据，又因为是搜索二叉树，有序也可以满足，我们只需要对数据和最终需要的解题思路改写节点、增\删方法即可，形成一个时间复杂度为 `O(logN)` 的黑盒。
 >   - SB树是不支持加入相同 `key` 的，如果想重复加入数字作为 `key` （比如用SB树维护一个数组），我们可以用 `index` 位置作为标识，然后用一个对象把它们包装起来，以值作为排序的第一关键字，值相同时以索引为第二排序关键字（因为数学意义上的中位数求解是在有序序列的情况下计算的，我们维护一个要计算中位数的序列，自然要排好序），当然如果只要求重复加而不需要识别，也可以像[区间和的个数](区间和的个数.md)一样用一个数据项 `all` 存储路过的节点数。
 >   - 对于题目我们需要维护一个存储要求解中位数的序列（窗口），能够一个个加入重复数据，能够一个个删除数据，能够获得中点或者上下中点处的值，要求中位数直接拿出中点处的数据即可。
@@ -327,8 +328,60 @@ class SBTree<K extends Comparable<K>> {
 }
 ```
 
+> - ***Question 2: 大根堆 + 小根堆***
+
+```java
+class MedianFinder {
+    
+    private final PriorityQueue<Integer> maxHeap;
+    private final PriorityQueue<Integer> minHeap;
+    
+    public MedianFinder() {
+        maxHeap = new PriorityQueue<>((a, b) -> b - a);
+        minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> a));
+    }
+    
+    public void addNum(int num) {
+        // 大根堆为空或者当前数字比大根堆堆顶小就入大根堆
+        if (maxHeap.isEmpty() || maxHeap.peek() >= num) {
+            maxHeap.add(num);
+        } else {
+            // 不然就进小根堆
+            minHeap.add(num);
+        }
+        balance();
+    }
+    
+    // 这种双堆结构保证大根堆是数据流中小的一部分，小根堆是大的一部分
+    public double findMedian() {
+        if (maxHeap.size() == minHeap.size()) {
+            // 大小相等说明有偶数个元素，堆顶相加除2
+            return (double) (maxHeap.peek() + minHeap.peek()) / 2;
+        } else {
+            // 奇数的话，中位数是元素个数多的堆的堆顶
+            return maxHeap.size() > minHeap.size() ? maxHeap.peek() : minHeap.peek();
+        }
+    }
+    
+    // 保证大根堆和小根堆内的元素个数相差不超过1个
+    private void balance() {
+        // 相差超过1个
+        if (Math.abs(maxHeap.size() - minHeap.size()) == 2) {
+            // 谁的元素多，谁就弹出一个然后扔给对方
+            if (maxHeap.size() > minHeap.size()) {
+                minHeap.add(maxHeap.poll());
+            } else {
+                maxHeap.add(minHeap.poll());
+            }
+        }
+    }
+    
+}
+
+```
+
 ---
 
-> ***last change: 2022/10/28***
+> ***last change: 2023/4/18***
 
 ---
