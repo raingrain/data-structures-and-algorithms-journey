@@ -5,7 +5,7 @@
 > - ***Question***
 >   - KMP算法的用途：给你两个字符串 `haystack` 和 `needle` ，请你在 `haystack` 字符串中找出 `needle` 字符串的第一个匹配项的下标（下标从 `0` 开始）。如果 `needle` 不是 `haystack` 的一部分，则返回 `-1` 。
 >   - ***tips:***
->     - `1 <= haystack.length, needle.length <= 104`
+>     - `1 <= haystack.length, needle.length <= 10^4`
 >     - `haystack` 和 `needle` 仅由小写英文字符组成
 
 ---
@@ -121,6 +121,6 @@ class KMP {
 
 ---
 
-> ***last change: 2022/11/9***
+> ***last change: 2023/4/19***
 
 ---
