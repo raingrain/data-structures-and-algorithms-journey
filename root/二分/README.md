@@ -16,28 +16,28 @@
 > - ***Question 2***
 >   - 给定一个排序的整数数组 `nums` 和一个整数目标值 `target` ，请在数组中找到 `target` ，并返回其下标。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
 >   - ***tips:***
->     - `1 <= nums.length <= 104`
->     - `-104 <= nums[i] <= 104`
+>     - `1 <= nums.length <= 10^4`
+>     - `-10^4 <= nums[i] <= 10^4`
 >     - `nums` 为无重复元素的升序排列数组
->     - `-104 <= target <= 104`
+>     - `-10^4 <= target <= 10^4`
 
 ## [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 > - ***Question 3***
 >   - 给你一个按照非递减顺序排列的整数数组 `nums` ，和一个目标值 `target` 。请你找出给定目标值在数组中的开始位置和结束位置。如果数组中不存在目标值 `target` ，返回 `[-1, -1]` 。
 >   - ***tips:***
->     - `-109 <= nums[i] <= 109`
+>     - `-10^9 <= nums[i] <= 10^9`
 >     - `nums` 是一个非递减数组
->     - `-109 <= target <= 109`
+>     - `-10^9 <= target <= 10^9`
 
 ## [剑指 Offer 53 - I. 在排序数组中查找数字 I](https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/)
 
 > - ***Question 4***
 >   - 统计一个数字在排序数组中出现的次数。
 >   - ***tips:***
->     - `-109 <= nums[i] <= 109`
+>     - `-10^9 <= nums[i] <= 10^9`
 >     - `nums` 是一个非递减数组
->     - `-109 <= target <= 109`
+>     - `-10^9 <= target <= 10^9`
 
 ## 左老师课堂讲述
 
@@ -201,6 +201,6 @@ class Solution {
 
 ---
 
-> ***last change: 2023/4/15***
+> ***last change: 2023/4/19***
 
 ---
