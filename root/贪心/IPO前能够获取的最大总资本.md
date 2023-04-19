@@ -14,8 +14,8 @@
 >     - `n == profits.length`
 >     - `n == capital.length`
 >     - `1 <= n <= 105`
->     - `0 <= profits[i] <= 104`
->     - `0 <= capital[i] <= 109`
+>     - `0 <= profits[i] <= 10^4`
+>     - `0 <= capital[i] <= 10^9`
 
 ---
 
@@ -86,6 +86,6 @@ class Solution {
 
 ---
 
-> ***last change: 2022/10/27***
+> ***last change: 2023/4/19***
 
 ---
