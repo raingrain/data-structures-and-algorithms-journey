@@ -14,7 +14,7 @@
 >   - ***tips:***
 >     - `1 <= word.length, prefix.length <= 2000`
 >     - `word` 和 `prefix` 仅由小写英文字母组成
->     - `insert` 、 `search` 和 `startsWith` 调用次数 总计不超过 `3 * 104` 次
+>     - `insert` 、 `search` 和 `startsWith` 调用次数 总计不超过 `3 * 10^4` 次
 
 ---
 
@@ -203,6 +203,6 @@ class Trie {
 
 ---
 
-> ***last change: 2022/11/1***
+> ***last change: 2023/4/19***
 
 ---
