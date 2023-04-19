@@ -4,14 +4,6 @@
 
 ## [剑指 Offer II 076. 数组中的第 k 大的数字](https://leetcode.cn/problems/xx4gT2/)
 
-## [703. 数据流中的第 K 大元素](https://leetcode.cn/problems/kth-largest-element-in-a-stream/)
-
-## [剑指 Offer II 059. 数据流的第 K 大数值](https://leetcode.cn/problems/jBjn9C/)
-
-## [面试题 17.14. 最小K个数](https://leetcode.cn/problems/smallest-k-lcci/)
-
-## [剑指 Offer 40. 最小的k个数](https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/)
-
 > - ***Question 1***
 >   - 给定整数数组 `nums` 和整数 `k` ，请返回数组中第 `k` 个最大的元素。
 >   - 请注意，你需要找的是数组排序后的第 `k` 个最大的元素，而不是第 `k` 个不同的元素。
@@ -19,20 +11,42 @@
 >   - ***tips:***
 >     - `1 <= k <= nums.length <= 10^5`
 >     - `-10^4 <= nums[i] <= 10^4`
+
+## [703. 数据流中的第 K 大元素](https://leetcode.cn/problems/kth-largest-element-in-a-stream/)
+
+## [剑指 Offer II 059. 数据流的第 K 大数值](https://leetcode.cn/problems/jBjn9C/)
+
 > - ***Question 2***
 >   - 设计一个找到数据流中第 `k` 大元素的类。注意是排序后的第 `k` 大元素，不是第 `k` 个不同的元素。
 >   - 请实现 `KthLargest` 类：
 >     - `KthLargest(int k, int[] nums)` 使用整数 `k` 和整数流 `nums` 初始化对象。
 >     - `int add(int val)` 将 `val` 插入数据流 `nums` 后，返回当前数据流中第 `k` 大的元素。
 >   - ***tips:***
->     - `1 <= k <= 104`
->     - `0 <= nums.length <= 104`
->     - `-104 <= nums[i] <= 104`
->     - `-104 <= val <= 104`
->     - 最多调用 `add` 方法 `104` 次
+>     - `1 <= k <= 10^4`
+>     - `0 <= nums.length <= 10^4`
+>     - `-10^4 <= nums[i] <= 10^4`
+>     - `-10^4 <= val <= 10^4`
+>     - 最多调用 `add` 方法 `10^4` 次
 >     - 题目数据保证，在查找第 `k` 大元素时，数组中至少有 `k` 个元素
+
+## [面试题 17.14. 最小K个数](https://leetcode.cn/problems/smallest-k-lcci/)
+
+## [剑指 Offer 40. 最小的k个数](https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/)
+
 > - ***Question 3***
 >   - 找出数组中最小的 `k` 个数。以任意顺序返回这 `k` 个数均可。
+>   - ***tips:***
+>     - `0 <= k <= arr.length <= 10000`
+>     - `0 <= arr[i] <= 10000`
+
+## [347. 前 K 个高频元素](https://leetcode.cn/problems/top-k-frequent-elements/)
+
+> - ***Question 4***
+>   - 给你一个整数数组 `nums` 和一个整数 `k` ，请你返回其中出现频率前 `k` 高的元素。你可以按任意顺序返回答案。
+>   - ***tips:***
+>     - `1 <= nums.length <= 10^5`
+>     - `k` 的取值范围是 `[1, 数组中不相同的元素的个数]`
+>     - 题目数据保证答案唯一，换句话说，数组中前 `k` 个高频元素的集合是唯一的
 
 ---
 
@@ -328,8 +342,47 @@ class KthLargest {
 }
 ```
 
+> - ***Question 4: 小根堆***
+>   - 首先遍历整个数组，并使用哈希表记录每个数字出现的次数，并形成一个出现次数数组。找出原数组的前 `k` 个高频元素，就相当于找出出现次数数组的前 `k` 大的值。
+>   - 在这里，我们可以利用堆的思想，建立一个小顶堆，然后遍历出现次数数组：
+>     - 如果堆的元素个数小于 `k` ，就可以直接插入堆中。
+>     - 如果堆的元素个数等于 `k` ，则检查堆顶与当前出现次数的大小。如果堆顶更大，说明至少有 `k` 个数字的出现次数比当前值大，故舍弃当前值；否则，就弹出堆顶，并将当前值插入堆中。
+>   - 遍历完成后，堆中的元素就代表了出现次数数组中前 k 大的值。
+>   - 时间复杂度 `O(Nlogk)` ，空间复杂度为哈希表大小（比堆大），为 `O(N)` ， `N` 为数组长度， `k` 为限定。
+
+```java
+class Solution {
+    
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> occurrences = new HashMap<>();
+        for (int num : nums) {
+            occurrences.put(num, occurrences.getOrDefault(num, 0) + 1);
+        }
+        // int[] 的第一个元素代表数组的值，第二个元素代表了该值出现的次数
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>(Comparator.comparingInt(m -> m[1]));
+        for (Map.Entry<Integer, Integer> entry : occurrences.entrySet()) {
+            int num = entry.getKey(), count = entry.getValue();
+            if (minHeap.size() == k) {
+                if (minHeap.peek()[1] < count) {
+                    minHeap.poll();
+                    minHeap.offer(new int[]{num, count});
+                }
+            } else {
+                minHeap.offer(new int[]{num, count});
+            }
+        }
+        int[] ret = new int[k];
+        for (int i = 0; i < k; ++i) {
+            ret[i] = minHeap.poll()[0];
+        }
+        return ret;
+    }
+    
+}
+```
+
 ---
 
-> ***last change: 2022/11/5***
+> ***last change: 2023/4/19***
 
 ---
