@@ -354,23 +354,28 @@ class KthLargest {
 class Solution {
     
     public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> occurrences = new HashMap<>();
+        // 词频统计
+        HashMap<Integer, Integer> occurrences = new HashMap<>();
         for (int num : nums) {
             occurrences.put(num, occurrences.getOrDefault(num, 0) + 1);
         }
+        // 小根堆
         // int[] 的第一个元素代表数组的值，第二个元素代表了该值出现的次数
         PriorityQueue<int[]> minHeap = new PriorityQueue<>(Comparator.comparingInt(m -> m[1]));
         for (Map.Entry<Integer, Integer> entry : occurrences.entrySet()) {
             int num = entry.getKey(), count = entry.getValue();
             if (minHeap.size() == k) {
+                // 比顶部元素大
                 if (minHeap.peek()[1] < count) {
                     minHeap.poll();
                     minHeap.offer(new int[]{num, count});
                 }
             } else {
+                // 堆没满
                 minHeap.offer(new int[]{num, count});
             }
         }
+        // 收集答案
         int[] ret = new int[k];
         for (int i = 0; i < k; ++i) {
             ret[i] = minHeap.poll()[0];
@@ -383,6 +388,6 @@ class Solution {
 
 ---
 
-> ***last change: 2023/4/19***
+> ***last change: 2023/4/20***
 
 ---
