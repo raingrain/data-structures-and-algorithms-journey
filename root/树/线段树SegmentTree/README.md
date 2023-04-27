@@ -247,19 +247,21 @@ class DynamicSegmentTree {
     }
     
     private final DynamicSegmentTreeNode root;
-    private final int[] origin;
+    private final int size;
+    // private final int[] origin;
     
-    public DynamicSegmentTree(int[] origin) {
+    public DynamicSegmentTree(int size) {
         root = new DynamicSegmentTreeNode();
-        this.origin = origin;
-        buildTree();
+        this.size = size;
+        // this.origin = origin;
+        // buildTree();
     }
     
-    private void buildTree() {
+    /*private void buildTree() {
         for (int i = 0; i < origin.length; i++) {
             add(root, 1, origin.length, i + 1, i + 1, origin[i]);
         }
-    }
+    }*/
     
     private void getSum(DynamicSegmentTreeNode node) {
         node.sum = node.left.sum + node.right.sum;
@@ -354,7 +356,7 @@ class DynamicSegmentTree {
     
     // 区域更新
     public void update(int start, int end, int value) {
-        update(root, 1, origin.length, start + 1, end + 1, value);
+        update(root, 1, size, start + 1, end + 1, value);
     }
     
     // 单点加
@@ -364,12 +366,12 @@ class DynamicSegmentTree {
     
     // 区域加
     public void add(int index, int end, int value) {
-        add(root, 1, origin.length, index + 1, end + 1, value);
+        add(root, 1, size, index + 1, end + 1, value);
     }
     
     // 区域查询
     public int sumRange(int start, int end) {
-        return sumRange(root, 1, origin.length, start + 1, end + 1);
+        return sumRange(root, 1, size, start + 1, end + 1);
     }
     
 }
@@ -379,7 +381,11 @@ class NumArray {
     private final DynamicSegmentTree segmentTree;
     
     public NumArray(int[] nums) {
-        segmentTree = new DynamicSegmentTree(nums);
+        segmentTree = new DynamicSegmentTree(nums.length);
+        // 初始化线段树
+        for (int i = 0; i < nums.length; i++) {
+            segmentTree.add(i, nums[i]);
+        }
     }
     
     public void update(int index, int val) {
