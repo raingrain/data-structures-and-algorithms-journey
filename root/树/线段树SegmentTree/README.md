@@ -228,8 +228,173 @@ class NumArray {
 }
 ```
 
+> - ***动态开点实现线段树***
+>   - 有需要才创建
+
+```java
+class DynamicSegmentTree {
+    
+    // 节点与范围解耦，范围由函数控制
+    private static class DynamicSegmentTreeNode {
+        
+        public int sum;
+        public int lazy;
+        public int change;
+        public boolean update;
+        public DynamicSegmentTreeNode left;
+        public DynamicSegmentTreeNode right;
+        
+    }
+    
+    private final DynamicSegmentTreeNode root;
+    private final int[] origin;
+    
+    public DynamicSegmentTree(int[] origin) {
+        root = new DynamicSegmentTreeNode();
+        this.origin = origin;
+        buildTree();
+    }
+    
+    private void buildTree() {
+        for (int i = 0; i < origin.length; i++) {
+            add(root, 1, origin.length, i + 1, i + 1, origin[i]);
+        }
+    }
+    
+    private void getSum(DynamicSegmentTreeNode node) {
+        node.sum = node.left.sum + node.right.sum;
+    }
+    
+    private void pushDown(DynamicSegmentTreeNode node, int leftSize, int rightSize) {
+        // 没有节点要创建，不然没法往下推送
+        if (node.left == null) {
+            node.left = new DynamicSegmentTreeNode();
+        }
+        if (node.right == null) {
+            node.right = new DynamicSegmentTreeNode();
+        }
+        if (node.update) {
+            node.left.update = true;
+            node.right.update = true;
+            node.left.change = node.change;
+            node.right.change = node.change;
+            node.left.lazy = 0;
+            node.right.lazy = 0;
+            node.left.sum = node.change * leftSize;
+            node.right.sum = node.change * rightSize;
+            node.update = false;
+        }
+        if (node.lazy != 0) {
+            node.left.lazy += node.lazy;
+            node.right.lazy += node.lazy;
+            node.left.sum += node.lazy * leftSize;
+            node.right.sum += node.lazy * rightSize;
+            node.lazy = 0;
+        }
+    }
+    
+    private void update(DynamicSegmentTreeNode node, int left, int right, int start, int end, int value) {
+        if (start <= left && right <= end) {
+            node.update = true;
+            node.change = value;
+            node.sum = value * (right - left + 1);
+            node.lazy = 0;
+        } else {
+            int mid = left + (right - left) / 2;
+            pushDown(node, mid - left + 1, right - mid);
+            if (start <= mid) {
+                update(node.left, left, mid, start, end, value);
+            }
+            if (end >= mid + 1) {
+                update(node.right, mid + 1, right, start, end, value);
+            }
+            getSum(node);
+        }
+    }
+    
+    private void add(DynamicSegmentTreeNode node, int left, int right, int start, int end, int value) {
+        if (start <= left && right <= end) {
+            node.sum += value * (right - left + 1);
+            node.lazy += value;
+        } else {
+            int mid = left + (right - left) / 2;
+            pushDown(node, mid - left + 1, right - mid);
+            if (start <= mid) {
+                add(node.left, left, mid, start, end, value);
+            }
+            if (end >= mid + 1) {
+                add(node.right, mid + 1, right, start, end, value);
+            }
+            getSum(node);
+        }
+    }
+    
+    private int sumRange(DynamicSegmentTreeNode node, int left, int right, int start, int end) {
+        if (start <= left && right <= end) {
+            return node.sum;
+        } else {
+            int mid = left + (right - left) / 2;
+            pushDown(node, mid - left + 1, right - mid);
+            int ans = 0;
+            if (start <= mid) {
+                ans += sumRange(node.left, left, mid, start, end);
+            }
+            if (end >= mid + 1) {
+                ans += sumRange(node.right, mid + 1, right, start, end);
+            }
+            return ans;
+        }
+    }
+    
+    // 以下传进来的全都是原始的
+    // 单点更新
+    public void update(int index, int value) {
+        update(index, index, value);
+    }
+    
+    // 区域更新
+    public void update(int start, int end, int value) {
+        update(root, 1, origin.length, start + 1, end + 1, value);
+    }
+    
+    // 单点加
+    public void add(int index, int value) {
+        add(index, index, value);
+    }
+    
+    // 区域加
+    public void add(int index, int end, int value) {
+        add(root, 1, origin.length, index + 1, end + 1, value);
+    }
+    
+    // 区域查询
+    public int sumRange(int start, int end) {
+        return sumRange(root, 1, origin.length, start + 1, end + 1);
+    }
+    
+}
+
+class NumArray {
+    
+    private final DynamicSegmentTree segmentTree;
+    
+    public NumArray(int[] nums) {
+        segmentTree = new DynamicSegmentTree(nums);
+    }
+    
+    public void update(int index, int val) {
+        segmentTree.update(index, val);
+    }
+    
+    public int sumRange(int left, int right) {
+        return segmentTree.sumRange(left, right);
+    }
+    
+}
+```
+
 ---
 
-> ***last change: 2023/3/4***
+> ***last change: 2023/4/27***
 
 ---
