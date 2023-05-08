@@ -11,7 +11,7 @@
 >     - `flights[i].length == 3`
 >     - `0 <= fromi, toi < n`
 >     - `fromi != toi`
->     - `1 <= pricei <= 10^4
+>     - `1 <= pricei <= 10^4`
 >     - 航班没有重复，且不存在自环
 >     - `0 <= src, dst, k < n`
 >     - `src != dst`
