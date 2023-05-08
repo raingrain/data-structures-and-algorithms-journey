@@ -27,7 +27,7 @@
 
 ## [2166. 设计位集](https://leetcode.cn/problems/design-bitset/)
 
-> - ***Question***
+> - ***Question 3***
 >   - 位集 `Bitset` 是一种能以紧凑形式存储位的数据结构。请你实现 `Bitset` 类：
 >     - `Bitset(int size)` 用 `size` 个位初始化 `Bitset` ，所有位都是 `0` 。
 >     - `void fix(int idx)` 将下标为 `idx` 的位上的值更新为 `1` 。如果值已经是 `1` ，则不会发生任何改变。
