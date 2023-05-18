@@ -30,7 +30,7 @@ class Solution {
         if (row == 1 || row >= n) {
             return s;
         }
-        // 周期
+        // 变换周期
         int T = 2 * (row - 1);
         char[] ans = new char[n];
         int fill = 0;
