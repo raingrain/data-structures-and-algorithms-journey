@@ -12,21 +12,21 @@ class Solution {
     private static class StronglyConnectedComponents {
 
         // 邻接表，0位置弃而不用
-        private ArrayList<ArrayList<Integer>> nextMap;
+        private final ArrayList<ArrayList<Integer>> nextMap;
         // 节点个数
         private int n;
         // 栈
-        private int[] stack;
+        private final int[] stack;
         // 栈顶指针
         private int stackSize;
         // 遍历时统计dfn序
         private int cnt;
         // 存储每一个节点对应的dfn序
-        private int[] dfn;
+        private final int[] dfn;
         // 每一个节点所能到达的dfn序最小的节点的dfn序
-        private int[] low;
+        private final int[] low;
         // 一个节点所在的强连通分量，从1开始
-        private int[] scc;
+        private final int[] scc;
         // 遍历时记录强连通来到哪里了
         private int sccn;
 
