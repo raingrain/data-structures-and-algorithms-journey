@@ -259,6 +259,7 @@ class GraphAlgorithms {
     // 最小生成树不需要头节点
     // 并查集+小根堆是一种贪心的思想，即逐项选择权重最小的边并保证没有环路，然后加入到生成树的边的集合
     // 优化看点被选完了就结束
+    // Kruskal算法的特点是当前形成的集合T除了最后的结果外，始终不是一个树。它的时间主要取决于边数，因此较适合于稀疏图。
     public static Set<Edge> MSTByKruskal(Graph graph) {
         // 创建点集的并查集
         UnionFindSet unionFindSet = new UnionFindSet(graph.nodes.values());
@@ -284,6 +285,7 @@ class GraphAlgorithms {
     
     // prim是随机选取一个出发点，并采用点解锁边，边解锁点，点再解锁边的方式，每次都选取不会形成闭环且权重最小的边，直到所有点都被选中
     // 判断点有没有被选过依旧使用HashSet
+    // Prim算法的特点是当前形成的集合T始终是一棵树。它的时间复杂度与图的边数无关，适合于稠密图。
     public static Set<Edge> MSTByPrim(Graph graph) {
         // 小根堆用于存储已经解锁的边
         PriorityQueue<Edge> edgePriorityQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.weight));
@@ -527,6 +529,6 @@ class GraphAlgorithms {
 
 ---
 
-> ***last change: 2022/11/7***
+> ***last change: 2023/7/7***
 
 ---
