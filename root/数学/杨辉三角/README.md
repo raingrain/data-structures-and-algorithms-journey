@@ -1,4 +1,6 @@
-# 标题
+# 杨辉三角
+
+> 具体性质可参考[维基百科](https://zh.wikipedia.org/zh-hans/%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E5%BD%A2)或[百度百科](https://baike.baidu.com/item/%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/215098)。
 
 ## [118. 杨辉三角](https://leetcode.cn/problems/pascals-triangle/)
 
