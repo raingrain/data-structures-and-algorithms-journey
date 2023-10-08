@@ -2,17 +2,27 @@
 
 ## [912. 排序数组](https://leetcode.cn/problems/sort-an-array/)
 
-> - ***Question***
+> - ***Question 1***
 >   - 给你一个整数数组 nums，请你将该数组升序排列。
 >   - ***tips:***
 >     - `1 <= nums.length <= 5 * 10^4`
 >     - `-5 * 10^4 <= nums[i] <= 5 * 10^4`
 
+## [排序（归并排序）](https://www.nowcoder.com/practice/bc25055fb97e4a0bb564cb4b214ffa92)
+
+> - ***Question 2***
+>   - 给你一个 `n` 代表有 `n` 个数字，然后你需要使用归并排序将这些数字从小到大排好。
+>   - ***输入描述***
+>     - 第一行输入一个 `n` ，代表有 `n` 个数字。
+>     - 第二行输入 `n` 个数。
+>   - ***输出描述***
+>     - 输出排序好后的 `n` 个数。
+
 ---
 
 ## *Java*
 
-> - ***排序***
+> - ***Question 1: 排序***
 >   - 实现了冒泡排序、选择排序、插入排序、希尔排序、归并排序（递归版和迭代版）、堆排序、快速排序（递归版和迭代版）、计数排序。
 >   - 没有考虑溢出，适用大部分场景
 
@@ -396,8 +406,118 @@ class Solution {
 }
 ```
 
+> - ***Question 2: 归并排序但ACM模式***
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+
+public class Main {
+
+    // 题目没有说数据量，按道理是要说的
+    // 根据实验，长度500以内够用了
+    // 如果有一天牛客升级了数据量导致出错
+    // 把这个值改大即可
+    public static int MAXN = 501;
+
+    public static int[] arr = new int[MAXN];
+
+    public static int[] help = new int[MAXN];
+
+    public static int n;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        while (in.nextToken() != StreamTokenizer.TT_EOF) {
+            n = (int) in.nval;
+            for (int i = 0; i < n; i++) {
+                in.nextToken();
+                arr[i] = (int) in.nval;
+            }
+            // mergeSort1为递归方法
+            // mergeSort2为非递归方法
+            // 用哪个都可以
+            // mergeSort1(0, n - 1);
+            mergeSort2();
+            out.print(arr[0]);
+            for (int i = 1; i < n; i++) {
+                out.print(" " + arr[i]);
+            }
+            out.println();
+        }
+        br.close();
+        out.flush();
+        out.close();
+    }
+
+    // 归并排序递归版
+    // 假设l...r一共n个数
+    // T(n) = 2 * T(n/2) + O(n)
+    // a = 2, b = 2, c = 1
+    // 根据master公式，时间复杂度O(n * logn)
+    // 空间复杂度O(n)
+    public static void mergeSort1(int l, int r) {
+        if (l == r) {
+            return;
+        }
+        int m = (l + r) / 2;
+        mergeSort1(l, m);
+        mergeSort1(m + 1, r);
+        merge(l, m, r);
+    }
+
+    // 归并排序非递归版
+    // 时间复杂度O(n * logn)
+    // 空间复杂度O(n)
+    public static void mergeSort2() {
+        // 一共发生O(logn)次
+        for (int l, m, r, step = 1; step < n; step <<= 1) {
+            // 内部分组merge，时间复杂度O(n)
+            l = 0;
+            while (l < n) {
+                m = l + step - 1;
+                if (m + 1 >= n) {
+                    break;
+                }
+                r = Math.min(l + (step << 1) - 1, n - 1);
+                merge(l, m, r);
+                l = r + 1;
+            }
+        }
+    }
+
+    // l....r 一共有n个数
+    // O(n)
+    public static void merge(int l, int m, int r) {
+        int i = l;
+        int a = l;
+        int b = m + 1;
+        while (a <= m && b <= r) {
+            help[i++] = arr[a] <= arr[b] ? arr[a++] : arr[b++];
+        }
+        // 左侧指针、右侧指针，必有一个越界、另一个不越界
+        while (a <= m) {
+            help[i++] = arr[a++];
+        }
+        while (b <= r) {
+            help[i++] = arr[b++];
+        }
+        for (i = l; i <= r; i++) {
+            arr[i] = help[i];
+        }
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2023/4/19***
+> ***last change: 2023/10/8***
 
 ---
