@@ -145,6 +145,11 @@ class BitMap {
         // 那个位置不为1集合中才存在这个数字
         return (bits[num >> 6] & getIndex(num)) != 0;
     }
+
+    // 集合中没有这个数字就加上，有就删除
+    public void reverse(int num) {
+        bits[num >> 6] ^= 1 << getIndex(num);
+    }
     
 }
 ```
