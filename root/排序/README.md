@@ -37,6 +37,16 @@
 >   - ***输出描述***
 >     - 输出排序好后的 `n` 个数。
 
+## [排序（基数排序）](https://www.nowcoder.com/practice/ed8308a5f0f744fc936bdba78c15f810)
+
+> - ***Question 5***
+>   - 给你一个 `n` 代表有 `n` 个数字，然后你需要使用基数排序将这些数字从小到大排好。
+>   - ***输入描述***
+>     - 第一行输入一个 `n` ，代表有 `n` 个数字。
+>     - 第二行输入 `n` 个数。
+>   - ***输出描述***
+>     - 输出排序好后的 `n` 个数。
+
 ---
 
 ## *Java*
@@ -757,8 +767,209 @@ public class Main {
 }
 ```
 
+> - ***Question 1 & Question 5: 基数排序***
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+import java.util.Arrays;
+
+// 牛客
+public class Main {
+
+    // 可以设置进制，不一定10进制，随你设置
+    public static int BASE = 10;
+
+    // 题目没有说数据量，按道理是要说的
+    // 根据实验，长度500以内够用了
+    // 如果有一天牛客升级了数据量导致出错
+    // 把这个值改大即可
+    public static int MAXN = 501;
+
+    public static int[] arr = new int[MAXN];
+
+    public static int[] help = new int[MAXN];
+
+    public static int[] cnts = new int[BASE];
+
+    public static int n;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        while (in.nextToken() != StreamTokenizer.TT_EOF) {
+            n = (int) in.nval;
+            for (int i = 0; i < n; i++) {
+                in.nextToken();
+                arr[i] = (int) in.nval;
+            }
+            sort();
+            out.print(arr[0]);
+            for (int i = 1; i < n; i++) {
+                out.print(" " + arr[i]);
+            }
+            out.println();
+        }
+        out.flush();
+        out.close();
+    }
+
+    public static void sort() {
+        // 如果会溢出，那么要改用long类型数组来排序
+        // 找到数组中的最小值
+        int min = arr[0];
+        for (int i = 1; i < n; i++) {
+            min = Math.min(min, arr[i]);
+        }
+        int max = 0;
+        for (int i = 0; i < n; i++) {
+            // 数组中的每个数字，减去数组中的最小值，就把arr转成了非负数组
+            arr[i] -= min;
+            // 记录数组中的最大值
+            max = Math.max(max, arr[i]);
+        }
+        // 根据最大值在BASE进制下的位数，决定基数排序做多少轮
+        radixSort(bits(max));
+        // 数组中所有数都减去了最小值，所以最后不要忘了还原
+        for (int i = 0; i < n; i++) {
+            arr[i] += min;
+        }
+    }
+
+    // 返回number在BASE进制下有几位
+    public static int bits(int number) {
+        int ans = 0;
+        while (number > 0) {
+            ans++;
+            number /= BASE;
+        }
+        return ans;
+    }
+
+    // 基数排序核心代码
+    // arr内要保证没有负数
+    // m是arr中最大值在BASE进制下有几位
+    public static void radixSort(int bits) {
+        // 理解的时候可以假设BASE = 10
+        for (int offset = 1; bits > 0; offset *= BASE, bits--) {
+            Arrays.fill(cnts, 0);
+            for (int i = 0; i < n; i++) {
+                // 数字提取某一位的技巧
+                cnts[(arr[i] / offset) % BASE]++;
+            }
+            for (int i = 1; i < BASE; i++) {
+                cnts[i] = cnts[i] + cnts[i - 1];
+            }
+            for (int i = n - 1; i >= 0; i--) {
+                // 前缀数量分区的技巧
+                // 数字提取某一位的技巧
+                help[--cnts[(arr[i] / offset) % BASE]] = arr[i];
+            }
+            for (int i = 0; i < n; i++) {
+                arr[i] = help[i];
+            }
+        }
+    }
+
+}
+
+// leetcode
+class Solution {
+
+    // 可以设置进制，不一定10进制，随你设置
+    // 比如237 529 678，你用10进制需要排3轮但用1000进制只需要排1轮
+    public static int BASE = 10;
+
+    public static int MAXN = 50001;
+
+    public static int[] help = new int[MAXN];
+
+    public static int[] cnts = new int[BASE];
+
+    public static int[] sortArray(int[] arr) {
+        if (arr.length > 1) {
+            // 如果会溢出，那么要改用long类型数组来排序
+            int n = arr.length;
+            // 找到数组中的最小值
+            int min = arr[0];
+            for (int i = 1; i < n; i++) {
+                min = Math.min(min, arr[i]);
+            }
+            int max = 0;
+            for (int i = 0; i < n; i++) {
+                // 数组中的每个数字，减去数组中的最小值，就把arr转成了非负数组
+                arr[i] -= min;
+                // 记录数组中的最大值
+                max = Math.max(max, arr[i]);
+            }
+            // 根据最大值在BASE进制下的位数，决定基数排序做多少轮
+            radixSort(arr, n, bits(max));
+            // 数组中所有数都减去了最小值，所以最后不要忘了还原
+            for (int i = 0; i < n; i++) {
+                arr[i] += min;
+            }
+        }
+        return arr;
+    }
+
+    // 返回number在BASE进制下有几位
+    public static int bits(int number) {
+        int ans = 0;
+        while (number > 0) {
+            ans++;
+            number /= BASE;
+        }
+        return ans;
+    }
+
+    // 基数排序核心代码
+    // arr内要保证没有负数
+    // n是arr的长度
+    // bits是arr中最大值在BASE进制下有几位
+    public static void radixSort(int[] arr, int n, int bits) {
+        // 理解的时候可以假设BASE = 10
+        for (int offset = 1; bits > 0; offset *= BASE, bits--) {
+            Arrays.fill(cnts, 0);
+            for (int i = 0; i < n; i++) {
+                // 数字提取某一位的技巧
+                cnts[(arr[i] / offset) % BASE]++;
+            }
+            // 处理成前缀次数累加的形式
+            for (int i = 1; i < BASE; i++) {
+                // 比如10进制
+                // cnts[i]表示小于等于i的数字有几个
+                cnts[i] = cnts[i] + cnts[i - 1];
+            }
+            for (int i = n - 1; i >= 0; i--) {
+                // 前缀数量分区的技巧
+                // 数字提取某一位的技巧
+                // 倒序遍历arr 3 2 1 2 1 2
+                // 小于等于0 0
+                // 小于等于1 2
+                // 小于等于2 5
+                // 小于等于3 6
+                // 最后一个是2 小于等于2的有5个，它应该填入索引4 小于等于2个数--
+                // 最后一个是1 小于等于1的有2个，它应该填入索引1 小于等于1个数--
+                // 最后一个是2 小于等于1的有4个，它应该填入索引3 小于等于2个数--
+                // ...
+                // 最后1 1 2 2 2 3，且没改变相对次序
+                help[--cnts[(arr[i] / offset) % BASE]] = arr[i];
+            }
+            // help数组拷贝过去
+            if (n >= 0) System.arraycopy(help, 0, arr, 0, n);
+        }
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2023/10/8***
+> ***last change: 2023/10/9***
 
 ---
