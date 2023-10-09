@@ -4,6 +4,8 @@
 
 ## [剑指 Offer II 078. 合并排序链表](https://leetcode.cn/problems/vvXgSW/)
 
+## [合并k个已排序的链表](https://www.nowcoder.com/practice/65cfde9e5b9b4cf2b6bafa5f3ef33fa6)
+
 > - ***Question***
 >   - 给你一个链表数组，数组中的每一个元素为一个链表的头节点，每个链表都已经按升序排列。
 >   - 请你将所有链表合并到一个升序链表中，返回合并后的链表。
@@ -86,10 +88,53 @@ class Solution {
     }
     
 }
+
+// 牛客，题意一样，输入不同
+public class Main {
+
+    // 不要提交这个类
+    public static class ListNode {
+
+        public int val;
+        public ListNode next;
+
+    }
+
+    // 提交以下的方法
+    public static ListNode mergeKLists(ArrayList<ListNode> arr) {
+        // 小根堆
+        PriorityQueue<ListNode> heap = new PriorityQueue<>((a, b) -> a.val - b.val);
+        for (ListNode h : arr) {
+            // 遍历所有的头！
+            if (h != null) {
+                heap.add(h);
+            }
+        }
+        if (heap.isEmpty()) {
+            return null;
+        }
+        // 先弹出一个节点，做总头部
+        ListNode h = heap.poll();
+        ListNode pre = h;
+        if (pre.next != null) {
+            heap.add(pre.next);
+        }
+        while (!heap.isEmpty()) {
+            ListNode cur = heap.poll();
+            pre.next = cur;
+            pre = cur;
+            if (cur.next != null) {
+                heap.add(cur.next);
+            }
+        }
+        return h;
+    }
+
+}
 ```
 
 ---
 
-> ***last change: 2022/10/28***
+> ***last change: 2023/10/9***
 
 ---
