@@ -41,6 +41,16 @@
 >     - `-100 <= Node.val <= 100`
 >     - 你只能使用常量级额外空间
 
+## [199. 二叉树的右视图](https://leetcode.cn/problems/binary-tree-right-side-view/)
+
+## [LCR 046. 二叉树的右视图](https://leetcode.cn/problems/WNC0Lk/)
+
+> - ***Question 7***
+>   - 给定一个二叉树的根节点 `root` ，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
+>   - ***tips:***
+>     - `二叉树的节点个数的范围是 [0, 100]`
+>     - `-100 <= Node.val <= 100`
+
 ---
 
 ## *Java*
@@ -137,6 +147,31 @@ class Solution {
                 }
             }
             ans.add(curLevel);
+        }
+        return ans;
+    }
+
+    // Question 7即层序遍历按层遍历中队列每层最后一个节点
+    public List<Integer> rightSideView(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        ArrayDeque<TreeNode> deque = new ArrayDeque<>();
+        List<Integer> ans = new ArrayList<>();
+        deque.add(root);
+        while (!deque.isEmpty()) {
+            for (int i = deque.size(); i > 0; --i) {
+                TreeNode node = deque.poll();
+                if (node.left != null) {
+                    deque.add(node.left);
+                }
+                if (node.right != null) {
+                    deque.add(node.right);
+                }
+                if (i == 1) {
+                    ans.add(node.val);
+                }
+            }
         }
         return ans;
     }
@@ -338,6 +373,6 @@ class Solution {
 
 ---
 
-> ***last change: 2023/4/16***
+> ***last change: 2023/10/13***
 
 ---
