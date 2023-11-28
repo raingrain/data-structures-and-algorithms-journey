@@ -9,7 +9,7 @@
 
 ## *Java*
 
-> - ***树形DP***
+> - ***树型DP***
 
 ```java
 class Solution {
