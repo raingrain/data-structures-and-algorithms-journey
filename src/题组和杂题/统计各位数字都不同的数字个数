@@ -1,0 +1,45 @@
+# 统计各位数字都不同的数字个数
+
+## [357. 统计各位数字都不同的数字个数](https://leetcode.cn/problems/count-numbers-with-unique-digits/)
+
+> - ***Question***
+>   - 给你一个整数 `n` ，统计并返回各位数字都不同的数字 `x` 的个数，其中 `0 <= x < 10^n` 。
+>   - ***tips:***
+>     - `0 <= n <= 8`
+
+---
+
+## *Java*
+
+> - ***排列组合***
+
+```java
+class Solution {
+
+    public int countNumbersWithUniqueDigits(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        int ans = 10;
+        // 0-9有10个数字
+        // 第一个位置不能有0，有9种选择，第二个位置有9种选择，第三个位置有8种，以此类推
+        // 1 : 10
+        // 2 : 9 * 9
+        // 3 : 9 * 9 * 8
+        // 4 : 9 * 9 * 8 * 7
+        // ...都累加起来...
+        for (int s = 9, i = 9, k = 2; k <= n; i--, k++) {
+            s *= i;
+            ans += s;
+        }
+        return ans;
+    }
+
+}
+```
+
+---
+
+> ***last change: 2024/1/16***
+
+---
