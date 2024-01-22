@@ -1,1 +1,1 @@
-# 🎉[Data-Structure-and-Algorithm-Notes](https://github.com/raingrain/Data-Structure-and-Algorithm-Notes)🎉
+# 🎉[Data-Structure-and-Algorithm-Journey](https://github.com/raingrain/data-structure-and-algorithm-journey/)🎉
