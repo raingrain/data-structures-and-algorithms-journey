@@ -22,7 +22,7 @@
 
 ## *Java*
 
-> - ***Manacher大概思路***
+> - ***Question 1 & 2: Manacher大概思路***
 >   - 先把给定的字符串 `s` 转化成 `manacher` 字符数组，遍历 `manacher` 字符数组， 求出每一个位置的回文半径，回文半径最大值即为最长回文子串长度，对应的回文串即为最长的回文子串。
 >   - 利用最右回文半径索引和最右回文半径中心点，看当前遍历到的位置关于该最右回文半径中心点的对称点的回文区域与最左回文半径（当前最右回文半径关于中心点的对称点）的情况：
 >     - 被囊括，当前位置回文区域和对称点相同。
@@ -172,6 +172,51 @@ class Manacher {
         return ans;
     }
     
+}
+
+// 新版
+class Solution {
+
+    public static String longestPalindrome(String s) {
+        manacher(s);
+        return s.substring(end - max, end);
+    }
+
+    public static int MAXN = 1001;
+
+    public static char[] ss = new char[MAXN << 1];
+
+    public static int[] p = new int[MAXN << 1];
+
+    public static int n, max, end;
+
+    public static void manacher(String str) {
+        manacherss(str.toCharArray());
+        max = end = 0;
+        for (int i = 0, c = 0, r = 0, len; i < n; i++) {
+            len = r > i ? Math.min(p[2 * c - i], r - i) : 1;
+            while (i + len < n && i - len >= 0 && ss[i + len] == ss[i - len]) {
+                len++;
+            }
+            if (i + len > r) {
+                r = i + len;
+                c = i;
+            }
+            if (len > max) {
+                max = len - 1;
+                end = (i + len - 1) / 2;
+            }
+            p[i] = len;
+        }
+    }
+
+    public static void manacherss(char[] a) {
+        n = a.length * 2 + 1;
+        for (int i = 0, j = 0; i < n; i++) {
+            ss[i] = (i & 1) == 0 ? '#' : a[j++];
+        }
+    }
+
 }
 ```
 
