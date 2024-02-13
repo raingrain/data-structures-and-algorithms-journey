@@ -7,6 +7,17 @@
 > - ***Question 2***
 >   - 给你一个字符串 `s` ，找到 `s` 中最长的回文子串。
 
+## [P3805 【模板】manacher](https://www.luogu.com.cn/problem/P3805)
+
+> - ***Question 3***
+>   - 给出一个只由小写英文字符组成的字符串 `S` ，求 `S` 中最长回文串的长度。字符串长度为 `n` 。
+>   - ***输入描述***
+>     - 一行小写英文字母组成的字符串 `S` 。
+>   - ***输出描述***
+>     - 一个整数表示答案。
+>   - ***tips:***
+>     - `1 <= n <= 10^7`
+
 ---
 
 ## *Java*
@@ -22,6 +33,19 @@
 >   - 不给出证明。
 
 ```java
+// 理解Manacher算法的重要步骤
+// 1. 暴力方法如何寻找最长回文子串
+// 2. Manacher扩展串，可以方便的寻找奇长度、偶长度的回文，扩展字符可以随意设置，不会影响计算
+// 3. 回文半径和真实回文长度的对应，真实长度 = p[i] - 1
+// 4. 扩展回文串结尾下标和真实回文串终止位置的对应，真实回文串终止位置 = 扩展回文串结尾下标 / 2
+// 5. 理解回文半径数组p、理解回文覆盖最右边界r、理解回文中心c
+// 6. Manacher算法的加速过程，当来到的中心点i，如何利用p、r、c来进行回文扩展，课上详细图解
+//    a. i没有被r包住，那么以i为中心直接扩展
+//    b. i被r包住，对称点 2*c-i 的回文半径，在大回文区域以内，直接确定p[i] = p[2*c-i]
+//    c. i被r包住，对称点 2*c-i 的回文半径，在大回文区域以外，直接确定p[i] = r - i
+//    d. i被r包住，对称点 2*c-i 的回文半径，撞线大回文区域的边界，从r之外的位置进行扩展
+// 7. Manacher算法的时间复杂度分析，时间复杂度O(n)
+// 8. Manacher算法代码讲解，理解巧妙的while是如何兼顾四种情况的，代码中无需四种情况的判断
 class Solution {
     
     // 获取最长回文子串
@@ -151,8 +175,60 @@ class Manacher {
 }
 ```
 
+> - ***Question 3: 新版***
+
+```java
+import java.io.*;
+
+public class Main {
+
+    public static int MAXN = 11000001;
+
+    public static char[] ss = new char[MAXN << 1];
+
+    public static int[] p = new int[MAXN << 1];
+
+    public static int n;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        out.println(manacher(in.readLine()));
+        out.flush();
+        out.close();
+        in.close();
+    }
+
+    public static int manacher(String str) {
+        manacherss(str.toCharArray());
+        int max = 0;
+        for (int i = 0, c = 0, r = 0, len; i < n; i++) {
+            len = r > i ? Math.min(p[2 * c - i], r - i) : 1;
+            while (i + len < n && i - len >= 0 && ss[i + len] == ss[i - len]) {
+                len++;
+            }
+            if (i + len > r) {
+                r = i + len;
+                c = i;
+            }
+            max = Math.max(max, len);
+            p[i] = len;
+        }
+        return max - 1;
+    }
+
+    public static void manacherss(char[] a) {
+        n = a.length * 2 + 1;
+        for (int i = 0, j = 0; i < n; i++) {
+            ss[i] = (i & 1) == 0 ? '#' : a[j++];
+        }
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2022/11/9***
+> ***last change: 2024/2/13***
 
 ---
