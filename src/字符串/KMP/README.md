@@ -31,6 +31,7 @@
 class Solution {
     
     public int strStr(String haystack, String needle) {
+        // return haystack.indexOf(needle);
         KMP kmp = new KMP();
         return kmp.indexOf(haystack, needle);
     }
@@ -121,6 +122,6 @@ class KMP {
 
 ---
 
-> ***last change: 2023/4/19***
+> ***last change: 2024/2/13***
 
 ---
