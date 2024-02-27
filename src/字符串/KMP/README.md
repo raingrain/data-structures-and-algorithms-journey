@@ -3,7 +3,7 @@
 ## [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
 
 > - ***Question***
->   - KMP算法的用途：给你两个字符串 `haystack` 和 `needle` ，请你在 `haystack` 字符串中找出 `needle` 字符串的第一个匹配项的下标（下标从 `0` 开始）。如果 `needle` 不是 `haystack` 的一部分，则返回 `-1` 。
+>   - 给你两个字符串 `haystack` 和 `needle` ，请你在 `haystack` 字符串中找出 `needle` 字符串的第一个匹配项的下标（下标从 `0` 开始）。如果 `needle` 不是 `haystack` 的一部分，则返回 `-1` 。
 >   - ***tips:***
 >     - `1 <= haystack.length, needle.length <= 10^4`
 >     - `haystack` 和 `needle` 仅由小写英文字符组成
@@ -28,6 +28,7 @@
 >   - 空间复杂度： `O(m)` ，其中 `m` 是字符串 `needle` 的长度。我们只需要保存字符串 needle 的前缀函数。
 
 ```java
+// 字符串哈希解法在另一个文件中
 class Solution {
     
     public int strStr(String haystack, String needle) {
@@ -122,6 +123,6 @@ class KMP {
 
 ---
 
-> ***last change: 2024/2/13***
+> ***last change: 2024/2/27***
 
 ---
