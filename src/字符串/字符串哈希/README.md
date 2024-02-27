@@ -2,7 +2,7 @@
 
 ## [P3370 【模板】字符串哈希](https://www.luogu.com.cn/problem/P3370)
 
-> - ***Question***
+> - ***Question 1***
 >   - 给定 `N` 个字符串（第 `i` 个字符串长度为 `Mi` ，字符串内包含数字、大小写字母，大小写敏感），请求出 `N` 个字符串中共有多少个不同的字符串。
 >   - ***输入描述***
 >     - 第一行包含一个整数 `N` ，为字符串的个数。接下来 `N` 行每行包含一个字符串，为所提供的字符串。
@@ -12,6 +12,14 @@
 >     - `N <= 10`
 >     - `Mi ≈ 1000`
 >     - `Mmax <= 1500`
+
+## [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
+
+> - ***Question 2***
+>   - 给你两个字符串 `haystack` 和 `needle` ，请你在 `haystack` 字符串中找出 `needle` 字符串的第一个匹配项的下标（下标从 `0` 开始）。如果 `needle` 不是 `haystack` 的一部分，则返回 `-1` 。
+>   - ***tips:***
+>     - `1 <= haystack.length, needle.length <= 10^4`
+>     - `haystack` 和 `needle` 仅由小写英文字符组成
 
 ---
 
@@ -43,7 +51,6 @@
 
 // 字符串哈希从理论上说会有碰撞导致出错，但现实中的算法考察样本量太少了，出错概率非常低，即便是出错了，也可以更换进制数base，再去赌，一定能赌赢。
 // 没错！是玄学！但是好用！堪称赌狗的胜利！
-
 
 // 字符串哈希原理和实现
 // 比如p = 233, 也就是选择的质数进制
@@ -173,7 +180,7 @@ class Solution {
 
 }
 
-// 洛谷版
+// Question 1
 import java.io.*;
 import java.util.Arrays;
 
@@ -237,6 +244,85 @@ public class Main {
             if (nums[i] != nums[i - 1]) {
                 ans++;
             }
+        }
+        return ans;
+    }
+
+}
+
+// Question 2
+// KMP解法在另一个文件
+// 字符串中子串对比变成哈希值对比非常好用的！大量节省时间
+// 很多较难的算法都可以被字符串哈希替代，都是因为子串对比的代价变为O(1)
+// 字符串哈希易于理解且使用灵活，因为非常方便的子串对比，很多难题变得非常好想
+// 字符串哈希也能替代Manacher算法
+// 不过时间复杂度没有Manacher算法解决回文类的问题好
+// Manacher算法生成回文半径数组，时间复杂度O(n)
+// 字符串哈希替代Manacher算法生成回文半径数组，时间复杂度O(n * logn)
+class Solution {
+
+    public static int strStr(String str1, String str2) {
+        char[] s1 = str1.toCharArray();
+        char[] s2 = str2.toCharArray();
+        int n = s1.length;
+        int m = s2.length;
+        build(s1, n);
+        long h2 = s2[0] - 'a' + 1;
+        for (int i = 1; i < m; i++) {
+            h2 = h2 * base + s2[i] - 'a' + 1;
+        }
+        for (int l = 0, r = m - 1; r < n; l++, r++) {
+            if (hash(l, r) == h2) {
+                return l;
+            }
+        }
+        return -1;
+    }
+
+    // 如下代码是字符串哈希的原理和模版
+    // 比如，base = 499, 也就是课上说的选择的质数进制
+    // 再比如字符串s如下
+    // " c a b e f "
+    //   0 1 2 3 4
+    // hash[0] = 3 * base的0次方
+    // hash[1] = 3 * base的1次方 + 1 * base的0次方
+    // hash[2] = 3 * base的2次方 + 1 * base的1次方 + 2 * base的0次方
+    // hash[3] = 3 * base的3次方 + 1 * base的2次方 + 2 * base的1次方 + 5 * base的0次方
+    // hash[4] = 3 * base的4次方 + 1 * base的3次方 + 2 * base的2次方 + 5 * base的1次方 + 6 *
+    // base的0次方
+    // hash[i] = hash[i-1] * base + s[i] - 'a' + 1，就是上面说的意思
+    // 想计算子串"be"的哈希值 -> 2 * base的1次方 + 5 * base的0次方
+    // 子串"be"的哈希值 = hash[3] - hash[1] * base的2次方(子串"be"的长度次方)
+    // hash[1] = 3 * base的1次方 + 1 * base的0次方
+    // hash[1] * base的2次方 = 3 * base的3次方 + 1 * base的2次方
+    // hash[3] = 3 * base的3次方 + 1 * base的2次方 + 2 * base的1次方 + 5 * base的0次方
+    // hash[3] - hash[1] * base的2次方 = 2 * base的1次方 + 5 * base的0次方
+    // 这样就得到子串"be"的哈希值了
+    // 子串s[l...r]的哈希值 = hash[r] - hash[l-1] * base的(r-l+1)次方，就是上面说的意思
+    public static int MAXN = 100005;
+
+    public static int base = 499;
+
+    public static long[] pow = new long[MAXN];
+
+    public static long[] hash = new long[MAXN];
+
+    public static void build(char[] s, int n) {
+        pow[0] = 1;
+        for (int i = 1; i < n; i++) {
+            pow[i] = pow[i - 1] * base;
+        }
+        hash[0] = s[0] - 'a' + 1;
+        for (int i = 1; i < n; i++) {
+            hash[i] = hash[i - 1] * base + s[i] - 'a' + 1;
+        }
+    }
+
+    // 返回s[l...r]的哈希值
+    public static long hash(int l, int r) {
+        long ans = hash[r];
+        if (l > 0) {
+            ans -= hash[l - 1] * pow[r - l + 1];
         }
         return ans;
     }
