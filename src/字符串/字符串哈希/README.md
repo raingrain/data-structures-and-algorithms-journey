@@ -1,5 +1,18 @@
 # 字符串哈希
 
+## [P3370 【模板】字符串哈希](https://www.luogu.com.cn/problem/P3370)
+
+> - ***Question***
+>   - 给定 `N` 个字符串（第 `i` 个字符串长度为 `Mi` ，字符串内包含数字、大小写字母，大小写敏感），请求出 `N` 个字符串中共有多少个不同的字符串。
+>   - ***输入描述***
+>     - 第一行包含一个整数 `N` ，为字符串的个数。接下来 `N` 行每行包含一个字符串，为所提供的字符串。
+>   - ***输出描述***
+>     - 输出包含一行，包含一个整数，为不同的字符串个数。
+>   - ***tips:***
+>     - `N <= 10`
+>     - `Mi ≈ 1000`
+>     - `Mmax <= 1500`
+
 ---
 
 ## *Java*
@@ -135,10 +148,80 @@ class Solution {
     }
 
 }
+
+// 洛谷版
+import java.io.*;
+import java.util.Arrays;
+
+public class Main {
+
+    public static int MAXN = 10001;
+
+    public static int base = 499;
+
+    public static long[] nums = new long[MAXN];
+
+    public static int n;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        n = Integer.valueOf(in.readLine());
+        for (int i = 0; i < n; i++) {
+            nums[i] = value(in.readLine().toCharArray());
+        }
+        out.println(cnt());
+        out.flush();
+        out.close();
+        in.close();
+    }
+
+    public static long value(char[] s) {
+        long ans = v(s[0]);
+        for (int i = 1; i < s.length; i++) {
+            ans = ans * base + v(s[i]);
+        }
+        return ans;
+    }
+
+    // 数字 + 大写 + 小写
+    // '0' -> 1
+    // '1' -> 2
+    // ...
+    // '9' -> 10
+    // 'A' -> 11
+    // 'B' -> 12
+    // ...
+    // 'Z' -> 36
+    // 'a' -> 37
+    // ...
+    // 'z' -> 62
+    public static int v(char c) {
+        if (c >= '0' && c <= '9') {
+            return c - '0' + 1;
+        } else if (c >= 'A' && c <= 'z') {
+            return c - 'A' + 11;
+        } else {
+            return c - 'a' + 37;
+        }
+    }
+
+    public static int cnt() {
+        Arrays.sort(nums, 0, n);
+        int ans = 1;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] != nums[i - 1]) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+}
 ```
 
 ---
 
-> ***last change: 2023/7/1***
+> ***last change: 2024/2/27***
 
 ---
