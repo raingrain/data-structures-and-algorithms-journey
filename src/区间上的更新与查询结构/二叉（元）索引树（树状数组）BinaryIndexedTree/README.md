@@ -60,6 +60,24 @@
 >   - ***tips:***
 >     - `1 <= n, m <= 5 * 10^5`
 
+## [P3368 【模板】树状数组 2](https://www.luogu.com.cn/problem/P3368)
+
+> - ***Question 4***
+>   - 如题，已知一个数列，你需要进行下面两种操作：
+>     - 将某区间每一个数加上 `x` 。
+>     - 求出某一个数的值。
+>   - ***输入描述***
+>     - 第一行包含两个整数 `N, M`，分别表示该数列数字的个数和操作的总个数。
+>     - 第二行包含 `N` 个用空格分隔的整数，其中第 `i` 个数字表示数列第 `i` 项的初始值。
+>     - 接下来 `M` 行每行包含 `2` 或 `4` 个整数，表示一个操作，具体如下：
+>       - 操作 `1` ：格式： `1 x y k` 含义：将区间 `[x, y]` 内每个数加上 `k` ；
+>       - 操作 `2` ：格式： `2 x` 含义：输出第 `x` 个数的值。
+>   - ***输出描述***
+>     - 输出包含若干行整数，即为所有操作 `2` 的结果。
+>   - ***tips:***
+>     - `1 <= N, M <= 500000, 1 <= x, y <= n`
+>     - 保证任意时刻序列中任意元素的绝对值都不大于 `2^30`
+
 ---
 
 ## *Java*
@@ -315,6 +333,85 @@ public class Main {
                     add(b, c);
                 } else {
                     out.println(range(b, c));
+                }
+            }
+        }
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
+> - ***Question 4: 树状数组范围增加、单点查询模版***
+>   - 如果用 `Question 3` 中的模版，范围增加就只能遍历范围内的所有数字一个个加，但如果我们求原始数组，然后对差分数组建立树状数组，那么对于树状数组的范围增加、单点查询就变成了差分数组的两点增加，范围查询，对差分数组的树状数组用 `Question 3` 中的模版即可。
+
+```java
+import java.io.*;
+
+public class Main {
+
+    public static int MAXN = 500002;
+
+    // 树状数组不维护原数组的信息，维护原数组的差分信息
+    // 注意下标一定从1开始，不从0开始
+    public static int[] tree = new int[MAXN];
+
+    public static int n, m;
+
+    public static int lowbit(int i) {
+        return i & -i;
+    }
+
+    public static void add(int i, int v) {
+        while (i <= n) {
+            tree[i] += v;
+            i += lowbit(i);
+        }
+    }
+
+    // 返回1~i范围累加和
+    public static int sum(int i) {
+        int ans = 0;
+        while (i > 0) {
+            ans += tree[i];
+            i -= lowbit(i);
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        while (in.nextToken() != StreamTokenizer.TT_EOF) {
+            n = (int) in.nval;
+            in.nextToken();
+            m = (int) in.nval;
+            for (int i = 1, v; i <= n; i++) {
+                in.nextToken();
+                v = (int) in.nval;
+                // 单点初始化，转化为差分2个位置的加
+                add(i, v);
+                add(i + 1, -v);
+            }
+            for (int i = 1; i <= m; i++) {
+                in.nextToken();
+                int op = (int) in.nval;
+                if (op == 1) {
+                    in.nextToken();
+                    int l = (int) in.nval;
+                    in.nextToken();
+                    int r = (int) in.nval;
+                    in.nextToken();
+                    int v = (int) in.nval;
+                    add(l, v);
+                    add(r + 1, -v);
+                } else {
+                    in.nextToken();
+                    int index = (int) in.nval;
+                    out.println(sum(index));
                 }
             }
         }
