@@ -632,6 +632,7 @@ public class Main {
 >   - ![image](./images/二维数组范围增加与范围查询2.png)
 
 ```java
+// 该用法也可以用线段树的树套树替代，替代之后使用空间更大，改写的代码更多，理解会更难
 import java.io.*;
 
 public class Main {
