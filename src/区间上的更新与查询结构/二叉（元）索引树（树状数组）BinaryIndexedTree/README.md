@@ -78,6 +78,24 @@
 >     - `1 <= N, M <= 500000, 1 <= x, y <= n`
 >     - 保证任意时刻序列中任意元素的绝对值都不大于 `2^30`
 
+## [P3372 【模板】线段树 1](https://www.luogu.com.cn/problem/P3372)
+
+> - ***Question 5***
+>   - 如题，已知一个数列，你需要进行下面两种操作：
+>     - 将某区间每一个数加上 `x` 。
+>     - 求出某区间每一个数的和。
+>   - ***输入描述***
+>     - 第一行包含两个正整数 `n, m` ，分别表示该数列数字的个数和操作的总个数。
+>     - 第二行包含 `n` 个用空格分隔的整数，其中第 `i` 个数字表示数列第 `i` 项的初始值。
+>     - 接下来 `m` 行每行包含 `3` 或 `4` 个整数，表示一个操作，具体如下：
+>       - `1 x y k` ：将区间 `[x, y]` 内每个数加上 `k` 。
+>       - `2 x y` ：输出区间 `[x, y]` 内每个数的和。
+>   - ***输出描述***
+>     - 输出包含若干行整数，即为所有操作 `2` 的结果。
+>   - ***tips:***
+>     - `1 <= n, m <= 10^5`
+>     - 保证任意时刻数列中所有元素的绝对值之和小于等于 `10^8`
+
 ---
 
 ## *Java*
@@ -423,8 +441,116 @@ public class Main {
 }
 ```
 
+> - ***Question 5: 树状数组范围增加、范围查询模版***
+
+```java
+// 原始数组a1 + ... + an
+// = d1 + (d1 + d2) + ... + (d1 + ... + dk)
+// = k * d1 + (k - 1) * d2 + (k - 2) * d3 + ... + (k - (k - 1)) * dk
+// = k * (d1 + d2 + ... + dk) - ((1 - 1) * d1 + (2 - 1) * d2 + ... + (k - 1) * dk)
+// 维护两个差分数组 原始差分数组和(i - 1) * di
+// 范围求和转化为1到r减去1到l，1到k的求和用两个差分数组的求和实现
+import java.io.*;
+
+public class Main {
+
+    public static int MAXN = 100001;
+
+    // 维护原始数组的差分信息：Di
+    public static long[] info1 = new long[MAXN];
+
+    // 维护原始数组的差分加工信息：(i-1) * Di
+    public static long[] info2 = new long[MAXN];
+
+    public static int n, m;
+
+    public static int lowbit(int i) {
+        return i & -i;
+    }
+
+    // 判断加哪个数组
+    public static void add(long[] tree, int i, long v) {
+        while (i <= n) {
+            tree[i] += v;
+            i += lowbit(i);
+        }
+    }
+
+    public static long sum(long[] tree, int i) {
+        long ans = 0;
+        while (i > 0) {
+            ans += tree[i];
+            i -= lowbit(i);
+        }
+        return ans;
+    }
+
+    // 原始数组中[l..r]每个数值+v
+    // 两个差分数组都加
+    public static void add(int l, int r, long v) {
+        add(info1, l, v);
+        add(info1, r + 1, -v);
+        add(info2, l, (l - 1) * v);
+        add(info2, r + 1, -(r * v));
+    }
+
+    // 原始数组中[l..r]范围上的累加和
+    public static long range(int l, int r) {
+        return sum(info1, r) * r - sum(info2, r) - sum(info1, l - 1) * (l - 1) + sum(info2, l - 1);
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        while (in.nextToken() != StreamTokenizer.TT_EOF) {
+            n = (int) in.nval;
+            in.nextToken();
+            m = (int) in.nval;
+            long cur;
+            for (int i = 1; i <= n; i++) {
+                in.nextToken();
+                cur = (long) in.nval;
+                add(i, i, cur);
+            }
+            long v;
+            for (int i = 1, op, l, r; i <= m; i++) {
+                in.nextToken();
+                op = (int) in.nval;
+                if (op == 1) {
+                    in.nextToken();
+                    l = (int) in.nval;
+                    in.nextToken();
+                    r = (int) in.nval;
+                    in.nextToken();
+                    v = (long) in.nval;
+                    add(l, r, v);
+                } else {
+                    in.nextToken();
+                    l = (int) in.nval;
+                    in.nextToken();
+                    r = (int) in.nval;
+                    out.println(range(l, r));
+                }
+            }
+        }
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
+> - ***总结***
+>   - 树状数组一般用来维护可差分的信息，比如累加和、累乘积、或者出题人发现了某个可差分信息来出题考你。
+>   - 不可差分的信息，比如最大值、最小值、除此之外的很多信息，不可差分的信息一般不用树状数组维护，会选择用线段树维护，因为线段树维护的方式思考难度更低。
+>   - 大多数情况下，线段树可以替代树状数组，两者的时间复杂度差不多，单次调用都是 `O(logn)` 。
+>   - 线段树的优势：用法全面、思考难度低、维护信息类型多（包括可差分信息、不可差分信息）；线段树的劣势：代码较多、使用空间较大、常数时间稍差。
+>   - 树状数组优势：代码量少、使用空间少、常数时间优异；树状数组劣势：维护信息的类型少、维护某些不可差分的信息时思考难度大并且不易实现。
+
 ---
 
-> ***last change: 2023/3/16***
+> ***last change: 2023/3/17***
 
 ---
