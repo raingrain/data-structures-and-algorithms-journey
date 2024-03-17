@@ -96,6 +96,21 @@
 >     - `1 <= n, m <= 10^5`
 >     - 保证任意时刻数列中所有元素的绝对值之和小于等于 `10^8`
 
+## [P4514 上帝造题的七分钟](https://www.luogu.com.cn/problem/P4514)
+
+> - ***Question 6***
+>   - ***输入描述***
+>     - 输入数据的第一行为 `X n m`，代表矩阵大小为 `n x m` 。
+>     - 从输入数据的第二行开始到文件尾的每一行会出现以下两种操作：
+>       - `L a b c d delta` ：代表将 `(a, b), (c, d)` 为顶点的矩形区域内的所有数字加上 `delta` 。
+>       - `k a b c d` ：代表求 `(a, b), (c, d)` 为顶点的矩形区域内所有数字的和。
+>   - ***输出描述***
+>     - 针对每个 `k` 操作，在单独的一行输出答案。
+>   - ***tips:***
+>     - `1 <= n, m <= 2048`
+>     - `-500 <= delta <= 500`
+>     - 操作不超过 `2 * 10^5` 个，保证运算过程中及最终结果均不超过 `32` 位带符号整数类型的表示范围
+
 ---
 
 ## *Java*
@@ -601,6 +616,121 @@ public class Main {
                     r = (int) in.nval;
                     out.println(range(l, r));
                 }
+            }
+        }
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
+> - ***Question 6: 二维数组上范围增加、范围查询，使用树状数组模版***
+>   - 原数组范围和怎么用差分数组求：化简后转化为 `4` 个差分。
+>   - ![image](./images/二维数组范围增加与范围查询1.png)
+>   - ![image](./images/二维数组范围增加与范围查询2.png)
+
+```java
+import java.io.*;
+
+public class Main {
+
+    public static int MAXN = 2050;
+
+    public static int MAXM = 2050;
+
+    // 维护信息 : d[i][j]
+    public static int[][] info1 = new int[MAXN][MAXM];
+
+    // 维护信息 : d[i][j] * i
+    public static int[][] info2 = new int[MAXN][MAXM];
+
+    // 维护信息 : d[i][j] * j
+    public static int[][] info3 = new int[MAXN][MAXM];
+
+    // 维护信息 : d[i][j] * i * j
+    public static int[][] info4 = new int[MAXN][MAXM];
+
+    public static int n, m;
+
+    public static int lowbit(int i) {
+        return i & -i;
+    }
+
+    public static void add(int x, int y, int v) {
+        int v1 = v;
+        int v2 = x * v;
+        int v3 = y * v;
+        int v4 = x * y * v;
+        for (int i = x; i <= n; i += lowbit(i)) {
+            for (int j = y; j <= m; j += lowbit(j)) {
+                info1[i][j] += v1;
+                info2[i][j] += v2;
+                info3[i][j] += v3;
+                info4[i][j] += v4;
+            }
+        }
+    }
+
+    // 以(1,1)左上角，以(x,y)右下角
+    public static int sum(int x, int y) {
+        int ans = 0;
+        for (int i = x; i > 0; i -= lowbit(i)) {
+            for (int j = y; j > 0; j -= lowbit(j)) {
+                ans += (x + 1) * (y + 1) * info1[i][j] - (y + 1) * info2[i][j] - (x + 1) * info3[i][j] + info4[i][j];
+            }
+        }
+        return ans;
+    }
+
+    // 参考二维差分
+    public static void add(int a, int b, int c, int d, int v) {
+        add(a, b, v);
+        add(a, d + 1, -v);
+        add(c + 1, b, -v);
+        add(c + 1, d + 1, v);
+    }
+
+    public static int range(int a, int b, int c, int d) {
+        return sum(c, d) - sum(a - 1, d) - sum(c, b - 1) + sum(a - 1, b - 1);
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        String op;
+        int a, b, c, d, v;
+        while (in.nextToken() != StreamTokenizer.TT_EOF) {
+            op = in.sval;
+            if (op.equals("X")) {
+                in.nextToken();
+                n = (int) in.nval;
+                in.nextToken();
+                m = (int) in.nval;
+            } else if (op.equals("L")) {
+                in.nextToken();
+                a = (int) in.nval;
+                in.nextToken();
+                b = (int) in.nval;
+                in.nextToken();
+                c = (int) in.nval;
+                in.nextToken();
+                d = (int) in.nval;
+                in.nextToken();
+                v = (int) in.nval;
+                add(a, b, c, d, v);
+            } else {
+                in.nextToken();
+                a = (int) in.nval;
+                in.nextToken();
+                b = (int) in.nval;
+                in.nextToken();
+                c = (int) in.nval;
+                in.nextToken();
+                d = (int) in.nval;
+                out.println(range(a, b, c, d));
             }
         }
         out.flush();
