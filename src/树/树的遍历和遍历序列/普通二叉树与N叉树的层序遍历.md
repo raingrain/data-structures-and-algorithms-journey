@@ -61,6 +61,17 @@
 >     - 二叉树的节点个数的范围是 `[0, 10^4]`
 >     - `-2^31 <= Node.val <= 2^31 - 1`
 
+## [513. 找树左下角的值](https://leetcode.cn/problems/find-bottom-left-tree-value/)
+
+## [LCR 045. 找树左下角的值](https://leetcode.cn/problems/LwUNpT/)
+
+> - ***Question 9***
+>   - 给定一个二叉树的根节点 `root` ，请找出该二叉树的最底层最左边 节点的值。
+>   - 假设二叉树中至少有一个节点。
+>   - ***tips:***
+>     - 二叉树的节点个数的范围是 `[1, 10^4]`
+>     - `-2^31 <= Node.val <= 2^31 - 1`
+
 ---
 
 ## *Java*
@@ -208,6 +219,27 @@ class Solution {
                 }
             }
             ans.add(max);
+        }
+        return ans;
+    }
+
+    // Question 9
+    public int findBottomLeftValue(TreeNode root) {
+        ArrayDeque<TreeNode> deque = new ArrayDeque<>();
+        int ans = 0;
+        deque.add(root);
+        while (!deque.isEmpty()) {
+            // 每层记录第一个
+            ans = deque.peek().val;
+            for (int i = deque.size(); i > 0; --i) {
+                TreeNode node = deque.poll();
+                if (node.left != null) {
+                    deque.add(node.left);
+                }
+                if (node.right != null) {
+                    deque.add(node.right);
+                }
+            }
         }
         return ans;
     }
