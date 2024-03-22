@@ -51,6 +51,16 @@
 >     - `二叉树的节点个数的范围是 [0, 100]`
 >     - `-100 <= Node.val <= 100`
 
+## [515. 在每个树行中找最大值](https://leetcode.cn/problems/find-largest-value-in-each-tree-row/)
+
+## [LCR 044. 在每个树行中找最大值](https://leetcode.cn/problems/hPov7L/)
+
+> - ***Question 8***
+>   - 给定一棵二叉树的根节点 `root` ，请找出该二叉树中每一层的最大值。
+>   - ***tips:***
+>     - 二叉树的节点个数的范围是 `[0, 10^4]`
+>     - `-2^31 <= Node.val <= 2^31 - 1`
+
 ---
 
 ## *Java*
@@ -172,6 +182,32 @@ class Solution {
                     ans.add(node.val);
                 }
             }
+        }
+        return ans;
+    }
+
+    // Question 8
+    public List<Integer> largestValues(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        ArrayDeque<TreeNode> deque = new ArrayDeque<>();
+        List<Integer> ans = new ArrayList<>();
+        deque.add(root);
+        while (!deque.isEmpty()) {
+            int max = Integer.MIN_VALUE;
+            for (int i = deque.size(); i > 0; --i) {
+                TreeNode node = deque.poll();
+                // 每层记录最大值
+                max = Math.max(max, node.val);
+                if (node.left != null) {
+                    deque.add(node.left);
+                }
+                if (node.right != null) {
+                    deque.add(node.right);
+                }
+            }
+            ans.add(max);
         }
         return ans;
     }
@@ -373,6 +409,6 @@ class Solution {
 
 ---
 
-> ***last change: 2023/10/13***
+> ***last change: 2024/3/22***
 
 ---
