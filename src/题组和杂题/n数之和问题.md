@@ -50,6 +50,18 @@
 >     - `-1000 <= target <= 1000`
 >     - 仅存在一个有效答案
 
+## [653. 两数之和 IV - 输入二叉搜索树](https://leetcode.cn/problems/two-sum-iv-input-is-a-bst/)
+
+## [LCR 056. 两数之和 IV - 输入二叉搜索树](https://leetcode.cn/problems/opLdQZ/)
+
+> - ***Question 5***
+>   - 给定一个二叉搜索树的根节点 `root` 和一个整数 `k` ，请判断该二叉搜索树中是否存在两个节点它们的值之和等于 `k` 。假设二叉搜索树中节点的值均唯一。
+>   - ***tips:***
+>     - 二叉树的节点个数的范围是  `[1, 10^4]`
+>     - `-10^4 <= Node.val <= 10^4`
+>     - `root` 为二叉搜索树
+>     - `-10^5 <= k <= 10^5`
+
 ---
 
 ## *Java*
@@ -158,6 +170,63 @@ class Solution {
             }
         }
         return new int[]{-1, -1};
+    }
+
+}
+```
+
+> - ***Question 5: 中序遍历 + 双指针***
+>   - 注意到二叉搜索树的中序遍历是升序排列的，我们可以将该二叉搜索树的中序遍历的结果记录下来，得到一个升序数组。然后转化为 `Question 3 & Question 4` 使用双指针。
+
+```java
+class TreeNode {
+
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode() {
+    }
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+
+}
+
+class Solution {
+
+    ArrayList<Integer> list = new ArrayList<>();
+
+    public boolean findTarget(TreeNode root, int k) {
+        inorderTraversal(root);
+        int left = 0, right = list.size() - 1;
+        while (left < right) {
+            if (list.get(left) + list.get(right) == k) {
+                return true;
+            }
+            if (list.get(left) + list.get(right) < k) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return false;
+    }
+
+    public void inorderTraversal(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        inorderTraversal(node.left);
+        list.add(node.val);
+        inorderTraversal(node.right);
     }
 
 }
