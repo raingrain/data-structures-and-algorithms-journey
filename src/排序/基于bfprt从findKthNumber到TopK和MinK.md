@@ -41,6 +41,8 @@
 
 ## [347. 前 K 个高频元素](https://leetcode.cn/problems/top-k-frequent-elements/)
 
+## [LCR 060. 前 K 个高频元素](https://leetcode.cn/problems/g5c51o/)
+
 > - ***Question 4***
 >   - 给你一个整数数组 `nums` 和一个整数 `k` ，请你返回其中出现频率前 `k` 高的元素。你可以按任意顺序返回答案。
 >   - ***tips:***
@@ -388,6 +390,6 @@ class Solution {
 
 ---
 
-> ***last change: 2023/4/20***
+> ***last change: 2024/3/22***
 
 ---
