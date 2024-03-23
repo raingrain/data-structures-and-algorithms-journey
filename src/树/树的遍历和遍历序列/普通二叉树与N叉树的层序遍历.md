@@ -72,6 +72,11 @@
 >     - 二叉树的节点个数的范围是 `[1, 10^4]`
 >     - `-2^31 <= Node.val <= 2^31 - 1`
 
+## [面试题 04.03. 特定深度节点链表](https://leetcode.cn/problems/list-of-depth-lcci/)
+
+> - ***Question 10***
+>   - 给定一棵二叉树，设计一个算法，创建含有某一深度上所有节点的链表（比如，若一棵树的深度为 `D` ，则会创建出 `D` 个链表）。返回一个包含所有深度的链表的数组。
+
 ---
 
 ## *Java*
@@ -117,6 +122,18 @@ class TreeNode {
         this.right = right;
     }
     
+}
+
+// Question 10
+class ListNode {
+
+    int val;
+    ListNode next;
+
+    ListNode(int x) {
+        val = x;
+    }
+
 }
 
 class Solution {
@@ -240,6 +257,38 @@ class Solution {
                     deque.add(node.right);
                 }
             }
+        }
+        return ans;
+    }
+
+    // Question 10
+    public ListNode[] listOfDepth(TreeNode root) {
+        if (root == null) {
+            return new ListNode[]{};
+        }
+        ArrayList<ListNode> ansList = new ArrayList<>();
+        ArrayDeque<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            ListNode guardRoot = new ListNode(0);
+            ListNode cur = guardRoot;
+            for (int i = queue.size(); i > 0; --i) {
+                TreeNode node = queue.poll();
+                assert node != null;
+                cur.next = new ListNode(node.val);
+                cur = cur.next;
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            ansList.add(guardRoot.next);
+        }
+        ListNode[] ans = new ListNode[ansList.size()];
+        for (int i = 0; i < ansList.size(); i++) {
+            ans[i] = ansList.get(i);
         }
         return ans;
     }
@@ -441,6 +490,6 @@ class Solution {
 
 ---
 
-> ***last change: 2024/3/22***
+> ***last change: 2024/3/23***
 
 ---
