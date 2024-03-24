@@ -62,6 +62,40 @@
 >     - `root` 为二叉搜索树
 >     - `-10^5 <= k <= 10^5`
 
+## [16. 最接近的三数之和](https://leetcode.cn/problems/3sum-closest/)
+
+> - ***Question 6***
+>   - 给你一个长度为 `n` 的整数数组 `nums` 和 一个目标值 `target` 。请你从 `nums` 中选出三个整数，使它们的和与 `target` 最接近。
+>   - 返回这三个数的和。
+>   - 假定每组输入只存在恰好一个解。
+>   - ***tips:***
+>     - `3 <= nums.length <= 1000`
+>     - `-1000 <= nums[i] <= 1000`
+>     - `-10^4 <= target <= 10^4`
+
+## [18. 四数之和](https://leetcode.cn/problems/4sum/)
+
+> - ***Question 7***
+>   - 给你一个由 `n` 个整数组成的数组 `nums` ，和一个目标值 `target` 。请你找出并返回满足下述全部条件且不重复的四元组 `[nums[a], nums[b], nums[c], nums[d]]` （若两个四元组元素一一对应，则认为两个四元组重复）：
+>     - `0 <= a, b, c, d < n`
+>     - `a, b, c, d` 互不相同
+>     - `nums[a] + nums[b] + nums[c] + nums[d] == target`
+>   - 你可以按任意顺序返回答案。
+>   - ***tips:***
+>     - `1 <= nums.length <= 200`
+>     - `-10^9 <= nums[i] <= 10^9`
+>     - `-10^9 <= target <= 10^9`
+
+## [923. 三数之和的多种可能](https://leetcode.cn/problems/3sum-with-multiplicity/)
+
+> - ***Question 8***
+>   - 给定一个整数数组 `arr` ，以及一个整数 `target` 作为目标值，返回满足 `i < j < k` 且 `arr[i] + arr[j] + arr[k] == target` 的元组 `i, j, k` 的数量。
+>   - 由于结果会非常大，请返回 `10^9 + 7` 的模。
+>   - ***tips:***
+>     - `3 <= arr.length <= 3000`
+>     - `0 <= arr[i] <= 100`
+>     - `0 <= target <= 300`
+
 ---
 
 ## *Java*
@@ -232,8 +266,170 @@ class Solution {
 }
 ```
 
+> - ***Question 6: 排序 + 双指针***
+
+```java
+// 首先进行数组排序
+// 在数组 nums 中，进行遍历，每遍历一个值利用其下标i，形成一个固定值 nums[i]
+// 再使用前指针指向 start = i + 1 处，后指针指向 end = nums.length - 1 处，也就是结尾处
+// 根据 sum = nums[i] + nums[start] + nums[end] 的结果，判断 sum 与目标 target 的距离，如果更近则更新结果 ans
+// 同时判断 sum 与 target 的大小关系，因为数组有序，如果 sum > target 则 end--，如果 sum < target 则 start++，如果 sum == target 则说明距离为 0 直接返回结果
+class Solution {
+
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int ans = nums[0] + nums[1] + nums[2];
+        for (int i = 0; i < nums.length; i++) {
+            int start = i + 1, end = nums.length - 1;
+            while (start < end) {
+                int sum = nums[start] + nums[end] + nums[i];
+                if (Math.abs(target - sum) < Math.abs(target - ans))
+                    ans = sum;
+                if (sum > target)
+                    end--;
+                else if (sum < target)
+                    start++;
+                else
+                    return ans;
+            }
+        }
+        return ans;
+    }
+
+}
+```
+
+> - ***Question 7: 排序 + 双指针***
+>   - 最朴素的方法是使用四重循环枚举所有的四元组，然后使用哈希表进行去重操作，得到不包含重复四元组的最终答案。假设数组的长度是 `n` ，则该方法中，枚举的时间复杂度为 `O(n^4)` ，去重操作的时间复杂度和空间复杂度也很高，因此需要换一种思路。
+>   - 为了避免枚举到重复四元组，则需要保证每一重循环枚举到的元素不小于其上一重循环枚举到的元素，且在同一重循环中不能多次枚举到相同的元素。
+>   - 为了实现上述要求，可以对数组进行排序，并且在循环过程中遵循以下两点：
+>     - 每一种循环枚举到的下标必须大于上一重循环枚举到的下标；
+>     - 同一重循环中，如果当前元素与上一个元素相同，则跳过当前元素。
+>   - 使用上述方法，可以避免枚举到重复四元组，但是由于仍使用四重循环，时间复杂度仍是 `O(n^4)` 。注意到数组已经被排序，因此可以使用双指针的方法去掉一重循环。
+>   - 使用两重循环分别枚举前两个数，然后在两重循环枚举到的数之后使用双指针枚举剩下的两个数。假设两重循环枚举到的前两个数分别位于下标 `i` 和 `j` ，其中 `i < j` 。初始时，左右指针分别指向下标 `j + 1` 和下标 `n - 1` 。每次计算四个数的和，并进行如下操作：
+>     - 如果和等于 `target` ，则将枚举到的四个数加到答案中，然后将左指针右移直到遇到不同的数，将右指针左移直到遇到不同的数；
+>     - 如果和小于 `target` ，则将左指针右移一位；
+>     - 如果和大于 `target` ，则将右指针左移一位。
+>   - 使用双指针枚举剩下的两个数的时间复杂度是 `O(n)` ，因此总时间复杂度是 `O(n^3)` ，低于 `O(n^4)` 。
+>   - 具体实现时，还可以进行一些剪枝操作：
+>     - 在确定第一个数之后，如果 `nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target` ，说明此时剩下的三个数无论取什么值，四数之和一定大于 `target` ，因此退出第一重循环；
+>     - 在确定第一个数之后，如果 `nums[i] + nums[n - 3] + nums[n - 2] + nums[n - 1] < target` ，说明此时剩下的三个数无论取什么值，四数之和一定小于 `target` ，因此第一重循环直接进入下一轮，枚举 `nums[i + 1]` ；
+>     - 在确定前两个数之后，如果 `nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target` ，说明此时剩下的两个数无论取什么值，四数之和一定大于 `target` ，因此退出第二重循环；
+>     - 在确定前两个数之后，如果 `nums[i] + nums[j] + nums[n - 2] + nums[n - 1] < target` ，说明此时剩下的两个数无论取什么值，四数之和一定小于 `target` ，因此第二重循环直接进入下一轮，枚举 `nums[j + 1]` 。
+
+```java
+import java.util.*;
+
+class Solution {
+
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> quadruplets = new ArrayList<List<Integer>>();
+        if (nums == null || nums.length < 4) {
+            return quadruplets;
+        }
+        Arrays.sort(nums);
+        int length = nums.length;
+        for (int i = 0; i < length - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            if ((long) nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) {
+                break;
+            }
+            if ((long) nums[i] + nums[length - 3] + nums[length - 2] + nums[length - 1] < target) {
+                continue;
+            }
+            for (int j = i + 1; j < length - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+                if ((long) nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target) {
+                    break;
+                }
+                if ((long) nums[i] + nums[j] + nums[length - 2] + nums[length - 1] < target) {
+                    continue;
+                }
+                int left = j + 1, right = length - 1;
+                while (left < right) {
+                    long sum = (long) nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum == target) {
+                        quadruplets.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left++;
+                        }
+                        left++;
+                        while (left < right && nums[right] == nums[right - 1]) {
+                            right--;
+                        }
+                        right--;
+                    } else if (sum < target) {
+                        left++;
+                    } else {
+                        right--;
+                    }
+                }
+            }
+        }
+        return quadruplets;
+    }
+
+}
+```
+
+> - ***Question 8: 三指针***
+>   - 先将数组进行排序，遍历数组下标，对于每个 `i` ，设 `T = target - A[i]` 作为剩余要凑成的目标数。接着用双指针来完成 `A[j] + A[k] == T` 的子任务。
+>   - 考虑到有些元素是重复的，需要小心处理边界条件。在特殊的情况下，比如说 `target = 8` ，数组为 `[2, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6]` ，这个数组就有大量的重复元素可以组成 `target` ，下面来分析一下这种情况该怎么处理。
+>   - 只要 `A[j] + A[k] == T` ，就要算上这一对 `j, k` 组合。在这个例子里面，当 `A[j] == 2, A[k] == 6` ，有 `4 * 2 = 8` 种组合方式。
+>   - 在特殊情况下，如果 `A[j] == A[k]` ，比如最后剩下的 `[4, 4, 4]` ，这里有 `3` 对。一般情况下，如果 `A[j] == A[k]` ，我们有 `M * (M - 1) / 2` 对 `(j, k)` （满足 `j < k` 且 `A[j] + A[k] == T` ）。
+
+```java
+import java.util.*;
+
+class Solution {
+
+    public int threeSumMulti(int[] A, int target) {
+        int MOD = 1_000_000_007;
+        long ans = 0;
+        Arrays.sort(A);
+        for (int i = 0; i < A.length; ++i) {
+            int T = target - A[i];
+            int j = i + 1, k = A.length - 1;
+
+            while (j < k) {
+                // These steps proceed as in a typical two-sum.
+                if (A[j] + A[k] < T)
+                    j++;
+                else if (A[j] + A[k] > T)
+                    k--;
+                else if (A[j] != A[k]) {
+                    int left = 1, right = 1;
+                    while (j + 1 < k && A[j] == A[j + 1]) {
+                        left++;
+                        j++;
+                    }
+                    while (k - 1 > j && A[k] == A[k - 1]) {
+                        right++;
+                        k--;
+                    }
+                    ans += left * right;
+                    ans %= MOD;
+                    j++;
+                    k--;
+                } else {
+                    ans += (k - j + 1) * (k - j) / 2;
+                    ans %= MOD;
+                    break;
+                }
+            }
+        }
+        return (int) ans;
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2024/3/22***
+> ***last change: 2024/3/24***
 
 ---
