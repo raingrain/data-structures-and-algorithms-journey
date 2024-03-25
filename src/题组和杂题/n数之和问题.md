@@ -96,6 +96,14 @@
 >     - `0 <= arr[i] <= 100`
 >     - `0 <= target <= 300`
 
+## [面试题 16.24. 数对和](https://leetcode.cn/problems/pairs-with-sum-lcci/)
+
+> - ***Question 9***
+>   - 设计一个算法，找出数组中两数之和为指定值的所有整数对。一个数只能属于一个数对。
+>   - ***tips:***
+>     - `nums.length <= 100000`
+>     - `-10^5 <= nums[i], target <= 10^5`
+
 ---
 
 ## *Java*
@@ -428,8 +436,43 @@ class Solution {
 }
 ```
 
+> - ***Question 9: 双指针***
+
+```java
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+class Solution {
+
+    public List<List<Integer>> pairSums(int[] nums, int target) {
+        // 对数组进行排序
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            // 两个指针所指的两个元素和
+            int sum = nums[left] + nums[right];
+            // 如果两个的和小于目标值，那么left指针向右走一步继续寻找
+            if (sum < target) {
+                ++left;
+            } else if (sum > target) {
+                // 如果两个的和大于目标值，那么right指针向左走一步继续寻找
+                --right;
+            } else {
+                // 如果刚好等于要找的target值，那么加入结果集中，并且left指针和right指针分别向右和向左走一步(因为一个数只能属于一个数对)
+                ans.add(Arrays.asList(nums[left++], nums[right--]));
+            }
+
+        }
+        return ans;
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2024/3/24***
+> ***last change: 2024/3/25***
 
 ---
