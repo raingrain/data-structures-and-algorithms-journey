@@ -31,6 +31,13 @@
 >   - ***tips:***
 >     - `1 <= a <= b <= 10^12`
 
+## [面试题 17.06. 2出现的次数](https://leetcode.cn/problems/number-of-2s-in-range-lcci/)
+
+> - ***Question***
+>   - 编写一个方法，计算从 `0` 到 `n` （含 `n`） 中数字 `2` 出现的次数。
+>   - ***tips:***
+>     - `n <= 10^9`
+
 ---
 
 ## *Java*
@@ -150,6 +157,14 @@ public class Solution {
 
 ```java
 class Solution {
+
+    // Question 5
+    public int numberOf2sInRange(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        return count(n, 2);
+    }
 
     // Question 1
     public static int countDigitOne(int n) {
@@ -283,6 +298,6 @@ public class Main {
 
 ---
 
-> ***last change: 2024/1/17***
+> ***last change: 2024/3/24***
 
 ---
