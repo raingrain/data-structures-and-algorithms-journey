@@ -61,6 +61,14 @@
 >     - `words[i]` 由小写英文字母组成
 >     - `k` 的取值范围是 `[1, 不同 words[i] 的数量]`
 
+## [414. 第三大的数](https://leetcode.cn/problems/third-maximum-number/)
+
+> - ***Question 6***
+>   - 给你一个非空数组，返回此数组中第三大的数。如果不存在，则返回数组中最大的数。
+>   - ***tips:***
+>     - `1 <= nums.length <= 10^4`
+>     - `-2^31 <= nums[i] <= 2^31 - 1`
+
 ---
 
 ## *Java*
@@ -451,6 +459,26 @@ class Solution {
         }
         Collections.reverse(ret);
         return ret;
+    }
+
+}
+```
+
+> - ***Question 6: 有序表***
+>   - 我们可以遍历数组，同时用一个有序集合来维护数组中前三大的数。具体做法是每遍历一个数，就将其插入有序集合，若有序集合的大小超过 `3` ，就删除集合中的最小元素。这样可以保证有序集合的大小至多为 `3` ，且遍历结束后，若有序集合的大小为 `3` ，其最小值就是数组中第三大的数；若有序集合的大小不足 `3` ，那么就返回有序集合中的最大值。
+
+```java
+class Solution {
+
+    public int thirdMax(int[] nums) {
+        TreeSet<Integer> s = new TreeSet<>();
+        for (int num : nums) {
+            s.add(num);
+            if (s.size() > 3) {
+                s.remove(s.first());
+            }
+        }
+        return s.size() == 3 ? s.first() : s.last();
     }
 
 }
