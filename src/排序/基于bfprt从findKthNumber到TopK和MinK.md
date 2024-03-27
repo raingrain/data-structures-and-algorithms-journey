@@ -50,6 +50,17 @@
 >     - `k` 的取值范围是 `[1, 数组中不相同的元素的个数]`
 >     - 题目数据保证答案唯一，换句话说，数组中前 `k` 个高频元素的集合是唯一的
 
+## [692. 前K个高频单词](https://leetcode.cn/problems/top-k-frequent-words/)
+
+> - ***Question 5***
+>   - 给定一个单词列表 `words` 和一个整数 `k` ，返回前 `k` 个出现次数最多的单词。
+>   - 返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率，按字典顺序排序。
+>   - ***tips:***
+>     - `1 <= words.length <= 500`
+>     - `1 <= words[i] <= 10`
+>     - `words[i]` 由小写英文字母组成
+>     - `k` 的取值范围是 `[1, 不同 words[i] 的数量]`
+
 ---
 
 ## *Java*
@@ -388,8 +399,65 @@ class Solution {
 }
 ```
 
+> - ***Question 5: 哈希表 + 排序***
+>   - 我们可以预处理出每一个单词出现的频率，然后依据每个单词出现的频率降序排序，最后返回前 `k` 个字符串即可。
+>   - 具体地，我们利用哈希表记录每一个字符串出现的频率，然后将哈希表中所有字符串进行排序，排序时，如果两个字符串出现频率相同，那么我们让两字符串中字典序较小的排在前面，否则我们让出现频率较高的排在前面。最后我们只需要保留序列中的前 `k` 个字符串即可。
+
+```java
+import java.util.*;
+
+class Solution {
+
+    public List<String> topKFrequent(String[] words, int k) {
+        HashMap<String, Integer> cnt = new HashMap<>();
+        for (String word : words) {
+            cnt.put(word, cnt.getOrDefault(word, 0) + 1);
+        }
+        List<String> rec = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : cnt.entrySet()) {
+            rec.add(entry.getKey());
+        }
+        rec.sort((word1, word2) -> Objects.equals(cnt.get(word1), cnt.get(word2)) ? word1.compareTo(word2) : cnt.get(word2) - cnt.get(word1));
+        return rec.subList(0, k);
+    }
+
+}
+```
+
+> - ***Question 5: 小跟堆***
+>   - 对于前 `k` 大或前 `k` 小这类问题，有一个通用的解法：优先队列。优先队列可以在 `O(log⁡ n)` 的时间内完成插入或删除元素的操作（其中 `n` 为优先队列的大小），并可以 `O(1)` 地查询优先队列顶端元素。
+>   - 在本题中，我们可以创建一个小根优先队列（顾名思义，就是优先队列顶端元素是最小元素的优先队列）。我们将每一个字符串插入到优先队列中，如果优先队列的大小超过了 `k` ，那么我们就将优先队列顶端元素弹出。这样最终优先队列中剩下的 `k` 个元素就是前 `k` 个出现次数最多的单词。
+
+```java
+import java.util.*;
+
+class Solution {
+
+    public List<String> topKFrequent(String[] words, int k) {
+        Map<String, Integer> cnt = new HashMap<>();
+        for (String word : words) {
+            cnt.put(word, cnt.getOrDefault(word, 0) + 1);
+        }
+        PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>((entry1, entry2) -> entry1.getValue() == entry2.getValue() ? entry2.getKey().compareTo(entry1.getKey()) : entry1.getValue() - entry2.getValue());
+        for (Map.Entry<String, Integer> entry : cnt.entrySet()) {
+            pq.offer(entry);
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+        List<String> ret = new ArrayList<>();
+        while (!pq.isEmpty()) {
+            ret.add(pq.poll().getKey());
+        }
+        Collections.reverse(ret);
+        return ret;
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2024/3/22***
+> ***last change: 2024/3/27***
 
 ---
