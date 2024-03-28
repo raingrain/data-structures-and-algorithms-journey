@@ -77,6 +77,14 @@
 > - ***Question 10***
 >   - 给定一棵二叉树，设计一个算法，创建含有某一深度上所有节点的链表（比如，若一棵树的深度为 `D` ，则会创建出 `D` 个链表）。返回一个包含所有深度的链表的数组。
 
+## [637. 二叉树的层平均值](https://leetcode.cn/problems/average-of-levels-in-binary-tree/)
+
+> - ***Question 11***
+>   - 给定一个非空二叉树的根节点 `root` , 以数组的形式返回每一层节点的平均值。与实际答案相差 `10^-5` 以内的答案可以被接受。
+>   - ***tips:***
+>     - 树中节点数量在 `[1, 10^4]` 范围内
+>     - `-2^31 <= Node.val <= 2^31 - 1`
+
 ---
 
 ## *Java*
@@ -292,6 +300,32 @@ class Solution {
         }
         return ans;
     }
+
+    // Question 11
+    public List<Double> averageOfLevels(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        ArrayDeque<TreeNode> deque = new ArrayDeque<>();
+        List<Double> ans = new ArrayList<>();
+        deque.add(root);
+        while (!deque.isEmpty()) {
+            int len = deque.size();
+            double sum = 0;
+            for (int i = deque.size(); i > 0; --i) {
+                TreeNode node = deque.poll();
+                sum += node.val;
+                if (node.left != null) {
+                    deque.add(node.left);
+                }
+                if (node.right != null) {
+                    deque.add(node.right);
+                }
+            }
+            ans.add(sum / len);
+        }
+        return ans;
+    }
     
     // 逆层序遍历存储在二维链表中
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
@@ -490,6 +524,6 @@ class Solution {
 
 ---
 
-> ***last change: 2024/3/23***
+> ***last change: 2024/3/28***
 
 ---
