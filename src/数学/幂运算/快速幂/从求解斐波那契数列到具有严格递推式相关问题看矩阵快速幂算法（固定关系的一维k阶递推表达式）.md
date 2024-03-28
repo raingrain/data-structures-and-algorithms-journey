@@ -51,6 +51,19 @@
 >   - ***tips:***
 >     - `1 <= n <= 1000`
 
+## [2466. 统计构造好字符串的方案数](https://leetcode.cn/problems/count-ways-to-build-good-strings/)
+
+> - ***Question 7***
+>   - 给你整数 `zero, one, low, high` ，我们从空字符串开始构造一个字符串，每一步执行下面操作中的一种：
+>     - 将 `'0'` 在字符串末尾添加 `zero` 次。
+>     - 将 `'1'` 在字符串末尾添加 `one` 次。
+>   - 以上操作可以执行任意次。
+>   - 如果通过以上过程得到一个长度在 `low` 和 `high` 之间（包含上下边界）的字符串，那么这个字符串我们称为好字符串。
+>   - 请你返回满足以上要求的不同好字符串数目。由于答案可能很大，请将结果对 `10^9 + 7` 取余后返回。
+>   - ***tips:***
+>     - `1 <= low <= high <= 10^5`
+>     - `1 <= zero, one <= low`
+
 ---
 
 ## *Java*
@@ -704,8 +717,29 @@ class Solution {
 }
 ```
 
+> - ***Question 7: Question 2***
+
+```java
+class Solution {
+
+    public int countGoodStrings(int low, int high, int zero, int one) {
+        final int MOD = (int) 1e9 + 7;
+        int ans = 0;
+        var f = new int[high + 1]; // f[i] 表示构造长为 i 的字符串的方案数
+        f[0] = 1; // 构造空串的方案数为 1
+        for (int i = 1; i <= high; i++) {
+            if (i >= one) f[i] = (f[i] + f[i - one]) % MOD;
+            if (i >= zero) f[i] = (f[i] + f[i - zero]) % MOD;
+            if (i >= low) ans = (ans + f[i]) % MOD;
+        }
+        return ans;
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2024/1/19***
+> ***last change: 2024/3/28***
 
 ---
