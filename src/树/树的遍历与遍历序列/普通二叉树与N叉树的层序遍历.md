@@ -85,6 +85,14 @@
 >     - 树中节点数量在 `[1, 10^4]` 范围内
 >     - `-2^31 <= Node.val <= 2^31 - 1`
 
+## [1161. 最大层内元素和](https://leetcode.cn/problems/maximum-level-sum-of-a-binary-tree/)
+
+> - ***Question 12***
+>   - 给你一个二叉树的根节点 `root` 。设根节点位于二叉树的第 `1` 层，而根节点的子节点位于第 `2` 层，依此类推。请返回层内元素之和最大的那几层（可能只有一层）的层号，并返回其中最小的那个。
+>   - ***tips:***
+>     - 树中的节点数在 `[1, 10^4]` 范围内
+>     - `-10^5 <= Node.val <= 10^5`
+
 ---
 
 ## *Java*
@@ -326,6 +334,32 @@ class Solution {
         }
         return ans;
     }
+
+    // Question 12
+    public int maxLevelSum(TreeNode root) {
+        int ans = 1, maxSum = root.val;
+        ArrayDeque<TreeNode> Queue = new ArrayDeque<>();
+        Queue.add(root);
+        for (int level = 1; !Queue.isEmpty(); ++level) {
+            ArrayDeque<TreeNode> nextQueue = new ArrayDeque<>();
+            int sum = 0;
+            for (TreeNode node : Queue) {
+                sum += node.val;
+                if (node.left != null) {
+                    nextQueue.add(node.left);
+                }
+                if (node.right != null) {
+                    nextQueue.add(node.right);
+                }
+            }
+            if (sum > maxSum) {
+                maxSum = sum;
+                ans = level;
+            }
+            Queue = nextQueue;
+        }
+        return ans;
+    }
     
     // 逆层序遍历存储在二维链表中
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
@@ -524,6 +558,6 @@ class Solution {
 
 ---
 
-> ***last change: 2024/3/28***
+> ***last change: 2024/3/29***
 
 ---
