@@ -104,6 +104,15 @@
 >     - `nums.length <= 100000`
 >     - `-10^5 <= nums[i], target <= 10^5`
 
+## [1679. K 和数对的最大数目](https://leetcode.cn/problems/max-number-of-k-sum-pairs/)
+
+> - ***Question 10***
+>   - 给你一个整数数组 `nums` 和一个整数 `k` 。每一步操作中，你需要从数组中选出和为 `k` 的两个整数，并将它们移出数组。返回你可以对数组执行的最大操作数。
+>   - ***tips:***
+>     - `1 <= nums.length <= 10^5`
+>     - `1 <= nums[i] <= 10^9`
+>     - `1 <= k <= 10^9`
+
 ---
 
 ## *Java*
@@ -471,8 +480,42 @@ class Solution {
 }
 ```
 
+> - ***Question 10: 排序 + 双指针***
+
+```java
+import java.util.*;
+
+class Solution {
+
+    public int maxOperations(int[] nums, int k) {
+        int len = nums.length;
+        int left = 0;
+        int right = 0;
+        Arrays.sort(nums);
+        right = len - 1;
+        int sum = 0;
+        while (left < right) {
+            if (nums[left] + nums[right] == k) {
+                sum++;
+                left++;
+                right--;
+            } else if (nums[left] + nums[right] < k) {
+                left++;
+            } else {
+                right--;
+            }
+
+
+        }
+        return sum;
+
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2024/3/25***
+> ***last change: 2024/3/29***
 
 ---
