@@ -1,4 +1,4 @@
-# SegmentTree线段树代码模板
+# 线段树SegmentTree代码模板
 
 ## [2236. 判断根结点是否等于子结点之和](https://leetcode.cn/problems/root-equals-sum-of-children/)
 
