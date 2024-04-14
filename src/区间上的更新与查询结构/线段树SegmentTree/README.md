@@ -78,6 +78,38 @@
 >     - `1 <= n <= 10^9`
 >     - `1 <= m <= 10^3`
 
+## [Gorgeous Sequence](https://acm.hdu.edu.cn/showproblem.php?pid=5306)
+
+> - ***Question 6***
+>   - 给定一个长度为 `n` 的数组 `arr` ，实现支持以下三种操作的结构：
+>     - `l r x` ：把 `arr[l...r]` 范围的每个数 `v` ，更新成 `min(v, x)` 。
+>     - 操作 `1 l r` ：查询 `arr[l...r]` 范围上的最大值。
+>     - 操作 `2 l r` ：查询 `arr[l...r]` 范围上的累加和。
+>   - 三种操作一共调用 `m` 次，做到时间复杂度 `O(n * logn + m * logn)` 。
+
+## 线段树范围增加操作 + 区间最值操作
+
+> - ***Question 7***
+>   - 给定一个长度为 `n` 的数组 `arr` ，实现支持以下四种操作的结构
+>     - 操作 `l r x` ：把 `arr[l...r]` 范围的每个数 `v` ，增加 `x` 。
+>     - 操作 `l r x` ：把 `arr[l...r]` 范围的每个数 `v` ，更新成 `min(v, x)` 。
+>     - 操作 `l r` ：查询 `arr[l...r]` 范围上的最大值。
+>     - 操作 `l r` ：查询 `arr[l...r]` 范围上的累加和。
+
+## [P6242 【模板】线段树 3（区间最值操作、区间历史最值）](https://www.luogu.com.cn/problem/P6242)
+
+> - ***Question 8***
+>   - 给定两个长度都为 `n` 的数组 `A` 和 `B` ，一开始两个数组完全一样。
+>   - 任何操作做完，都更新 `B` 数组 `B[i] = max(B[i], A[i])` 。
+>   - 实现以下五种操作，一共会调用 `m` 次。
+>     - 操作 `l r v` ： `A[l...r]` 范围上每个数加上 `v` 。
+>     - 操作 `l r v` ： `A[l...r]` 范围上每个数 `A[i]` 变成 `min(A[i],v)` 。
+>     - 操作 `l r` ：返回 `A[l...r]` 范围上的累加和。
+>     - 操作 `l r` ：返回 `A[l...r]` 范围上的最大值。
+>     - 操作 `l r` ：返回 `B[l...r]` 范围上的最大值。
+>   - ***tips:***
+>     - `1 <= n、m <= 5 * 10^5`
+
 ---
 
 ## *Java*
@@ -1508,6 +1540,14 @@ public class Main {
 > - ***Question 5: 开点线段树***
 
 ```java
+// 开点线段树，可以支持很大的范围，一开始不为每个范围都分配空间，当真的需要开辟左侧、右侧的空间时，再临时申请，父范围的空间编号i，利用cnt自增给左右两侧申请的空间，记录在left[i]和right[i]里，除此之外和线段树再无区别
+// 开点线段树适用的范围：需要支持的范围很大，但实际操作数量并不大，此时用开点线段树试试，俗称莽一把，使用空间约等于 : 操作数量 * 树高 * 2，适量调大即可
+// 注意：测试通过的标准稍严，开点线段树很容易被卡，不过只有比赛才可能会卡，笔试一般不会卡
+// 开点线段树的劣势：常数时间不好，相比其他方法还是比较浪费空间
+// 开点线段树的优势：分析难度低，往往理解了开点线段树就很容易想到并轻易使用
+// 大多数情况下都可以被其他方法替代，比如离散化、有序表、堆结构等等
+// 如果数据量允许，莽一把能节省很多思考的时间，但是往往不是最优解，只是时间复杂度不差而已
+// 注意：开点线段树不可被替代的用法是用于线段树的合并与分裂，但是这一话题和树链剖分结合比较紧密
 import java.io.*;
 import java.util.Arrays;
 
@@ -1645,6 +1685,855 @@ public class Main {
         // 但是如果多组测试数据串行调用
         // 就需要加上清空逻辑
         clear();
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
+> - ***Question 6: 吉如一线段树***
+>   - 论文参考 `./references/线段树区间最值操作与历史最值问题-吉如一.pdf` 。
+
+```java
+// 对数器验证
+public class Main {
+
+    public static int MAXN = 100001;
+
+    // 假设初始数组中的值不会出现比LOWEST还小的值
+    // 假设更新操作时jobv的数值也不会出现比LOWEST还小的值
+    public static int LOWEST = -100001;
+
+    // 原始数组
+    public static int[] arr = new int[MAXN];
+
+    // 累加和
+    public static long[] sum = new long[MAXN << 2];
+
+    // 最大值(既是查询信息也是懒更新信息，课上已经讲解了)
+    public static int[] max = new int[MAXN << 2];
+
+    // 最大值个数
+    public static int[] cnt = new int[MAXN << 2];
+
+    // 严格次大值(second max)
+    public static int[] sem = new int[MAXN << 2];
+
+    public static void up(int i) {
+        int l = i << 1;
+        int r = i << 1 | 1;
+        sum[i] = sum[l] + sum[r];
+        max[i] = Math.max(max[l], max[r]);
+        if (max[l] > max[r]) {
+            cnt[i] = cnt[l];
+            sem[i] = Math.max(sem[l], max[r]);
+        } else if (max[l] < max[r]) {
+            cnt[i] = cnt[r];
+            sem[i] = Math.max(max[l], sem[r]);
+        } else {
+            cnt[i] = cnt[l] + cnt[r];
+            sem[i] = Math.max(sem[l], sem[r]);
+        }
+    }
+
+    public static void down(int i) {
+        lazy(i << 1, max[i]);
+        lazy(i << 1 | 1, max[i]);
+    }
+
+    // 一定是没有颠覆掉次大值的懒更新信息下发，也就是说：
+    // 最大值被压成v，并且v > 严格次大值的情况下
+    // sum和max怎么调整
+    public static void lazy(int i, int v) {
+        if (v < max[i]) {
+            sum[i] -= ((long) max[i] - v) * cnt[i];
+            max[i] = v;
+        }
+    }
+
+    public static void build(int l, int r, int i) {
+        if (l == r) {
+            sum[i] = max[i] = arr[l];
+            cnt[i] = 1;
+            sem[i] = LOWEST;
+        } else {
+            int mid = (l + r) >> 1;
+            build(l, mid, i << 1);
+            build(mid + 1, r, i << 1 | 1);
+            up(i);
+        }
+    }
+
+    public static void setMin(int jobl, int jobr, int jobv, int l, int r, int i) {
+        if (jobv >= max[i]) {
+            return;
+        }
+        if (jobl <= l && r <= jobr && sem[i] < jobv) {
+            lazy(i, jobv);
+        } else {
+            // 1) 任务没有全包
+            // 2) jobv <= sem[i]
+            down(i);
+            int mid = (l + r) >> 1;
+            if (jobl <= mid) {
+                setMin(jobl, jobr, jobv, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                setMin(jobl, jobr, jobv, mid + 1, r, i << 1 | 1);
+            }
+            up(i);
+        }
+    }
+
+    public static int queryMax(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return max[i];
+        }
+        down(i);
+        int mid = (l + r) >> 1;
+        int ans = Integer.MIN_VALUE;
+        if (jobl <= mid) {
+            ans = Math.max(ans, queryMax(jobl, jobr, l, mid, i << 1));
+        }
+        if (jobr > mid) {
+            ans = Math.max(ans, queryMax(jobl, jobr, mid + 1, r, i << 1 | 1));
+        }
+        return ans;
+    }
+
+    public static long querySum(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return sum[i];
+        }
+        down(i);
+        int mid = (l + r) >> 1;
+        long ans = 0;
+        if (jobl <= mid) {
+            ans += querySum(jobl, jobr, l, mid, i << 1);
+        }
+        if (jobr > mid) {
+            ans += querySum(jobl, jobr, mid + 1, r, i << 1 | 1);
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("测试开始");
+        int n = 2000;
+        int v = 5000;
+        int t = 1000000;
+        randomArray(n, v);
+        int[] check = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            check[i] = arr[i];
+        }
+        build(1, n, 1);
+        for (int i = 1, op, a, b, jobl, jobr, jobv; i <= t; i++) {
+            op = (int) (Math.random() * 3);
+            a = (int) (Math.random() * n) + 1;
+            b = (int) (Math.random() * n) + 1;
+            jobl = Math.min(a, b);
+            jobr = Math.max(a, b);
+            if (op == 0) {
+                jobv = (int) (Math.random() * v * 2) - v;
+                setMin(jobl, jobr, jobv, 1, n, 1);
+                checkSetMin(check, jobl, jobr, jobv);
+            } else if (op == 1) {
+                int ans1 = queryMax(jobl, jobr, 1, n, 1);
+                int ans2 = checkQueryMax(check, jobl, jobr);
+                if (ans1 != ans2) {
+                    System.out.println("出错了!");
+                }
+            } else {
+                long ans1 = querySum(jobl, jobr, 1, n, 1);
+                long ans2 = checkQuerySum(check, jobl, jobr);
+                if (ans1 != ans2) {
+                    System.out.println("出错了!");
+                }
+            }
+        }
+        System.out.println("测试结束");
+    }
+
+    // 为了验证
+    public static void randomArray(int n, int v) {
+        for (int i = 1; i <= n; i++) {
+            arr[i] = (int) (Math.random() * v * 2) - v;
+        }
+    }
+
+    // 为了验证
+    public static void checkSetMin(int[] check, int jobl, int jobr, int jobv) {
+        for (int i = jobl; i <= jobr; i++) {
+            check[i] = Math.min(check[i], jobv);
+        }
+    }
+
+    // 为了验证
+    public static int checkQueryMax(int[] check, int jobl, int jobr) {
+        int ans = Integer.MIN_VALUE;
+        for (int i = jobl; i <= jobr; i++) {
+            ans = Math.max(ans, check[i]);
+        }
+        return ans;
+    }
+
+    // 为了验证
+    public static long checkQuerySum(int[] check, int jobl, int jobr) {
+        long ans = 0;
+        for (int i = jobl; i <= jobr; i++) {
+            ans += check[i];
+        }
+        return ans;
+    }
+
+}
+
+// OJ
+
+// 每个数字都增加的范围修改操作发生后，setMin暴力执行的势能增加多少？
+// 增加幅度不超过(log n)平方规模，这个量很小
+// setMin的懒更新只会削弱最大值，需要实现setMinLazy函数
+// add的懒更新会增加所有数字的值，需要实现addLazy函数
+// 代码层次的小优化：可以只实现一个lazy函数，设计最大值增加幅度、其他值增加幅度两个入参即可
+
+import java.io.*;
+
+public class Main {
+
+    public static int MAXN = 1000001;
+
+    public static int LOWEST = -1;
+
+    public static long[] sum = new long[MAXN << 2];
+
+    public static int[] max = new int[MAXN << 2];
+
+    public static int[] cnt = new int[MAXN << 2];
+
+    public static int[] sem = new int[MAXN << 2];
+
+    public static void up(int i) {
+        int l = i << 1;
+        int r = i << 1 | 1;
+        sum[i] = sum[l] + sum[r];
+        max[i] = Math.max(max[l], max[r]);
+        if (max[l] > max[r]) {
+            cnt[i] = cnt[l];
+            sem[i] = Math.max(sem[l], max[r]);
+        } else if (max[l] < max[r]) {
+            cnt[i] = cnt[r];
+            sem[i] = Math.max(max[l], sem[r]);
+        } else {
+            cnt[i] = cnt[l] + cnt[r];
+            sem[i] = Math.max(sem[l], sem[r]);
+        }
+    }
+
+    public static void down(int i) {
+        lazy(i << 1, max[i]);
+        lazy(i << 1 | 1, max[i]);
+    }
+
+    // 一定是没有颠覆掉次大值的懒更新信息下发，也就是说：
+    // 最大值被压成v，并且v > 严格次大值的情况下
+    // sum和max怎么调整
+    public static void lazy(int i, int v) {
+        if (v < max[i]) {
+            sum[i] -= ((long) max[i] - v) * cnt[i];
+            max[i] = v;
+        }
+    }
+
+    public static void build(int l, int r, int i) throws IOException {
+        if (l == r) {
+            // 不能生成原始数组然后build
+            // 因为这道题空间非常极限
+            // 生成原始数组然后build
+            // 空间就是会超过限制
+            // 所以build的过程直接从输入流读入
+            // 一般情况下不会这么极限的
+            in.nextToken();
+            sum[i] = max[i] = (int) in.nval;
+            cnt[i] = 1;
+            sem[i] = LOWEST;
+        } else {
+            int mid = (l + r) >> 1;
+            build(l, mid, i << 1);
+            build(mid + 1, r, i << 1 | 1);
+            up(i);
+        }
+    }
+
+    public static void setMin(int jobl, int jobr, int jobv, int l, int r, int i) {
+        if (jobv >= max[i]) {
+            return;
+        }
+        if (jobl <= l && r <= jobr && sem[i] < jobv) {
+            lazy(i, jobv);
+        } else {
+            down(i);
+            int mid = (l + r) >> 1;
+            if (jobl <= mid) {
+                setMin(jobl, jobr, jobv, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                setMin(jobl, jobr, jobv, mid + 1, r, i << 1 | 1);
+            }
+            up(i);
+        }
+    }
+
+    public static int queryMax(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return max[i];
+        }
+        down(i);
+        int mid = (l + r) >> 1;
+        int ans = Integer.MIN_VALUE;
+        if (jobl <= mid) {
+            ans = Math.max(ans, queryMax(jobl, jobr, l, mid, i << 1));
+        }
+        if (jobr > mid) {
+            ans = Math.max(ans, queryMax(jobl, jobr, mid + 1, r, i << 1 | 1));
+        }
+        return ans;
+    }
+
+    public static long querySum(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return sum[i];
+        }
+        down(i);
+        int mid = (l + r) >> 1;
+        long ans = 0;
+        if (jobl <= mid) {
+            ans += querySum(jobl, jobr, l, mid, i << 1);
+        }
+        if (jobr > mid) {
+            ans += querySum(jobl, jobr, mid + 1, r, i << 1 | 1);
+        }
+        return ans;
+    }
+
+    // 为了不生成原始数组
+    // 让build函数可以直接从输入流拿数据
+    // 所以把输入输出流定义成全局静态变量
+    public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    public static StreamTokenizer in = new StreamTokenizer(br);
+
+    public static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+        in.nextToken();
+        int testCases = (int) in.nval;
+        for (int t = 1; t <= testCases; t++) {
+            in.nextToken();
+            int n = (int) in.nval;
+            in.nextToken();
+            int m = (int) in.nval;
+            build(1, n, 1);
+            for (int i = 1, op, jobl, jobr, jobv; i <= m; i++) {
+                in.nextToken();
+                op = (int) in.nval;
+                if (op == 0) {
+                    in.nextToken();
+                    jobl = (int) in.nval;
+                    in.nextToken();
+                    jobr = (int) in.nval;
+                    in.nextToken();
+                    jobv = (int) in.nval;
+                    setMin(jobl, jobr, jobv, 1, n, 1);
+                } else if (op == 1) {
+                    in.nextToken();
+                    jobl = (int) in.nval;
+                    in.nextToken();
+                    jobr = (int) in.nval;
+                    out.println(queryMax(jobl, jobr, 1, n, 1));
+                } else {
+                    in.nextToken();
+                    jobl = (int) in.nval;
+                    in.nextToken();
+                    jobr = (int) in.nval;
+                    out.println(querySum(jobl, jobr, 1, n, 1));
+                }
+            }
+        }
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
+> - ***Question 7***
+
+```java
+public class Main {
+
+    public static int MAXN = 500001;
+
+    public static long LOWEST = Long.MIN_VALUE;
+
+    // 原始数组
+    public static int[] arr = new int[MAXN];
+
+    // 累加和信息(查询信息)
+    public static long[] sum = new long[MAXN << 2];
+
+    // 最大值信息(只是查询信息，不再是懒更新信息，懒更新功能被maxAdd数组替代了)
+    public static long[] max = new long[MAXN << 2];
+
+    // 最大值个数(查询信息)
+    public static int[] cnt = new int[MAXN << 2];
+
+    // 严格次大值(查询信息)
+    public static long[] sem = new long[MAXN << 2];
+
+    // 最大值的增加幅度(懒更新信息)
+    public static long[] maxAdd = new long[MAXN << 2];
+
+    // 除最大值以外其他数字的增加幅度(懒更新信息)
+    public static long[] otherAdd = new long[MAXN << 2];
+
+    public static void up(int i) {
+        int l = i << 1;
+        int r = i << 1 | 1;
+        sum[i] = sum[l] + sum[r];
+        max[i] = Math.max(max[l], max[r]);
+        if (max[l] > max[r]) {
+            cnt[i] = cnt[l];
+            sem[i] = Math.max(sem[l], max[r]);
+        } else if (max[l] < max[r]) {
+            cnt[i] = cnt[r];
+            sem[i] = Math.max(max[l], sem[r]);
+        } else {
+            cnt[i] = cnt[l] + cnt[r];
+            sem[i] = Math.max(sem[l], sem[r]);
+        }
+    }
+
+    public static void lazy(int i, int n, long maxAddv, long otherAddv) {
+        sum[i] += maxAddv * cnt[i] + otherAddv * (n - cnt[i]);
+        max[i] += maxAddv;
+        sem[i] += sem[i] == LOWEST ? 0 : otherAddv;
+        maxAdd[i] += maxAddv;
+        otherAdd[i] += otherAddv;
+    }
+
+    public static void down(int i, int ln, int rn) {
+        int l = i << 1;
+        int r = i << 1 | 1;
+        // 为什么拿全局最大值不写成 : tmp = max[i]
+        // 因为父亲范围的最大值可能已经被懒更新任务修改过了
+        // 现在希望拿的是懒更新之前的最大值
+        // 子范围的max值没有修改过，所以写成 : tmp = Math.max(max[l], max[r])
+        long tmp = Math.max(max[l], max[r]);
+        if (max[l] == tmp) {
+            lazy(l, ln, maxAdd[i], otherAdd[i]);
+        } else {
+            lazy(l, ln, otherAdd[i], otherAdd[i]);
+        }
+        if (max[r] == tmp) {
+            lazy(r, rn, maxAdd[i], otherAdd[i]);
+        } else {
+            lazy(r, rn, otherAdd[i], otherAdd[i]);
+        }
+        maxAdd[i] = otherAdd[i] = 0;
+    }
+
+    public static void build(int l, int r, int i) {
+        if (l == r) {
+            sum[i] = max[i] = arr[l];
+            sem[i] = LOWEST;
+            cnt[i] = 1;
+        } else {
+            int mid = (l + r) >> 1;
+            build(l, mid, i << 1);
+            build(mid + 1, r, i << 1 | 1);
+            up(i);
+        }
+        maxAdd[i] = otherAdd[i] = 0;
+    }
+
+    public static void add(int jobl, int jobr, long jobv, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            lazy(i, r - l + 1, jobv, jobv);
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            if (jobl <= mid) {
+                add(jobl, jobr, jobv, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                add(jobl, jobr, jobv, mid + 1, r, i << 1 | 1);
+            }
+            up(i);
+        }
+    }
+
+    public static void setMin(int jobl, int jobr, long jobv, int l, int r, int i) {
+        if (jobv >= max[i]) {
+            return;
+        }
+        if (jobl <= l && r <= jobr && sem[i] < jobv) {
+            lazy(i, r - l + 1, jobv - max[i], 0);
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            if (jobl <= mid) {
+                setMin(jobl, jobr, jobv, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                setMin(jobl, jobr, jobv, mid + 1, r, i << 1 | 1);
+            }
+            up(i);
+        }
+    }
+
+    public static long querySum(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return sum[i];
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            long ans = 0;
+            if (jobl <= mid) {
+                ans += querySum(jobl, jobr, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                ans += querySum(jobl, jobr, mid + 1, r, i << 1 | 1);
+            }
+            return ans;
+        }
+    }
+
+    public static long queryMax(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return max[i];
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            Long ans = Long.MIN_VALUE;
+            if (jobl <= mid) {
+                ans = Math.max(ans, queryMax(jobl, jobr, l, mid, i << 1));
+            }
+            if (jobr > mid) {
+                ans = Math.max(ans, queryMax(jobl, jobr, mid + 1, r, i << 1 | 1));
+            }
+            return ans;
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("测试开始");
+        int n = 2000;
+        int v = 5000;
+        int t = 1000000;
+        randomArray(n, v);
+        long[] check = new long[n + 1];
+        for (int i = 1; i <= n; i++) {
+            check[i] = arr[i];
+        }
+        build(1, n, 1);
+        for (int i = 1, op, a, b, jobl, jobr, jobv; i <= t; i++) {
+            op = (int) (Math.random() * 4);
+            a = (int) (Math.random() * n) + 1;
+            b = (int) (Math.random() * n) + 1;
+            jobl = Math.min(a, b);
+            jobr = Math.max(a, b);
+            if (op == 0) {
+                jobv = (int) (Math.random() * v * 2) - v;
+                add(jobl, jobr, jobv, 1, n, 1);
+                checkAdd(check, jobl, jobr, jobv);
+            } else if (op == 1) {
+                jobv = (int) (Math.random() * v * 2) - v;
+                setMin(jobl, jobr, jobv, 1, n, 1);
+                checkSetMin(check, jobl, jobr, jobv);
+            } else if (op == 2) {
+                long ans1 = queryMax(jobl, jobr, 1, n, 1);
+                long ans2 = checkQueryMax(check, jobl, jobr);
+                if (ans1 != ans2) {
+                    System.out.println("出错了!");
+                }
+            } else {
+                long ans1 = querySum(jobl, jobr, 1, n, 1);
+                long ans2 = checkQuerySum(check, jobl, jobr);
+                if (ans1 != ans2) {
+                    System.out.println("出错了!");
+                }
+            }
+        }
+        System.out.println("测试结束");
+    }
+
+    // 为了验证
+    public static void randomArray(int n, int v) {
+        for (int i = 1; i <= n; i++) {
+            arr[i] = (int) (Math.random() * v * 2) - v;
+        }
+    }
+
+    // 为了验证
+    public static void checkAdd(long[] check, int jobl, int jobr, long jobv) {
+        for (int i = jobl; i <= jobr; i++) {
+            check[i] += jobv;
+        }
+    }
+
+    // 为了验证
+    public static void checkSetMin(long[] check, int jobl, int jobr, long jobv) {
+        for (int i = jobl; i <= jobr; i++) {
+            check[i] = Math.min(check[i], jobv);
+        }
+    }
+
+    // 为了验证
+    public static long checkQueryMax(long[] check, int jobl, int jobr) {
+        long ans = Long.MIN_VALUE;
+        for (int i = jobl; i <= jobr; i++) {
+            ans = Math.max(ans, check[i]);
+        }
+        return ans;
+    }
+
+    // 为了验证
+    public static long checkQuerySum(long[] check, int jobl, int jobr) {
+        long ans = 0;
+        for (int i = jobl; i <= jobr; i++) {
+            ans += check[i];
+        }
+        return ans;
+    }
+
+}
+```
+
+> - ***Question 8: 线段树维护区间最值操作与区间历史最值模板***
+
+```java
+import java.io.*;
+
+public class Main {
+
+    public static int MAXN = 500001;
+
+    public static long LOWEST = Long.MIN_VALUE;
+
+    public static int[] arr = new int[MAXN];
+
+    public static long[] sum = new long[MAXN << 2];
+
+    public static long[] max = new long[MAXN << 2];
+
+    public static int[] cnt = new int[MAXN << 2];
+
+    public static long[] sem = new long[MAXN << 2];
+
+    public static long[] maxAdd = new long[MAXN << 2];
+
+    public static long[] otherAdd = new long[MAXN << 2];
+
+    // 历史最大值
+    public static long[] maxHistory = new long[MAXN << 2];
+
+    // 最大值达到过的最大提升幅度(懒更新信息)
+    public static long[] maxAddTop = new long[MAXN << 2];
+
+    // 除最大值以外的其他数字，达到过的最大提升幅度(懒更新信息)
+    public static long[] otherAddTop = new long[MAXN << 2];
+
+    public static void up(int i) {
+        int l = i << 1;
+        int r = i << 1 | 1;
+        maxHistory[i] = Math.max(maxHistory[l], maxHistory[r]);
+        sum[i] = sum[l] + sum[r];
+        max[i] = Math.max(max[l], max[r]);
+        if (max[l] > max[r]) {
+            cnt[i] = cnt[l];
+            sem[i] = Math.max(sem[l], max[r]);
+        } else if (max[l] < max[r]) {
+            cnt[i] = cnt[r];
+            sem[i] = Math.max(max[l], sem[r]);
+        } else {
+            cnt[i] = cnt[l] + cnt[r];
+            sem[i] = Math.max(sem[l], sem[r]);
+        }
+    }
+
+    // maxAddv   : 最大值增加多少
+    // otherAddv : 其他数增加多少
+    // maxUpv    : 最大值达到过的最大提升幅度
+    // otherUpv  : 其他数达到过的最大提升幅度
+    public static void lazy(int i, int n, long maxAddv, long otherAddv, long maxUpv, long otherUpv) {
+        maxHistory[i] = Math.max(maxHistory[i], max[i] + maxUpv);
+        maxAddTop[i] = Math.max(maxAddTop[i], maxAdd[i] + maxUpv);
+        otherAddTop[i] = Math.max(otherAddTop[i], otherAdd[i] + otherUpv);
+        sum[i] += maxAddv * cnt[i] + otherAddv * (n - cnt[i]);
+        max[i] += maxAddv;
+        sem[i] += sem[i] == LOWEST ? 0 : otherAddv;
+        maxAdd[i] += maxAddv;
+        otherAdd[i] += otherAddv;
+    }
+
+    public static void down(int i, int ln, int rn) {
+        int l = i << 1;
+        int r = i << 1 | 1;
+        long tmp = Math.max(max[l], max[r]);
+        if (max[l] == tmp) {
+            lazy(l, ln, maxAdd[i], otherAdd[i], maxAddTop[i], otherAddTop[i]);
+        } else {
+            lazy(l, ln, otherAdd[i], otherAdd[i], otherAddTop[i], otherAddTop[i]);
+        }
+        if (max[r] == tmp) {
+            lazy(r, rn, maxAdd[i], otherAdd[i], maxAddTop[i], otherAddTop[i]);
+        } else {
+            lazy(r, rn, otherAdd[i], otherAdd[i], otherAddTop[i], otherAddTop[i]);
+        }
+        maxAdd[i] = otherAdd[i] = maxAddTop[i] = otherAddTop[i] = 0;
+    }
+
+    public static void build(int l, int r, int i) {
+        if (l == r) {
+            sum[i] = max[i] = maxHistory[i] = arr[l];
+            sem[i] = LOWEST;
+            cnt[i] = 1;
+        } else {
+            int mid = (l + r) >> 1;
+            build(l, mid, i << 1);
+            build(mid + 1, r, i << 1 | 1);
+            up(i);
+        }
+        maxAdd[i] = otherAdd[i] = maxAddTop[i] = otherAddTop[i] = 0;
+    }
+
+    public static void add(int jobl, int jobr, long jobv, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            lazy(i, r - l + 1, jobv, jobv, jobv, jobv);
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            if (jobl <= mid) {
+                add(jobl, jobr, jobv, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                add(jobl, jobr, jobv, mid + 1, r, i << 1 | 1);
+            }
+            up(i);
+        }
+    }
+
+    public static void setMin(int jobl, int jobr, long jobv, int l, int r, int i) {
+        if (jobv >= max[i]) {
+            return;
+        }
+        if (jobl <= l && r <= jobr && sem[i] < jobv) {
+            lazy(i, r - l + 1, jobv - max[i], 0, jobv - max[i], 0);
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            if (jobl <= mid) {
+                setMin(jobl, jobr, jobv, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                setMin(jobl, jobr, jobv, mid + 1, r, i << 1 | 1);
+            }
+            up(i);
+        }
+    }
+
+    public static long querySum(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return sum[i];
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            long ans = 0;
+            if (jobl <= mid) {
+                ans += querySum(jobl, jobr, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                ans += querySum(jobl, jobr, mid + 1, r, i << 1 | 1);
+            }
+            return ans;
+        }
+    }
+
+    public static long queryMax(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return max[i];
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            Long ans = Long.MIN_VALUE;
+            if (jobl <= mid) {
+                ans = Math.max(ans, queryMax(jobl, jobr, l, mid, i << 1));
+            }
+            if (jobr > mid) {
+                ans = Math.max(ans, queryMax(jobl, jobr, mid + 1, r, i << 1 | 1));
+            }
+            return ans;
+        }
+    }
+
+    public static long queryHistoryMax(int jobl, int jobr, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return maxHistory[i];
+        } else {
+            int mid = (l + r) >> 1;
+            down(i, mid - l + 1, r - mid);
+            Long ans = Long.MIN_VALUE;
+            if (jobl <= mid) {
+                ans = Math.max(ans, queryHistoryMax(jobl, jobr, l, mid, i << 1));
+            }
+            if (jobr > mid) {
+                ans = Math.max(ans, queryHistoryMax(jobl, jobr, mid + 1, r, i << 1 | 1));
+            }
+            return ans;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        in.nextToken();
+        int n = (int) in.nval;
+        in.nextToken();
+        int m = (int) in.nval;
+        for (int i = 1; i <= n; i++) {
+            in.nextToken();
+            arr[i] = (int) in.nval;
+        }
+        build(1, n, 1);
+        long jobv;
+        for (int i = 1, op, jobl, jobr; i <= m; i++) {
+            in.nextToken();
+            op = (int) in.nval;
+            in.nextToken();
+            jobl = (int) in.nval;
+            in.nextToken();
+            jobr = (int) in.nval;
+            if (op == 1) {
+                in.nextToken();
+                jobv = (long) in.nval;
+                add(jobl, jobr, jobv, 1, n, 1);
+            } else if (op == 2) {
+                in.nextToken();
+                jobv = (long) in.nval;
+                setMin(jobl, jobr, jobv, 1, n, 1);
+            } else if (op == 3) {
+                out.println(querySum(jobl, jobr, 1, n, 1));
+            } else if (op == 4) {
+                out.println(queryMax(jobl, jobr, 1, n, 1));
+            } else {
+                out.println(queryHistoryMax(jobl, jobr, 1, n, 1));
+            }
+        }
         out.flush();
         out.close();
         br.close();
