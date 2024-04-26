@@ -44,6 +44,13 @@
 >     - 至少调用 `all, one, count, toString` 方法一次
 >     - 至多调用 `toString` 方法 `5` 次
 
+## 左老师课堂讲述
+
+> - ***Question 4***
+>   - 给定一个正数 `x` ，已知用 `m` 个二进制位一定能表示 `x` ，从高位到低位打印 `x` 每一位的状态
+> - ***Question 5***
+>   - 给定一个正数 `x` ，打印 `<=x` 最大的 `2` 的幂，到底是 `2` 的几次方。
+
 ---
 
 ## *Java*
@@ -378,8 +385,66 @@ class Bitset {
 }
 ```
 
+> - ***Question 4 & Question 5***
+
+```java
+import java.io.*;
+import java.util.Arrays;
+
+public class Main {
+
+    // 给定一个正数x
+    // 已知用m个二进制位一定能表示x
+    // 从高位到低位打印x每一位的状态
+    public static void show1(int x, int m) {
+        for (int p = m - 1, t = x; p >= 0; p--) {
+            if (1 << p <= t) {
+                t -= 1 << p;
+                System.out.println(x + "的第" + p + "位是1");
+            } else {
+                System.out.println(x + "的第" + p + "位是0");
+            }
+        }
+    }
+
+    // 给定一个正数x
+    // 打印<=x最大的2的幂
+    // 到底是2的几次方
+    public static void show2(int x) {
+        int power = 0;
+
+        // 以下注释掉的写法不对，没有考虑溢出
+        // while ((1 << power) <= x) {
+        //  power++;
+        // }
+        // power--;
+
+        // 防止溢出的写法
+        while ((1 << power) <= (x >> 1)) {
+            power++;
+        }
+        System.out.println("<=" + x + "最大的2的幂，是2的" + power + "次方");
+    }
+
+    public static void main(String[] args) {
+        // 需要保证用m个二进制位一定能表示x
+        int x = 101;
+        int m = 10;
+        show1(x, m);
+
+        x = 13;
+        show2(x);
+        x = 16;
+        show2(x);
+        x = 2000000000;
+        show2(x);
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2023/10/9***
+> ***last change: 2024/4/26***
 
 ---
