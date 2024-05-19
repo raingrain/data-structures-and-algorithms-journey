@@ -11,7 +11,7 @@
 
 ## *Java*
 
-> - ***递归版***
+> - ***点差分递归版***
 
 ```java
 import java.io.*;
@@ -155,7 +155,7 @@ public class Main {
 }
 ```
 
-> - ***迭代版***
+> - ***点差分迭代版***
 
 ```java
 import java.io.*;
