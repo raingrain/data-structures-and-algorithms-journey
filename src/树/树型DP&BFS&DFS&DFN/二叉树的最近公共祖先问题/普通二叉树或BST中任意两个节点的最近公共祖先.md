@@ -32,6 +32,20 @@
 > - ***Question 3***
 >   - 实现在线批量查询两个节点的最近公共祖先。
 
+## [P3379 【模板】最近公共祖先（LCA）](https://www.luogu.com.cn/problem/P3379)
+
+> - ***Question 4***
+>   - 如题，给定一棵有根多叉树，请求出指定两个点直接最近的公共祖先。
+>   - ***输入描述***
+>     - 第一行包含三个正整数 `N, M, S` ，分别表示树的结点个数、询问的个数和树根结点的序号。
+>     - 接下来 `N - 1` 行每行包含两个正整数 `x, y` ，表示 `x` 结点和 `y` 结点之间有一条直接连接的边（数据保证可以构成树）。
+>     - 接下来 `M` 行每行包含两个正整数 `a, b`，表示询问 `a` 结点和 `b` 结点的最近公共祖先。
+>   - ***输出描述***
+>     - 输出包含 `M` 行，每行包含一个正整数，依次为每一个询问的结果。
+>   - ***tips:***
+>     - `1 <= N, M <= 500000`
+>     - `1 <= x, y, a, b <= N`
+
 ---
 
 ## *Java*
@@ -218,6 +232,7 @@ class Solution {
 
 > - ***Question 2: Tarjan算法 + 并查集***
 >   - ![images](images/Tarjan算法与并查集解决二叉树节点间最近公共祖先的批量查询问题.jpg)
+>   - 如果节点数 `n` ，查询数量 `m` ，过程总的时间复杂度 `O(n + m)` ，但是只能做批量离线查询。
 
 ```java
 class Solution {
@@ -473,8 +488,608 @@ class Solution {
 }
 ```
 
+> - ***Question 4: 树上倍增递归版***
+>   - 先让 `a` 和 `b` 往上跳到同一层，利用倍增算法找到a和b的最低公共祖先。
+>   - 如果节点数为 `n` ，建立预处理结构的时间复杂度 `O(n * logn)` ，单次查询的时间复杂度 `O(log n)` ，优势是可以在线查询，如果一共 `m` 条查询，那么查询的总复杂度 `O(m * logn)` 。
+
+```java
+import java.io.*;
+import java.util.Arrays;
+
+public class Main {
+
+    public static int MAXN = 500001;
+
+    public static int LIMIT = 20;
+
+    // 根据节点个数n，计算出2的几次方就够用了
+    public static int power;
+
+    public static int log2(int n) {
+        int ans = 0;
+        while ((1 << ans) <= (n >> 1)) {
+            ans++;
+        }
+        return ans;
+    }
+
+    // 链式前向星建图
+    public static int[] head = new int[MAXN];
+
+    public static int[] next = new int[MAXN << 1];
+
+    public static int[] to = new int[MAXN << 1];
+
+    public static int cnt;
+
+    // deep[i] : 节点i在第几层
+    public static int[] deep = new int[MAXN];
+
+    // stjump[i][p] : 节点i往上跳2的p次方步，到达的节点编号
+    public static int[][] stjump = new int[MAXN][LIMIT];
+
+    public static void build(int n) {
+        power = log2(n);
+        cnt = 1;
+        Arrays.fill(head, 1, n + 1, 0);
+    }
+
+    public static void addEdge(int u, int v) {
+        next[cnt] = head[u];
+        to[cnt] = v;
+        head[u] = cnt++;
+    }
+
+    // dfs递归版
+    // 一般来说都这么写，但是本题附加的测试数据很毒
+    // java这么写就会因为递归太深而爆栈，c++这么写就能通过
+    public static void dfs(int u, int f) {
+        deep[u] = deep[f] + 1;
+        stjump[u][0] = f;
+        for (int p = 1; p <= power; p++) {
+            stjump[u][p] = stjump[stjump[u][p - 1]][p - 1];
+        }
+        for (int e = head[u]; e != 0; e = next[e]) {
+            if (to[e] != f) {
+                dfs(to[e], u);
+            }
+        }
+    }
+
+    public static int lca(int a, int b) {
+        if (deep[a] < deep[b]) {
+            int tmp = a;
+            a = b;
+            b = tmp;
+        }
+        for (int p = power; p >= 0; p--) {
+            if (deep[stjump[a][p]] >= deep[b]) {
+                a = stjump[a][p];
+            }
+        }
+        if (a == b) {
+            return a;
+        }
+        for (int p = power; p >= 0; p--) {
+            if (stjump[a][p] != stjump[b][p]) {
+                a = stjump[a][p];
+                b = stjump[b][p];
+            }
+        }
+        return stjump[a][0];
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        in.nextToken();
+        int n = (int) in.nval;
+        in.nextToken();
+        int m = (int) in.nval;
+        in.nextToken();
+        int root = (int) in.nval;
+        build(n);
+        for (int i = 1, u, v; i < n; i++) {
+            in.nextToken();
+            u = (int) in.nval;
+            in.nextToken();
+            v = (int) in.nval;
+            addEdge(u, v);
+            addEdge(v, u);
+        }
+        dfs(root, 0);
+        for (int i = 1, a, b; i <= m; i++) {
+            in.nextToken();
+            a = (int) in.nval;
+            in.nextToken();
+            b = (int) in.nval;
+            out.println(lca(a, b));
+        }
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
+> - ***Question 4: 树上倍增迭代版***
+
+```java
+import java.io.*;
+import java.util.Arrays;
+
+public class Main {
+
+    public static int MAXN = 500001;
+
+    public static int LIMIT = 20;
+
+    public static int power;
+
+    public static int log2(int n) {
+        int ans = 0;
+        while ((1 << ans) <= (n >> 1)) {
+            ans++;
+        }
+        return ans;
+    }
+
+    public static int cnt;
+
+    public static int[] head = new int[MAXN];
+
+    public static int[] next = new int[MAXN << 1];
+
+    public static int[] to = new int[MAXN << 1];
+
+    public static int[][] stjump = new int[MAXN][LIMIT];
+
+    public static int[] deep = new int[MAXN];
+
+    public static void build(int n) {
+        power = log2(n);
+        cnt = 1;
+        Arrays.fill(head, 1, n + 1, 0);
+    }
+
+    public static void addEdge(int u, int v) {
+        next[cnt] = head[u];
+        to[cnt] = v;
+        head[u] = cnt++;
+    }
+
+    // dfs迭代版
+    // nfe是为了实现迭代版而准备的栈
+    public static int[][] ufe = new int[MAXN][3];
+
+    public static int stackSize, u, f, e;
+
+    public static void push(int u, int f, int e) {
+        ufe[stackSize][0] = u;
+        ufe[stackSize][1] = f;
+        ufe[stackSize][2] = e;
+        stackSize++;
+    }
+
+    public static void pop() {
+        --stackSize;
+        u = ufe[stackSize][0];
+        f = ufe[stackSize][1];
+        e = ufe[stackSize][2];
+    }
+
+    public static void dfs(int root) {
+        stackSize = 0;
+        // 栈里存放三个信息
+        // u : 当前处理的点
+        // f : 当前点u的父节点
+        // e : 处理到几号边了
+        // 如果e==-1，表示之前没有处理过u的任何边
+        // 如果e==0，表示u的边都已经处理完了
+        push(root, 0, -1);
+        while (stackSize > 0) {
+            pop();
+            if (e == -1) {
+                deep[u] = deep[f] + 1;
+                stjump[u][0] = f;
+                for (int p = 1; p <= power; p++) {
+                    stjump[u][p] = stjump[stjump[u][p - 1]][p - 1];
+                }
+                e = head[u];
+            } else {
+                e = next[e];
+            }
+            if (e != 0) {
+                push(u, f, e);
+                if (to[e] != f) {
+                    push(to[e], u, -1);
+                }
+            }
+        }
+    }
+
+    public static int lca(int a, int b) {
+        if (deep[a] < deep[b]) {
+            int tmp = a;
+            a = b;
+            b = tmp;
+        }
+        for (int p = power; p >= 0; p--) {
+            if (deep[stjump[a][p]] >= deep[b]) {
+                a = stjump[a][p];
+            }
+        }
+        if (a == b) {
+            return a;
+        }
+        for (int p = power; p >= 0; p--) {
+            if (stjump[a][p] != stjump[b][p]) {
+                a = stjump[a][p];
+                b = stjump[b][p];
+            }
+        }
+        return stjump[a][0];
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        in.nextToken();
+        int n = (int) in.nval;
+        in.nextToken();
+        int m = (int) in.nval;
+        in.nextToken();
+        int root = (int) in.nval;
+        build(n);
+        for (int i = 1, u, v; i < n; i++) {
+            in.nextToken();
+            u = (int) in.nval;
+            in.nextToken();
+            v = (int) in.nval;
+            addEdge(u, v);
+            addEdge(v, u);
+        }
+        dfs(root);
+        for (int i = 1, a, b; i <= m; i++) {
+            in.nextToken();
+            a = (int) in.nval;
+            in.nextToken();
+            b = (int) in.nval;
+            out.println(lca(a, b));
+        }
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
+> - ***Question 4: Tarjan递归版***
+
+```java
+import java.io.*;
+import java.util.Arrays;
+
+public class Main {
+
+    public static int MAXN = 500001;
+
+    // 链式前向星建图
+    public static int[] headEdge = new int[MAXN];
+
+    public static int[] edgeNext = new int[MAXN << 1];
+
+    public static int[] edgeTo = new int[MAXN << 1];
+
+    public static int tcnt;
+
+    // 每个节点有哪些查询，也用链式前向星方式存储
+    public static int[] headQuery = new int[MAXN];
+
+    public static int[] queryNext = new int[MAXN << 1];
+
+    public static int[] queryTo = new int[MAXN << 1];
+
+    // 问题的编号，一旦有答案可以知道填写在哪
+    public static int[] queryIndex = new int[MAXN << 1];
+
+    public static int qcnt;
+
+    // 某个节点是否访问过
+    public static boolean[] visited = new boolean[MAXN];
+
+    // 并查集
+    public static int[] father = new int[MAXN];
+
+    // 收集的答案
+    public static int[] ans = new int[MAXN];
+
+    public static void build(int n) {
+        tcnt = qcnt = 1;
+        Arrays.fill(headEdge, 1, n + 1, 0);
+        Arrays.fill(headQuery, 1, n + 1, 0);
+        Arrays.fill(visited, 1, n + 1, false);
+        for (int i = 1; i <= n; i++) {
+            father[i] = i;
+        }
+    }
+
+    public static void addEdge(int u, int v) {
+        edgeNext[tcnt] = headEdge[u];
+        edgeTo[tcnt] = v;
+        headEdge[u] = tcnt++;
+    }
+
+    public static void addQuery(int u, int v, int i) {
+        queryNext[qcnt] = headQuery[u];
+        queryTo[qcnt] = v;
+        queryIndex[qcnt] = i;
+        headQuery[u] = qcnt++;
+    }
+
+    // 并查集找头节点递归版
+    // 一般来说都这么写，但是本题附加的测试数据很毒
+    // java这么写就会因为递归太深而爆栈，C++这么写就能通过
+    public static int find(int i) {
+        if (i != father[i]) {
+            father[i] = find(father[i]);
+        }
+        return father[i];
+    }
+
+    // tarjan算法递归版
+    // 一般来说都这么写，但是本题附加的测试数据很毒
+    // java这么写就会因为递归太深而爆栈，C++这么写就能通过
+    public static void tarjan(int u, int f) {
+        visited[u] = true;
+        for (int e = headEdge[u], v; e != 0; e = edgeNext[e]) {
+            v = edgeTo[e];
+            if (v != f) {
+                tarjan(v, u);
+                father[v] = u;
+            }
+        }
+        for (int e = headQuery[u], v; e != 0; e = queryNext[e]) {
+            v = queryTo[e];
+            if (visited[v]) {
+                ans[queryIndex[e]] = find(v);
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        in.nextToken();
+        int n = (int) in.nval;
+        in.nextToken();
+        int m = (int) in.nval;
+        in.nextToken();
+        int root = (int) in.nval;
+        build(n);
+        for (int i = 1, u, v; i < n; i++) {
+            in.nextToken();
+            u = (int) in.nval;
+            in.nextToken();
+            v = (int) in.nval;
+            addEdge(u, v);
+            addEdge(v, u);
+        }
+        for (int i = 1, u, v; i <= m; i++) {
+            in.nextToken();
+            u = (int) in.nval;
+            in.nextToken();
+            v = (int) in.nval;
+            addQuery(u, v, i);
+            addQuery(v, u, i);
+        }
+        tarjan(root, 0);
+        for (int i = 1; i <= m; i++) {
+            out.println(ans[i]);
+        }
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
+> - ***Question 4: Tarjan迭代版***
+
+```java
+import java.io.*;
+import java.util.Arrays;
+
+public class Main {
+
+    public static int MAXN = 500001;
+
+    public static int[] headEdge = new int[MAXN];
+
+    public static int[] edgeNext = new int[MAXN << 1];
+
+    public static int[] edgeTo = new int[MAXN << 1];
+
+    public static int tcnt;
+
+    public static int[] headQuery = new int[MAXN];
+
+    public static int[] queryNext = new int[MAXN << 1];
+
+    public static int[] queryTo = new int[MAXN << 1];
+
+    public static int[] queryIndex = new int[MAXN << 1];
+
+    public static int qcnt;
+
+    public static boolean[] visited = new boolean[MAXN];
+
+    public static int[] father = new int[MAXN];
+
+    public static int[] ans = new int[MAXN];
+
+    public static void build(int n) {
+        tcnt = qcnt = 1;
+        Arrays.fill(headEdge, 1, n + 1, 0);
+        Arrays.fill(headQuery, 1, n + 1, 0);
+        Arrays.fill(visited, 1, n + 1, false);
+        for (int i = 1; i <= n; i++) {
+            father[i] = i;
+        }
+    }
+
+    public static void addEdge(int u, int v) {
+        edgeNext[tcnt] = headEdge[u];
+        edgeTo[tcnt] = v;
+        headEdge[u] = tcnt++;
+    }
+
+    public static void addQuery(int u, int v, int i) {
+        queryNext[qcnt] = headQuery[u];
+        queryTo[qcnt] = v;
+        queryIndex[qcnt] = i;
+        headQuery[u] = qcnt++;
+    }
+
+    // 为了实现迭代版而准备的栈
+    public static int[] stack = new int[MAXN];
+
+    // 并查集找头节点迭代版
+    public static int find(int i) {
+        int size = 0;
+        while (i != father[i]) {
+            stack[size++] = i;
+            i = father[i];
+        }
+        while (size > 0) {
+            father[stack[--size]] = i;
+        }
+        return i;
+    }
+
+    // 为了实现迭代版而准备的栈
+    public static int[][] ufe = new int[MAXN][3];
+
+    public static int stackSize, u, f, e;
+
+    public static void push(int u, int f, int e) {
+        ufe[stackSize][0] = u;
+        ufe[stackSize][1] = f;
+        ufe[stackSize][2] = e;
+        stackSize++;
+    }
+
+    public static void pop() {
+        --stackSize;
+        u = ufe[stackSize][0];
+        f = ufe[stackSize][1];
+        e = ufe[stackSize][2];
+    }
+
+    // 为了容易改成迭代版，修改一下递归版
+    public static void tarjan(int u, int f) {
+        visited[u] = true;
+        for (int e = headEdge[u], v; e != 0; e = edgeNext[e]) {
+            v = edgeTo[e];
+            if (v != f) {
+                tarjan(v, u);
+                // 注意这里，注释了一行
+//    father[v] = u;
+            }
+        }
+        for (int e = headQuery[u], v; e != 0; e = queryNext[e]) {
+            v = queryTo[e];
+            if (visited[v]) {
+                ans[queryIndex[e]] = find(v);
+            }
+        }
+        // 注意这里，增加了一行
+        father[u] = f;
+    }
+
+    // tarjan算法迭代版，根据上面的递归版改写
+    public static void tarjan(int root) {
+        stackSize = 0;
+        // 栈里存放三个信息
+        // u : 当前处理的点
+        // f : 当前点u的父节点
+        // e : 处理到几号边了
+        // 如果e==-1，表示之前没有处理过u的任何边
+        // 如果e==0，表示u的边都已经处理完了
+        push(root, 0, -1);
+        while (stackSize > 0) {
+            pop();
+            if (e == -1) {
+                visited[u] = true;
+                e = headEdge[u];
+            } else {
+                e = edgeNext[e];
+            }
+            if (e != 0) {
+                push(u, f, e);
+                if (edgeTo[e] != f) {
+                    push(edgeTo[e], u, -1);
+                }
+            } else {
+                // e == 0代表u后续已经没有边需要处理了
+                for (int q = headQuery[u], v; q != 0; q = queryNext[q]) {
+                    v = queryTo[q];
+                    if (visited[v]) {
+                        ans[queryIndex[q]] = find(v);
+                    }
+                }
+                father[u] = f;
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        in.nextToken();
+        int n = (int) in.nval;
+        in.nextToken();
+        int m = (int) in.nval;
+        in.nextToken();
+        int root = (int) in.nval;
+        build(n);
+        for (int i = 1, u, v; i < n; i++) {
+            in.nextToken();
+            u = (int) in.nval;
+            in.nextToken();
+            v = (int) in.nval;
+            addEdge(u, v);
+            addEdge(v, u);
+        }
+        for (int i = 1, u, v; i <= m; i++) {
+            in.nextToken();
+            u = (int) in.nval;
+            in.nextToken();
+            v = (int) in.nval;
+            addQuery(u, v, i);
+            addQuery(v, u, i);
+        }
+        tarjan(root);
+        for (int i = 1; i <= m; i++) {
+            out.println(ans[i]);
+        }
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+}
+```
+
 ---
 
-> ***last change: 2023/4/19***
+> ***last change: 2024/5/19***
 
 ---
