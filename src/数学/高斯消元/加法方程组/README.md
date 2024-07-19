@@ -1,4 +1,4 @@
-# 高斯消元
+# 高斯消元解决加法方程组
 
 ## [P3389 【模板】高斯消元法](https://www.luogu.com.cn/problem/P3389)
 
@@ -494,6 +494,6 @@ public class Main {
 
 ---
 
-> ***last change: 2024/7/17***
+> ***last change: 2024/7/19***
 
 ---
