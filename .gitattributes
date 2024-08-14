@@ -2,4 +2,4 @@
 *.pdf filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
-*.md diff=markdown linguist-detectable linguist-language=Java
+*.md diff=markdown linguist-language=Java
