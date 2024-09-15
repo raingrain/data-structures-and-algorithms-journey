@@ -1712,7 +1712,8 @@ public class Main {
     // 累加和
     public static long[] sum = new long[MAXN << 2];
 
-    // 最大值(既是查询信息也是懒更新信息，课上已经讲解了)
+    // 最大值
+    // 既是查询信息也是懒更新信息
     public static int[] max = new int[MAXN << 2];
 
     // 最大值个数

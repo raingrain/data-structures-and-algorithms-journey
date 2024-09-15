@@ -18,7 +18,7 @@ public class Main {
 
     public static int[][] mat = new int[MAXN][MAXN];
 
-    // 逆元线性递推公式求逆元表，讲解099 - 除法同余
+    // 逆元线性递推公式求逆元表，除法同余
     public static int[] inv = new int[MOD];
 
     public static void inv() {
@@ -84,7 +84,7 @@ public class Main {
                 if (!flag) {
                     // 本来应该是，mat[i][n + 1] = mat[i][n + 1] / mat[i][i]
                     // 但是在模意义下应该求逆元，(a / b) % MOD = (a * b的逆元) % MOD
-                    // 如果不会，去看讲解099 - 除法同余
+                    // 除法同余
                     mat[i][n + 1] = (mat[i][n + 1] * inv[mat[i][i]]) % MOD;
                     mat[i][i] = 1;
                 }

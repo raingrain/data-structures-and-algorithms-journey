@@ -43,7 +43,7 @@ public class Main {
 
     // diameter[i] : 如果i是集合的头节点，diameter[i]表示整个集合的直径长度
     //               如果i不再是集合的头节点，diameter[i]的值没有用
-    // 并查集 + 集合打标签技巧，不会的看讲解056、讲解057
+    // 并查集 + 集合打标签技巧
     public static int[] diameter = new int[MAXN];
 
     public static void build(int n) {

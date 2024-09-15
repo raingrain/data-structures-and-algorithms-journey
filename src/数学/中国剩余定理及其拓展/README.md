@@ -65,7 +65,7 @@ public class Main {
         return ans;
     }
 
-    // 讲解139 - 扩展欧几里得算法
+    // 扩展欧几里得算法
     public static long d, x, y, px, py;
 
     public static void exgcd(long a, long b) {
@@ -82,7 +82,7 @@ public class Main {
         }
     }
 
-    // 讲解033 - 位运算实现乘法
+    // 位运算实现乘法
     // a*b过程每一步都%mod，这么写是防止溢出，也叫龟速乘
     public static long multiply(long a, long b, long mod) {
         a = (a % mod + mod) % mod;
@@ -164,7 +164,7 @@ public class Main {
         return tail;
     }
 
-    // 讲解139 - 扩展欧几里得算法
+    // 扩展欧几里得算法
     public static long d, x, y, px, py;
 
     public static void exgcd(long a, long b) {
@@ -181,7 +181,7 @@ public class Main {
         }
     }
 
-    // 讲解033 - 位运算实现乘法
+    // 位运算实现乘法
     // a*b过程每一步都%mod，这么写是防止溢出，也叫龟速乘
     public static long multiply(long a, long b, long mod) {
         a = (a % mod + mod) % mod;

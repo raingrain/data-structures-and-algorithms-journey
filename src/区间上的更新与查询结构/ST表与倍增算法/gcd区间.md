@@ -50,7 +50,7 @@ public class Main {
         }
     }
 
-    // 算法讲解041 - 辗转相除法求最大公约数
+    // 辗转相除法求最大公约数
     public static int gcd(int a, int b) {
         return b == 0 ? a : gcd(b, a % b);
     }

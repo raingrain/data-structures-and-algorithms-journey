@@ -220,7 +220,6 @@ public class Main {
     }
 
     // dfs迭代版
-    // 不懂去看讲解118，递归改迭代的部分
     public static int[][] ufe = new int[MAXN][3];
 
     public static long[] pstack = new long[MAXN];
