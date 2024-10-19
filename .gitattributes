@@ -7,4 +7,3 @@
 
 # Markdown Files
 *.md diff=markdown linguist-language=Java 
-*.md linguist-vendored
