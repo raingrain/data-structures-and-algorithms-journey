@@ -1,4 +1,4 @@
-# 🎉[Data Structure and Algorithm Journey](https://github.com/raingrain/data-structure-and-algorithm-journey)🎉
+# 🎉[Data Structures and Algorithms Journey](https://github.com/raingrain/data-structures-and-algorithms-journey)🎉
 
 > ## *Question source:*
 >
