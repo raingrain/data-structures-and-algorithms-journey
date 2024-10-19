@@ -112,7 +112,7 @@ public class Main {
     // 连续数逆元表
     public static long[] inv2 = new long[MAXN];
 
-    // 来自讲解099，题目3，生成阶乘余数表、阶乘逆元表
+    // 生成阶乘余数表、阶乘逆元表
     public static void build1(int n) {
         fac[0] = inv1[0] = 1;
         fac[1] = 1;
@@ -582,8 +582,7 @@ import java.math.BigInteger;
 public class Main {
 
     // 这里用公式2
-    // java同学使用BigInteger即可
-    // C++同学需要自己实现高精度乘法
+    // java使用BigInteger即可
     public static BigInteger compute(int n) {
         BigInteger a = new BigInteger("1");
         BigInteger b = new BigInteger("1");
