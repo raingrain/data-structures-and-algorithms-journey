@@ -16,9 +16,7 @@
 >     - `0 <= src, dst, k < n`
 >     - `src != dst`
 
----
-
-## *Java*
+## Java
 
 > - ***Bellman Ford算法 + SPFA算法优化***
 >   - 两种算法在图中有负权边的情况下能够正常运行，而Dijkstra不行。

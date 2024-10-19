@@ -1,8 +1,6 @@
 # DC3算法模板
 
----
-
-## *Java*
+## Java
 
 ```java
 class DC3 {

@@ -11,9 +11,7 @@
 >     - `1 <= nums.length <= 2 * 10^4`
 >     - `1 <= nums[i], k <= nums.length`
 
----
-
-## *Java*
+## Java
 
 > - ***两个滑动窗口***
 

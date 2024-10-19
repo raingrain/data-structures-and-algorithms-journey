@@ -10,9 +10,7 @@
 >     - `1 <= n <= batteries.length <= 10^5`
 >     - `1 <= batteries[i] <= 10^9`
 
----
-
-## *Java*
+## Java
 
 > - ***二分查找***
 

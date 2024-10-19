@@ -8,9 +8,7 @@
 >     - `1 <= haystack.length, needle.length <= 10^4`
 >     - `haystack` 和 `needle` 仅由小写英文字符组成
 
----
-
-## *Java*
+## Java
 
 > - ***KMP大概的原理***
 >   - 我们要在 `s1` 中找 `s2` 第一次出现的起始下标：

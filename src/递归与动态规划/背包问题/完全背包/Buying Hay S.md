@@ -14,9 +14,7 @@
 >   - ***tips:***
 >     - FJ can buy three packages from the second supplier for a total cost of 9.
 
----
-
-## *Java*
+## Java
 
 > - ***动态规划***
 

@@ -8,9 +8,7 @@
 >     - `0 <= s1.length, s2.length <= 1000`
 >     - `s1` 和 `s2` 由小写英文字母组成
 
----
-
-## *Java*
+## Java
 
 > - ***动态规划***
 >   - ![image](./images/两个字符串的最小ASCII删除和1.png)

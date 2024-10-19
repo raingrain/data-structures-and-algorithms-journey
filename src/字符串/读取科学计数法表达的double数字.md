@@ -5,9 +5,7 @@
 > - ***Question***
 >   - 读取科学计数法表达的double数字。
 
----
-
-## *Java*
+## Java
 
 > - ***内置类***
 >   - 用 `StreamTokenizer` 读取会出错。

@@ -17,9 +17,7 @@
 >     - `lists[i]` 按升序排列
 >     - `lists[i].length` 的总和不超过 `10^4`
 
----
-
-## *Java*
+## Java
 
 > - ***小根堆***
 >   - 准备一个小根堆，存储元素为 `ListNode` ，以 `ListNode` 的 `val` 作为比较基准。

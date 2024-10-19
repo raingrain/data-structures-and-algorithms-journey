@@ -36,9 +36,7 @@
 >     - `1 <= op <= 4`
 >     - `1 <= word.length <= 20`
 
----
-
-## *Java*
+## Java
 
 > - ***Question 1: 数组或者哈希表实现前缀树***
 >   - 代码中多实现了删除一个单词 `void delete(String word)` ，查询前缀 or 单词个数 `int[] searchPrefixAndWordNumber(String s)` 等功能。

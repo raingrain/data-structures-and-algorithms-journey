@@ -1,8 +1,6 @@
 # 堆相关代码模板
 
----
-
-## *Java*
+## Java
 
 > - ***堆重要属性和方法***
 >   - `HashMap<T, Integer> indexMap` 反向索引表

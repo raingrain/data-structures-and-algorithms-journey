@@ -14,9 +14,7 @@
 >   - ***ouput:***
 >     - For each case of input, print the case number and the total bandwidth between the source node s and the destination node t.
 
----
-
-## *Java*
+## Java
 
 > - ***Dinic***
 

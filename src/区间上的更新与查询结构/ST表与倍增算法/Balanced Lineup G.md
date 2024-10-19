@@ -12,9 +12,7 @@
 >   - ***输出描述***
 >     - Lines 1..Q: Each line contains a single integer that is a response to a reply and indicates the difference in height between the tallest and shortest cow in the range.
 
----
-
-## *Java*
+## Java
 
 > - ***ST表***
 >   - 给定一个长度为 `n` 的数组 `arr` ，一共有 `m` 次查询，每次查询 `arr[l ~ r]` 上的最大值和最小值，每次查询只需要打印最大值-最小值的结果。

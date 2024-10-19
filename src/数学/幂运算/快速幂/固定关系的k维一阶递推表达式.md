@@ -43,9 +43,7 @@
 >     - `1 <= s.length <= 1000`
 >     - `s[i]` 为 'A'、'L' 或 'P'
 
----
-
-## *Java*
+## Java
 
 > - ***Question 1***
 >   - ![image](images/统计元音字母序列的数目.png)

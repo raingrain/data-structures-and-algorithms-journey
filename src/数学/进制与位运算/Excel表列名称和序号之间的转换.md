@@ -18,9 +18,7 @@
 >     - `columnTitle` 仅由大写英文组成
 >     - `columnTitle` 在范围 `["A", "FXSHRXW"]` 内
 
----
-
-## *Java*
+## Java
 
 > - ***Question 1: 整数转伪26进制***
 >   - 这是一道从 `1` 开始的的 `26` 进制转换题。

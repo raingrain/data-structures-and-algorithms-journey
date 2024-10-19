@@ -21,9 +21,7 @@
 >     - `1 <= haystack.length, needle.length <= 10^4`
 >     - `haystack` 和 `needle` 仅由小写英文字符组成
 
----
-
-## *Java*
+## Java
 
 > - ***long类型 + 同余定理 + 质数进制***
 >   - 一种快速比对两个字符串的相等长度的字串是否相等的方法。

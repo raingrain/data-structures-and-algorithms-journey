@@ -8,9 +8,7 @@
 >     - `1 <= len(start) = len(end) <= 10000`
 >     - `start` 和 `end` 中的字符串仅限于 `'L', 'R', 'X'`
 
----
-
-## *Java*
+## Java
 
 > - ***双指针***
 >   - ![image](./images/在LR字符串中交换相邻字符.png)

@@ -11,9 +11,7 @@
 >     - `0 <= nums[i] <= 10^6`
 >     - `1 <= k <= n * (n - 1) / 2`
 
----
-
-## *Java*
+## Java
 
 > - ***排序 + 二分查找 + 双指针***
 >   - 先将数组 `nums` 从小到大进行排序。因为第 `k` 小的数对距离必然在区间 `[0, max(nums) - min(nums)]` 内，令 `left = 0` ， `right = max(nums) - min(nums)` ，我们在区间 `[left, right]` 上进行二分。

@@ -18,9 +18,7 @@
 >   - ***tips:***
 >     - `0 <= rowIndex <= 33`
 
----
-
-## *Java*
+## Java
 
 > - ***Question 1: 数学规律***
 >   - ![image](杨辉三角左对齐.jpg)
