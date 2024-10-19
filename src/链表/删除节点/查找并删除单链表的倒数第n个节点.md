@@ -159,9 +159,3 @@ class Solution {
     
 }
 ```
-
----
-
-> ***last change: 2022/10/28***
-
----

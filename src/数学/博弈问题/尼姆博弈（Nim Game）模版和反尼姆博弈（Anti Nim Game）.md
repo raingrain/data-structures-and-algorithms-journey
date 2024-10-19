@@ -109,9 +109,3 @@ public class Main {
 
 }
 ```
-
----
-
-> ***last change: 2024/1/20***
-
----

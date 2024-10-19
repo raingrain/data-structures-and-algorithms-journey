@@ -71,9 +71,3 @@ class Solution extends SolBase {
 
 }
 ```
-
----
-
-> ***last change: 2022/11/5***
-
----
