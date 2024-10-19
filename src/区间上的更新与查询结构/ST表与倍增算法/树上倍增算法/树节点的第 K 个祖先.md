@@ -104,9 +104,3 @@ class TreeAncestor {
 
 }
 ```
-
----
-
-> ***last change: 2024/5/19***
-
----

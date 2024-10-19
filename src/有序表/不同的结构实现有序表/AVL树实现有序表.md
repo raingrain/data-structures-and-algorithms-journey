@@ -539,9 +539,3 @@ class Solution {
     
 }
 ```
-
----
-
-> ***last change: 2022/11/21***
-
----
