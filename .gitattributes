@@ -6,4 +6,4 @@
 *.png filter=lfs diff=lfs merge=lfs -text
 
 # Markdown Files
-*.md linguist-detectable linguist-language=Java
+*.md linguist-detectable
