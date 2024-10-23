@@ -36,7 +36,7 @@
 
 ## Java
 
-> - **Question :裴蜀定理**
+> - **Question: 裴蜀定理**
 
 ```java
 import java.io.*;
