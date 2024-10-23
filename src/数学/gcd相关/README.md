@@ -2,7 +2,7 @@
 
 ## Java
 
-> - ***模板***
+> - **模板**
 
 ```java
 class Solution {

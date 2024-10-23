@@ -2,12 +2,12 @@
 
 ## [Travelling](<https://acm.hdu.edu.cn/showproblem.php?pid=3001>)
 
-> - ***Question***
+> - **Question**
 >   - 节点最多经过两次的tsp问题，给定有 `n` 个地点，用 `m` 条边无向边连接，每条边有权值，你可以任选一点出发，目标是经过所有的点，最终不必回到出发点，并且每个点最多可以到达两次，返回总路程最小是多少。
 
 ## Java
 
-> - ***三进制状压DP***
+> - **三进制状压DP**
 
 ```java
 import java.io.*;

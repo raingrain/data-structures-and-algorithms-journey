@@ -28,15 +28,15 @@
 
 ## [P4549 【模板】裴蜀定理](https://www.luogu.com.cn/problem/P4549)
 
-> - ***Question***
+> - **Question**
 >   - 给定长度为 `n` 的一组整数值 `[a1, a2, a3...]` ，你找到一组数值 `[x1, x2, x3...]` ，要让 `a1*x1 + a2*x2 + a3*x3 + ...` 得到的结果为最小正整数，返回能得到的最小正整数是多少。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 20`
 >     - `1 <= ai <= 10^5`
 
 ## Java
 
-> - ***Question :裴蜀定理***
+> - **Question :裴蜀定理**
 
 ```java
 import java.io.*;
@@ -67,7 +67,7 @@ public class Main {
 }
 ```
 
-> - ***扩展欧几里得算法***
+> - **扩展欧几里得算法**
 
 ```java
 public class Main {

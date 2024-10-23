@@ -2,18 +2,18 @@
 
 ## [992. K 个不同整数的子数组](https://leetcode.cn/problems/subarrays-with-k-different-integers/)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个正整数数组 `nums` 和一个整数 `k` ，返回 `num` 中好子数组的数目。
 >   - 如果 `nums` 的某个子数组中不同整数的个数恰好为 `k` ，则称 `nums` 的这个连续、不一定不同的子数组为好子数组。
 >   - 例如 `[1, 2, 3, 1, 2]` 中有 `3` 个不同的整数 `1, 2, 3` 。
 >   - 子数组是数组的连续部分。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= nums.length <= 2 * 10^4`
 >     - `1 <= nums[i], k <= nums.length`
 
 ## Java
 
-> - ***两个滑动窗口***
+> - **两个滑动窗口**
 
 ```java
 class Solution {
@@ -73,7 +73,7 @@ class Solution {
 }
 ```
 
-> - ***一个滑动窗口***
+> - **一个滑动窗口**
 
 ```java
 class Solution {

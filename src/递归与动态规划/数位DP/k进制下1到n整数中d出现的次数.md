@@ -4,43 +4,43 @@
 
 ## [剑指 Offer 43. 1～n 整数中 1 出现的次数](https://leetcode.cn/problems/1nzheng-shu-zhong-1chu-xian-de-ci-shu-lcof/)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 输入一个整数 `n` ，求 `1 ~ n` 这 `n` 个整数的十进制表示中1出现的次数。
 >   - 例如，输入 `12` ， `1 ~ 12` 这些整数中包含 `1` 的数字有 `1, 10, 11, 12` ， `1` 一共出现了 `5` 次。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n < 2^31`
 
 ## [3. k进制下一的个数](https://www.nowcoder.com/exam/test/69079544/detail?pid=33701596)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 定义 `F(m, k)` 为 `k` 进制下 `1 ~ m` 中 `1` 出现的次数。给定 `k` 和 `n` ，求使得 `F(m, k) >= n` 最小的 `m` 是多少。
 
 ## [1067. 范围内的数字计数](https://leetcode.cn/problems/digit-count-in-range/)
 
-> - ***Question 3***
+> - **Question 3**
 >   - 给定一个在 `0 ~ 9` 之间的整数 `d` ，两个正整数 `low` 和 `high` 分别作为上下界，返回 `d` 在 `low` 和 `high` 之间的整数中出现的次数，包括 `low` 和 `high` 。
 
 ## [P2602 [ZJOI2010] 数字计数](https://www.luogu.com.cn/problem/P2602)
 
-> - ***Question 4***
+> - **Question 4**
 >   - 给定两个正整数 `a` 和 `b` ，求在 `[a, b]` 中的所有整数中，每个数码 `d` 各出现了多少次。
->   - ***输入描述***
+>   - **输入描述**
 >     - 仅包含一行两个整数 `a` 和 `b` ，含义如上所述。
->   - ***输出描述***
+>   - **输出描述**
 >     - 包含一行十个整数，分别表示 `0 ~ 9` 在 `[a, b]` 中出现了多少次。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= a <= b <= 10^12`
 
 ## [面试题 17.06. 2出现的次数](https://leetcode.cn/problems/number-of-2s-in-range-lcci/)
 
-> - ***Question***
+> - **Question**
 >   - 编写一个方法，计算从 `0` 到 `n` （含 `n`） 中数字 `2` 出现的次数。
->   - ***tips:***
+>   - **Tips**
 >     - `n <= 10^9`
 
 ## Java
 
-> - ***Question 1: 数位DP***
+> - **Question 1: 数位DP**
 
 ```java
 class Solution {
@@ -93,7 +93,7 @@ class Solution {
 }
 ```
 
-> - ***Question 2: 数位DP***
+> - **Question 2: 数位DP**
 
 ```java
 public class Solution {
@@ -151,7 +151,7 @@ public class Solution {
 }
 ```
 
-> - ***Question 1 & Question3: 数位DP***
+> - **Question 1 & Question3: 数位DP**
 
 ```java
 class Solution {
@@ -244,7 +244,7 @@ class Solution {
 }
 ```
 
-> - ***Question 4: 同Question3***
+> - **Question 4: 同Question3**
 
 ```java
 import java.io.*;

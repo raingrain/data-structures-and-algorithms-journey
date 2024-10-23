@@ -2,12 +2,12 @@
 
 ## [Accumulation Degree](http://poj.org/problem?id=3585)
 
-> - ***Question***
+> - **Question**
 >   - 给定一棵 `n` 个点的树，边的边权代表流量限制。从边上流过的流量，不能超过流量限制。现在想知道以某个节点做根时，流到所有叶节点的流量，最大是多少。
 
 ## Java
 
-> - ***递归版***
+> - **递归版**
 
 ```java
 import java.io.*;
@@ -127,7 +127,7 @@ public class Main {
 }
 ```
 
-> - ***迭代版***
+> - **迭代版**
 
 ```java
 import java.io.*;

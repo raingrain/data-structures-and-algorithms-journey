@@ -2,10 +2,10 @@
 
 ## [902. 最大为 N 的数字组合](https://leetcode.cn/problems/numbers-at-most-n-given-digit-set/)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个按非递减顺序排列的数字数组 `digits` 。你可以用任意次数 `digits[i]` 来写的数字。例如，如果 `digits = ['1', '3', '5']`，我们可以写数字，如 `'13', '551', '1351315'`。
 >   - 返回可以生成的小于或等于给定整数 `n` 的正整数的个数。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= digits.length <= 9`
 >     - `digits[i].length == 1`
 >     - `digits[i]` 是从 `'1'` 到 `'9'` 的数
@@ -15,7 +15,7 @@
 
 ## Java
 
-> - ***数位DP***
+> - **数位DP**
 
 ```java
 class Solution {

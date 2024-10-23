@@ -2,14 +2,14 @@
 
 ## [440. 字典序的第K小数字](https://leetcode.cn/problems/k-th-smallest-in-lexicographical-order/)
 
-> - ***Question***
+> - **Question**
 >   - 给定整数 `n` 和 `k` ，返回 `[1, n]` 中字典序第 `k` 小的数字。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= k <= n <= 10^9`
 
 ## Java
 
-> - ***字典树***
+> - **字典树**
 >   - ![image](images/字典序的第K小数字1.png)
 >   - ![image](images/字典序的第K小数字2.png)
 >   - 时间复杂度 `O((logn)^2)` ，其中 `n` 为给定的数值的大小。每次计算子树下的节点数目的搜索深度最大为 `log(10, n)` ，最多需要搜索 `log(10, n)` 层，每一层最多需要计算 `10` 次，最多需要计算 `10 x (log(10, n))^2` 次。空间复杂度 `O(1)` ，不需要开辟额外的空间，只需常数空间记录常量即可。
@@ -51,7 +51,7 @@ class Solution {
 }
 ```
 
-> - ***数位DP***
+> - **数位DP**
 >   - 好难。
 
 ```java

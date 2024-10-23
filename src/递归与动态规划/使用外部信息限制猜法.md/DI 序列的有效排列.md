@@ -2,7 +2,7 @@
 
 ## [903. DI 序列的有效排列](https://leetcode.cn/problems/valid-permutations-for-di-sequence/)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个长度为 `n` 的字符串 `s` ，其中 `s[i]` 是:
 >     - `D` 意味着减少。
 >     - `I` 意味着增加。
@@ -10,14 +10,14 @@
 >     - 如果 `s[i] == 'D'` ，那么 `perm[i] > perm[i + 1]` 。
 >     - 如果 `s[i] == 'I'` ，那么 `perm[i] < perm[i + 1]` 。
 >   - 返回有效排列 `perm` 的数量。因为答案可能很大，所以请返回你的答案对 `10^9 + 7` 取余。
->   - ***tips:***
+>   - **Tips**
 >     - `n == s.length`
 >     - `1 <= n <= 200`
 >     - `s[i]` 不是 `I` 就是 `D`
 
 ## Java
 
-> - ***动态规划***
+> - **动态规划**
 
 ```java
 class Solution {

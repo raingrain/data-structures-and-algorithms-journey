@@ -20,77 +20,77 @@
 
 ## [P1044 [NOIP2003 普及组] 栈](https://www.luogu.com.cn/problem/P1044)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 进栈顺序规定为 `1, 2, 3, ..., n` ，返回有多少种不同的出栈顺序。测试题目的数据量很小，得到的卡特兰数没有多大，不需要取模处理，但是请假设，当 `n` 比较大时，卡特兰数是很大的，答案对 `1000000007` 取模。
 
 ## [P1976 鸡蛋饼](https://www.luogu.com.cn/problem/P1976)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 圆上有 `2n` 个点，这些点成对连接起来，形成 `n` 条线段，任意两条线段不能相交，返回连接的方法数注意！答案对 `10^8 + 7` 取模！
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 2999`
 
 ## [P1722 矩阵 II](https://www.luogu.com.cn/problem/P1722)
 
-> - ***Question 3***
+> - **Question 3**
 >   - 有 `n` 个红和 `n` 个黑，要组成 `2n` 长度的数列，保证任意前缀上，红的数量大于等于黑的数量，返回有多少种排列方法，答案对 `100` 取模。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 100`
 
 ## [96. 不同的二叉搜索树](https://leetcode.cn/problems/unique-binary-search-trees/)
 
-> - ***Question 4***
+> - **Question 4**
 >   - 给你一个整数 `n` ，求恰由 `n` 个节点组成且节点值从 `1` 到 `n` 互不相同的二叉搜索树有多少种？返回满足题意的二叉搜索树的种数。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 19`
 
 ## [P3200 [HNOI2009] 有趣的数列](https://www.luogu.com.cn/problem/P3200)
 
-> - ***Question 5***
+> - **Question 5**
 >   - 求第 `n` 项卡特兰数，要求答案对 `p` 取模。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 10^6`
 >     - `1 <= p <= 10^9`
 
 ## [P1641 [SCOI2010] 生成字符串](https://www.luogu.com.cn/problem/P1641)
 
-> - ***Question 6***
+> - **Question 6**
 >   - 有 `n` 个 `1` 和 `m` 个 `0` ，要组成 `n + m` 长度的数列，保证任意前缀上， `1` 的数量大于等于 `0` 的数量，返回有多少种排列方法，答案对 `20100403` 取模。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= m <= n <= 10^6`
 
 ## [SKYLINE - Skyline](https://www.luogu.com.cn/problem/SP7897)
 
-> - ***Question 7***
+> - **Question 7**
 >   - 数字从 `1` 到 `n` ，可以形成很多排列，要求任意从左往右的三个位置，不能出现依次递增的样子，返回排列的方法数，答案对 `1000000` 取模。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 1000`
 
 ## [P2532 [AHOI2012] 树屋阶梯](https://www.luogu.com.cn/problem/P2532)
 
-> - ***Question 8***
+> - **Question 8**
 >   - 地面高度是 `0` ，想搭建一个阶梯，要求每一个台阶上升 `1` 的高度，最终到达高度 `n` ，有无穷多任意规格的矩形材料，但是必须选择 `n` 个矩形，希望能搭建出阶梯的样子，返回搭建阶梯的不同方法数，答案可能很大，不取模！就打印真实答案。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 500`
 
 ## [P3978 [TJOI2015] 概率论](https://www.luogu.com.cn/problem/P3978)
 
-> - ***Question 9***
+> - **Question 9**
 >   - 一共有 `n` 个节点，认为节点之间无差别，能形成很多不同结构的二叉树，假设所有不同结构的二叉树，等概率出现一棵，返回叶子节点的期望。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 10^9`
 >     - 答案误差小于 `10^-9`
 
 ## [95. 不同的二叉搜索树 II](https://leetcode.cn/problems/unique-binary-search-trees-ii/)
 
-> - ***Question 10***
+> - **Question 10**
 >   - 给你一个整数 `n` ，请你生成并返回所有由 `n` 个节点组成且节点值从 `1` 到 `n` 互不相同的不同 二叉搜索树。可以按任意顺序返回答案。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 8`
 
 ## Java
 
-> - ***Question 1: 卡特兰数***
+> - **Question 1: 卡特兰数**
 
 ```java
 import java.io.*;
@@ -200,7 +200,7 @@ public class Main {
 }
 ```
 
-> - ***Question 2: 卡特兰数***
+> - **Question 2: 卡特兰数**
 
 ```java
 import java.io.*;
@@ -264,7 +264,7 @@ public class Main {
 }
 ```
 
-> - ***Question 3: 卡特兰数***
+> - **Question 3: 卡特兰数**
 
 ```java
 import java.io.*;
@@ -302,7 +302,7 @@ public class Main {
 }
 ```
 
-> - ***Question 4: 卡特兰数***
+> - **Question 4: 卡特兰数**
 >   - 这是一种数列，其通项公式主要有两种：
 >     - `Cn = 1 if n = 0`
 >     - `Cn = C(2n, n) - (C(2n, n + 1) or C(2n, n - 1))`
@@ -354,7 +354,7 @@ class Solution {
 }
 ```
 
-> - ***Question 5: 卡特兰数 + 因子计数法***
+> - **Question 5: 卡特兰数 + 因子计数法**
 >   - ![image](./images/5.png)
 
 ```java
@@ -461,7 +461,7 @@ public class Main {
 }
 ```
 
-> - ***Question 6: 卡特兰数***
+> - **Question 6: 卡特兰数**
 
 ```java
 import java.io.*;
@@ -526,7 +526,7 @@ public class Main {
 }
 ```
 
-> - ***Question 7: 卡特兰数***
+> - **Question 7: 卡特兰数**
 
 ```java
 import java.io.*;
@@ -571,7 +571,7 @@ public class Main {
 }
 ```
 
-> - ***Question 8: 卡特兰数***
+> - **Question 8: 卡特兰数**
 
 ```java
 import java.io.*;
@@ -611,7 +611,7 @@ public class Main {
 }
 ```
 
-> - ***Question 9: 卡特兰数***
+> - **Question 9: 卡特兰数**
 
 ```java
 import java.io.*;
@@ -633,7 +633,7 @@ public class Main {
 }
 ```
 
-> - ***Question 10: 回溯***
+> - **Question 10: 回溯**
 >   - 二叉搜索树关键的性质是根节点的值大于左子树所有节点的值，小于右子树所有节点的值，且左子树和右子树也同样为二叉搜索树。因此在生成所有可行的二叉搜索树的时候，假设当前序列长度为 nnn，如果我们枚举根节点的值为 `i` ，那么根据二叉搜索树的性质我们可以知道左子树的节点值的集合为 `[1 ~ i - 1]` ，右子树的节点值的集合为 `[i + 1 ~ n]` 。而左子树和右子树的生成相较于原问题是一个序列长度缩小的子问题，因此我们可以想到用回溯的方法来解决这道题目。
 >   - 我们定义 `generateTrees(start, end)` 函数表示当前值的集合为 `[start, end]` ，返回序列 `[start, end]` 生成的所有可行的二叉搜索树。按照上文的思路，我们考虑枚举 `[start, end]` 中的值 iii 为当前二叉搜索树的根，那么序列划分为了 `[start, i - 1]` 和 `[i + 1, end]` 两部分。我们递归调用这两部分，即 `generateTrees(start, i - 1)` 和 `generateTrees(i + 1, end)` ，获得所有可行的左子树和可行的右子树，那么最后一步我们只要从可行左子树集合中选一棵，再从可行右子树集合中选一棵拼接到根节点上，并将生成的二叉搜索树放入答案数组即可。递归的入口即为 `generateTrees(1, n)` ，出口为当 `start > end` 的时候，当前二叉搜索树为空，返回空节点即可。
 
@@ -702,7 +702,7 @@ class Solution {
 }
 ```
 
-> - ***一些题目的卡特兰数思路***
+> - **一些题目的卡特兰数思路**
 
 ![image](./images/出栈序列.png)
 ![image](./images/括号匹配.png)

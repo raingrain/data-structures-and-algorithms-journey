@@ -2,7 +2,7 @@
 
 ## Java
 
-> - ***堆重要属性和方法***
+> - **堆重要属性和方法**
 >   - `HashMap<T, Integer> indexMap` 反向索引表
 >   - `void heapInsert(int index)` 看看元素可否向上移动
 >   - `void heapIFY(int index)` 看看元素可否下沉

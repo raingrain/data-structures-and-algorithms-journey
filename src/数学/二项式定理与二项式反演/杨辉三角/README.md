@@ -4,23 +4,23 @@
 
 ## [118. 杨辉三角](https://leetcode.cn/problems/pascals-triangle/)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 给定一个非负整数 `numRows` ，生成杨辉三角的前 `numRows` 行。
 >   - 在杨辉三角中，每个数是它左上方和右上方的数的和。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= numRows <= 30`
 
 ## [119. 杨辉三角 II](https://leetcode.cn/problems/pascals-triangle-ii/)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 给定一个非负索引 `rowIndex` ，返回杨辉三角的第 `rowIndex` 行。
 >   - 在杨辉三角中，每个数是它左上方和右上方的数的和。
->   - ***tips:***
+>   - **Tips**
 >     - `0 <= rowIndex <= 33`
 
 ## Java
 
-> - ***Question 1: 数学规律***
+> - **Question 1: 数学规律**
 >   - ![image](杨辉三角左对齐.jpg)
 
 ```java
@@ -47,7 +47,7 @@ class Solution {
 }
 ```
 
-> - ***Question 2: 滚动数组***
+> - **Question 2: 滚动数组**
 
 ```java
 class Solution {

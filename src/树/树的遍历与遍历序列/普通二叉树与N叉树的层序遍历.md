@@ -2,41 +2,41 @@
 
 ## [剑指 Offer 32 - I. 从上到下打印二叉树](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 实现二叉树的层序遍历，返回一个存储全部节点的数组。
 
 ## [102. 二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 实现二叉树的层序遍历，每一层的节点用一个链表来存储，返回由每层链表的头节点组成的链表（二维链表）。
 
 ## [剑指 Offer 32 - II. 从上到下打印二叉树 II](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/)
 
 ## [107. 二叉树的层序遍历 II](https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/)
 
-> - ***Question 3***
+> - **Question 3**
 >   - 实现二叉树的逆层序遍历（即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历），返回和 `Question 2` 相同的结构。
 
 ## [103. 二叉树的锯齿形层序遍历](https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/)
 
 ## [剑指 Offer 32 - III. 从上到下打印二叉树 III](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/)
 
-> - ***Question 4***
->   - 实现二叉树的锯齿形层序遍历（之字形顺序）（即先从左往右（根节点所在层），再从右往左进行下一层遍历，以此类推，层与层之间交替进行），返回和***Question 2***相同的结构。
+> - **Question 4**
+>   - 实现二叉树的锯齿形层序遍历（之字形顺序）（即先从左往右（根节点所在层），再从右往左进行下一层遍历，以此类推，层与层之间交替进行），返回和**Question 2**相同的结构。
 
 ## [429. N 叉树的层序遍历](https://leetcode.cn/problems/n-ary-tree-level-order-traversal/)
 
-> - ***Question 5***
+> - **Question 5**
 >   - 给定一个 `N` 叉树，返回其节点值的层序遍历。
 
 ## [116. 填充每个节点的下一个右侧节点指针](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/)
 
 ## [117. 填充每个节点的下一个右侧节点指针 II](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/)
 
-> - ***Question 6***
+> - **Question 6**
 >   - 给定一个二叉树，结构如代码中所示，填充它的每个 `next` 指针，让这个指针指向其下一个右侧节点（层序遍历中的下一个节点）。如果找不到下一个右侧节点（层序遍历中每一层的最后一个节点），则将 `next` 指针设置为 `null` 。
 >   - 初始状态下，所有 `next` 指针都被设置为 `null` 。
->   - ***tips:***
+>   - **Tips**
 >     - 树中的节点数在范围 `[0, 6000]` 内
 >     - `-100 <= Node.val <= 100`
 >     - 你只能使用常量级额外空间
@@ -45,9 +45,9 @@
 
 ## [LCR 046. 二叉树的右视图](https://leetcode.cn/problems/WNC0Lk/)
 
-> - ***Question 7***
+> - **Question 7**
 >   - 给定一个二叉树的根节点 `root` ，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
->   - ***tips:***
+>   - **Tips**
 >     - `二叉树的节点个数的范围是 [0, 100]`
 >     - `-100 <= Node.val <= 100`
 
@@ -55,9 +55,9 @@
 
 ## [LCR 044. 在每个树行中找最大值](https://leetcode.cn/problems/hPov7L/)
 
-> - ***Question 8***
+> - **Question 8**
 >   - 给定一棵二叉树的根节点 `root` ，请找出该二叉树中每一层的最大值。
->   - ***tips:***
+>   - **Tips**
 >     - 二叉树的节点个数的范围是 `[0, 10^4]`
 >     - `-2^31 <= Node.val <= 2^31 - 1`
 
@@ -65,37 +65,37 @@
 
 ## [LCR 045. 找树左下角的值](https://leetcode.cn/problems/LwUNpT/)
 
-> - ***Question 9***
+> - **Question 9**
 >   - 给定一个二叉树的根节点 `root` ，请找出该二叉树的最底层最左边 节点的值。
 >   - 假设二叉树中至少有一个节点。
->   - ***tips:***
+>   - **Tips**
 >     - 二叉树的节点个数的范围是 `[1, 10^4]`
 >     - `-2^31 <= Node.val <= 2^31 - 1`
 
 ## [面试题 04.03. 特定深度节点链表](https://leetcode.cn/problems/list-of-depth-lcci/)
 
-> - ***Question 10***
+> - **Question 10**
 >   - 给定一棵二叉树，设计一个算法，创建含有某一深度上所有节点的链表（比如，若一棵树的深度为 `D` ，则会创建出 `D` 个链表）。返回一个包含所有深度的链表的数组。
 
 ## [637. 二叉树的层平均值](https://leetcode.cn/problems/average-of-levels-in-binary-tree/)
 
-> - ***Question 11***
+> - **Question 11**
 >   - 给定一个非空二叉树的根节点 `root` , 以数组的形式返回每一层节点的平均值。与实际答案相差 `10^-5` 以内的答案可以被接受。
->   - ***tips:***
+>   - **Tips**
 >     - 树中节点数量在 `[1, 10^4]` 范围内
 >     - `-2^31 <= Node.val <= 2^31 - 1`
 
 ## [1161. 最大层内元素和](https://leetcode.cn/problems/maximum-level-sum-of-a-binary-tree/)
 
-> - ***Question 12***
+> - **Question 12**
 >   - 给你一个二叉树的根节点 `root` 。设根节点位于二叉树的第 `1` 层，而根节点的子节点位于第 `2` 层，依此类推。请返回层内元素之和最大的那几层（可能只有一层）的层号，并返回其中最小的那个。
->   - ***tips:***
+>   - **Tips**
 >     - 树中的节点数在 `[1, 10^4]` 范围内
 >     - `-10^5 <= Node.val <= 10^5`
 
 ## Java
 
-> - ***广度优先搜索 BFS***
+> - **广度优先搜索 BFS**
 >   - 准备一个队列以及存储结果的容器，初始时头入队，进循环：
 >     - 如果是结果不区分层，则直接将队列中元素元素出队，然后加到结果中，并把非空的左右孩子入队。
 >     - 如果结果分层，则新建一个链表来存储结果，获取队列的长度，用一个 `for` 循环依次弹出这一层的元素，弹出后加入用于存储当前层的链表中（锯齿形层序遍历在这一步根据插入方向选择头插和尾插即可），并把非空左右孩子入队， `for` 循环结束后把存储当前层的元素的链表加入到头节点中（逆层序遍历在这一步改成头插即可）。
@@ -456,7 +456,7 @@ class Solution {
 }
 ```
 
-> - ***Question 6: 二叉树的层序遍历***
+> - **Question 6: 二叉树的层序遍历**
 
 ```java
 class Node {

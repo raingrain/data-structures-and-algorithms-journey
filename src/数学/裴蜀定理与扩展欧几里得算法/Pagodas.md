@@ -2,14 +2,14 @@
 
 ## [Pagodas](https://acm.hdu.edu.cn/showproblem.php?pid=5512)
 
-> - ***Question***
+> - **Question**
 >   - 一共有编号 `1 ~ n` 的宝塔，其中 `a` 号和 `b` 号宝塔已经修好了，Yuwgna和Iaka两个人轮流修塔，Yuwgna先手，Iaka后手，谁先修完所有的塔谁赢，每次可以选择 `j + k` 号或者 `j - k` 号塔进行修理，其中j和k是任意两个已经修好的塔，也就是输入 `n, a, b` ，如果先手赢打印 `Yuwgna` ，后手赢打印 `Iaka` 。
->   - ***tips:***
+>   - **Tips**
 >     - `2 <= n <= 2 * 10^4`
 
 ## Java
 
-> - ***分类讨论***
+> - **分类讨论**
 
 ```java
 import java.io.*;

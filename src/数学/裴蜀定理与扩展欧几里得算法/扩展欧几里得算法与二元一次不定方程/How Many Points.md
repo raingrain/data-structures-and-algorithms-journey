@@ -2,14 +2,14 @@
 
 ## [How Many Points?](https://lightoj.com/problem/how-many-points)
 
-> - ***Question***
+> - **Question**
 >   - 二维网格中只有 `x` 和 `y` 的值都为整数的坐标，才叫格点，给定两个格点 `A` 在 `(x1, y1)` 而 `B` 在 `(x2, y2)` ，返回 `A` 和 `B` 的连线上，包括 `A` 和 `B` 在内，一共有几个格点。
->   - ***tips:***
+>   - **Tips**
 >     - `-10^9 <= x1、y1、x2、y2 <= 10^9`
 
 ## Java
 
-> - ***Question***
+> - **Question**
 
 ```java
 import java.io.*;

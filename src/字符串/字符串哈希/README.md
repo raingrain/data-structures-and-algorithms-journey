@@ -2,28 +2,28 @@
 
 ## [P3370 【模板】字符串哈希](https://www.luogu.com.cn/problem/P3370)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 给定 `N` 个字符串（第 `i` 个字符串长度为 `Mi` ，字符串内包含数字、大小写字母，大小写敏感），请求出 `N` 个字符串中共有多少个不同的字符串。
->   - ***输入描述***
+>   - **输入描述**
 >     - 第一行包含一个整数 `N` ，为字符串的个数。接下来 `N` 行每行包含一个字符串，为所提供的字符串。
->   - ***输出描述***
+>   - **输出描述**
 >     - 输出包含一行，包含一个整数，为不同的字符串个数。
->   - ***tips:***
+>   - **Tips**
 >     - `N <= 10`
 >     - `Mi ≈ 1000`
 >     - `Mmax <= 1500`
 
 ## [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 给你两个字符串 `haystack` 和 `needle` ，请你在 `haystack` 字符串中找出 `needle` 字符串的第一个匹配项的下标（下标从 `0` 开始）。如果 `needle` 不是 `haystack` 的一部分，则返回 `-1` 。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= haystack.length, needle.length <= 10^4`
 >     - `haystack` 和 `needle` 仅由小写英文字符组成
 
 ## Java
 
-> - ***long类型 + 同余定理 + 质数进制***
+> - **long类型 + 同余定理 + 质数进制**
 >   - 一种快速比对两个字符串的相等长度的字串是否相等的方法。
 
 ```java

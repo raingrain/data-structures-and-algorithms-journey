@@ -2,12 +2,12 @@
 
 ## [Frequent values](https://www.luogu.com.cn/problem/UVA11235)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个长度为 `n` 的数组 `arr` ，该数组一定是有序的，一共有 `m` 次查询，每次查询 `arr[l ~ r]` 上出现次数最多的数有几个。
 
 ## Java
 
-> - ***ST表***
+> - **ST表**
 
 ```java
 // 提交于：https://www.luogu.com.cn/problem/UVA11235

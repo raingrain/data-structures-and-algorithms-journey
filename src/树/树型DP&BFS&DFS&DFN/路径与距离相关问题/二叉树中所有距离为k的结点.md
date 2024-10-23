@@ -2,10 +2,10 @@
 
 ## [863. 二叉树中所有距离为 K 的结点](https://leetcode.cn/problems/all-nodes-distance-k-in-binary-tree/)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个二叉树的根结点 `root` ， 一个目标结点 `target` ，和一个整数值 `k` 。
 >   - 返回到目标结点 `target` 距离为 `k` 的所有结点的值的列表。答案可以以任何顺序返回。
->   - ***tips:***
+>   - **Tips**
 >     - 节点数在 `[1, 500]` 范围内
 >     - `0 <= Node.val <= 500`
 >     - `Node.val` 中所有值 不同
@@ -14,7 +14,7 @@
 
 ## Java
 
-> - ***树型DP + 宽度优先遍历***
+> - **树型DP + 宽度优先遍历**
 
 ```java
 class TreeNode {

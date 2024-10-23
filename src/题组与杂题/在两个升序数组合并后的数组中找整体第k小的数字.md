@@ -2,10 +2,10 @@
 
 ## [4. 寻找两个正序数组的中位数](https://leetcode.cn/problems/median-of-two-sorted-arrays/)
 
-> - ***Question***
+> - **Question**
 >   - 给定两个大小分别为 `m` 和 `n` 的正序（从小到大）数组 `nums1` 和 `nums2` 。请你找出并返回这两个正序数组的中位数。
 >   - 即对于合并后的数组，如果合并后的长度为奇数，就返回合并后的数组中间位置的数，如果合并后的长度为奇数，就返回合并后的数组的上中位数与下中位数的平均值。
->   - ***tips:***
+>   - **Tips**
 >     - `nums1.length == m`
 >     - `nums2.length == n`
 >     - `0 <= m <= 1000`
@@ -15,7 +15,7 @@
 
 ## Java
 
-> - ***模拟***
+> - **模拟**
 
 ```java
 class Solution {

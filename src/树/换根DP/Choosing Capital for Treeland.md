@@ -2,7 +2,7 @@
 
 ## [Choosing Capital for Treeland](https://www.luogu.com.cn/problem/CF219D)
 
-> - ***Question***
+> - **Question**
 >   - 给定一棵 `n` 个点的树，但是给定的每条边都是有向的。
 >   - 需要选择某个城市为首都，要求首都一定可以去往任何一个城市。
 >   - 这样一来，可能需要翻转一些边的方向才能做到，现在想翻转道路的数量尽量少。
@@ -11,7 +11,7 @@
 
 ## Java
 
-> - ***换根DP***
+> - **换根DP**
 
 ```java
 import java.io.*;

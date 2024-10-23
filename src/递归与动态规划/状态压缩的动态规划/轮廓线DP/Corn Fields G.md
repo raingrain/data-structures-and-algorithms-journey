@@ -2,12 +2,12 @@
 
 ## [P1879 [USACO06NOV] Corn Fields G](https://www.luogu.com.cn/problem/P1879)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个 `n * m` 的二维网格 `grid` 。网格里只有 `0, 1` 两种值， `0` 表示该田地不能种草， `1` 表示该田地可以种草。种草的时候，任何两个种了草的田地不能相邻，相邻包括上、下、左、右四个方向。你可以随意决定种多少草，只要不破坏上面的规则即可。返回种草的方法数，答案对 `100000000` 取模。
 
 ## Java
 
-> - ***状压DP***
+> - **状压DP**
 
 ```java
 import java.io.*;
@@ -97,7 +97,7 @@ public class Main {
 }
 ```
 
-> - ***轮廓线DP***
+> - **轮廓线DP**
 
 ```java
 import java.io.*;
@@ -183,7 +183,7 @@ public class Main {
 }
 ```
 
-> - ***轮廓线DP + 空间压缩***
+> - **轮廓线DP + 空间压缩**
 
 ```java
 import java.io.*;

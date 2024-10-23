@@ -4,14 +4,14 @@
 
 ## [LCR 163. 找到第 k 位数字](https://leetcode.cn/problems/shu-zi-xu-lie-zhong-mou-yi-wei-de-shu-zi-lcof/)
 
-> - ***Question***
+> - **Question**
 >   - 给你一个整数 `n` ，请你在无限的整数序列 `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]` 中找出并返回第 `n` 位上的数字。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 2^31 - 1`
 
 ## Java
 
-> - ***模拟***
+> - **模拟**
 
 ```java
 // 我们还是需要先对n进行第一阶段的试减（更新n），得到目标数字所在的数值的长度len是多少。

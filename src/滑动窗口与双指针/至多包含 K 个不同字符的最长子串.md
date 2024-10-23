@@ -4,12 +4,12 @@
 
 ## [340. 至多包含 K 个不同字符的最长子串](https://leetcode.cn/problems/longest-substring-with-at-most-k-distinct-characters/)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个字符串和一个限定数 `k` ，请你返回最多包含 `k` 种不同字符的最长子串的长度。
 
 ## Java
 
-> - ***滑动窗口***
+> - **滑动窗口**
 
 ```java
 class Solution {

@@ -2,12 +2,12 @@
 
 ## [P3478 [POI2008] STA-Station](https://www.luogu.com.cn/problem/P3478)
 
-> - ***Question***
+> - **Question**
 >   - 给定一棵n个点的树，找到一个节点，使得以这个节点为根时，到达所有节点的深度之和最大，如果有多个节点满足要求，返回节点编号最小的。
 
 ## Java
 
-> - ***递归版***
+> - **递归版**
 
 ```java
 import java.io.*;
@@ -107,7 +107,7 @@ public class Main {
 }
 ```
 
-> - ***迭代版***
+> - **迭代版**
 
 ```java
 import java.io.*;

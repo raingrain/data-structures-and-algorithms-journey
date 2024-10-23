@@ -2,12 +2,12 @@
 
 ## [431. 将 N 叉树编码为二叉树](https://leetcode.cn/problems/encode-n-ary-tree-to-binary-tree/)
 
-> - ***Question***
+> - **Question**
 >   - 请实现 `Codec` 类，实现 `encode` 和 `decode` 方法，用于N叉树序列化为二叉树，以及二叉树序列化为N叉树。
 
 ## Java
 
-> - ***递归***
+> - **递归**
 >   - 对于N叉树的一个节点来说，其序列化成一颗二叉树的方式是将其所有孩子（ `List<Node> children` 中定义的）挂在其变成二叉树的节点后的左树右边界上。
 >   - 序列化和反序列化采用深度优先的方式（看代码）。
 

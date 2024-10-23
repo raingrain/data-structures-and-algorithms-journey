@@ -10,27 +10,27 @@
 
 ## [P5960 【模板】差分约束](https://www.luogu.com.cn/problem/P5960)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 一共有 `n` 个变量，编号 `1 ~ n` ，给定 `m` 个不等式，每个不等式的形式为 `Xi - Xj <= Ci` ，其中 `Xi` 和 `Xj` 为变量， `Ci` 为常量，如果不等式存在矛盾导致无解，打印 `NO` ，如果有解，打印满足所有不等式的其中一组解 `X1, X2, ...` 。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n、m <= 5 * 10^3`
 >     - `-10^4 <= Ci <= +10^4`
 
 ## [P1993 小 K 的农场](https://www.luogu.com.cn/problem/P1993)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 一共有 `n` 个农场，编号 `1 ~ n` ，给定 `m` 条关系，每条关系是如下三种形式中的一种
 >     - 关系 `a b c` 表示农场 `a` 比农场 `b` 至少多种植了 `c` 个作物。
 >     - 关系 `a b c` 表示农场 `a` 比农场 `b` 至多多种植了 `c` 个作物。
 >     - 关系 `a b` 表示农场 `a` 和农场 `b` 种植了一样多的作物。
 >   - 如果关系之间能推出矛盾，打印 `No` ，不存在矛盾，打印 `Yes` 。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n、m <= 5 * 10^3`
 >     - `1 <= c <= 5 * 10^3`
 
 ## Java
 
-> - ***Question 1: 形式1***
+> - **Question 1: 形式1**
 
 ```java
 import java.io.*;
@@ -153,7 +153,7 @@ public class Main {
 }
 ```
 
-> - ***Question 1: 形式2***
+> - **Question 1: 形式2**
 
 ```java
 import java.io.*;
@@ -276,7 +276,7 @@ public class Main {
 }
 ```
 
-> - ***Question 2: 形式1***
+> - **Question 2: 形式1**
 
 ```java
 import java.io.*;

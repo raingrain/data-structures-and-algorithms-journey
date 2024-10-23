@@ -2,15 +2,15 @@
 
 ## [P2627 [USACO11OPEN] Mowing the Lawn G](https://www.luogu.com.cn/problem/P2627)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个长度为 `n` 的数组 `arr` ，你可以随意选择数字，要求选择的方案中，连续选择的个数不能超过 `k` 个，返回能得到的最大累加和。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n、k <= 10^5`
 >     - `0 <= arr[i] <= 10^9`
 
 ## Java
 
-> - ***公式加工 + 单调队列优化***
+> - **公式加工 + 单调队列优化**
 
 ```java
 import java.io.*;

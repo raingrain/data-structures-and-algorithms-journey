@@ -2,12 +2,12 @@
 
 ## [751. IP 到 CIDR](https://leetcode.cn/problems/ip-to-cidr/)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个初始的IP地址和要分配的IP地址数，按照CIDR方式进行分配，返回所需固定IP数量最小的分配方式。
 
 ## Java
 
-> - ***位运算***
+> - **位运算**
 
 ```java
 class Solution {

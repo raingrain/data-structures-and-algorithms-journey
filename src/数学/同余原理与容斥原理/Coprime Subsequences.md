@@ -2,12 +2,12 @@
 
 ## [Coprime Subsequences](https://www.luogu.com.cn/problem/CF803F )
 
-> - ***Question***
+> - **Question**
 >   - 给你一个序列，问你有多少个子序列的 `gcd = 1` 。
 
 ## Java
 
-> - ***容斥原理***
+> - **容斥原理**
 
 ```java
 import java.io.*;

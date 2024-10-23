@@ -2,16 +2,16 @@
 
 ## [878. 第 N 个神奇数字](https://leetcode.cn/problems/nth-magical-number/)
 
-> - ***Question***
+> - **Question**
 >   - 一个正整数如果能被 `a` 或 `b` 整除，那么它是神奇的。
 >   - 给定三个整数 `n, a, b` ，返回第 `n` 个神奇的数字。因为答案可能很大，所以返回答案对 `10 ^ 9 + 7` 取模后的值。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= n <= 10^9`
 >     - `2 <= a, b <= 4 * 10^4`
 
 ## Java
 
-> - ***二分答案法 + gcd + lcm***
+> - **二分答案法 + gcd + lcm**
 
 ```java
 class Solution {

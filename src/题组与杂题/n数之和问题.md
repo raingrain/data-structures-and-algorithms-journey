@@ -2,11 +2,11 @@
 
 ## [1. 两数之和](https://leetcode.cn/problems/two-sum/)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 给定一个整数数组 `nums` 和一个整数目标值 `target` ，请你在该数组中找出和为目标值 `target` 的那两个整数，并返回它们的数组下标。
 >   - 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
 >   - 你可以按任意顺序返回答案。
->   - ***tips:***
+>   - **Tips**
 >     - `2 <= nums.length <= 10^4`
 >     - `-10^9 <= nums[i] <= 10^9`
 >     - `-10^9 <= target <= 10^9`
@@ -16,21 +16,21 @@
 
 ## [LCR 007. 三数之和](https://leetcode.cn/problems/1fGaJU/)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 给你一个整数数组 `nums` ，判断是否存在三元组 `[nums[i], nums[j], nums[k]]` 满足 `i != j, i != k` 且 `j != k` ，同时还满足 `nums[i] + nums[j] + nums[k] == 0` 。
 >   - 请你返回所有和为 `0` 且不重复的三元组。
->   - ***tips:***
+>   - **Tips**
 >     - `3 <= nums.length <= 3000`
 >     - `-10^5 <= nums[i] <= 10^5`
 
 ## [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
 
-> - ***Question 3***
+> - **Question 3**
 >   - 给你一个下标从 `1` 开始的整数数组 `numbers` ，该数组已按非递减顺序排列，请你从数组中找出满足相加之和等于目标数 `target` 的两个数。如果设这两个数分别是 `numbers[index1]` 和 `numbers[index2]` ，则 `1 <= index1 < index2 <= numbers.length` 。
 >   - 以长度为 `2` 的整数数组 `[index1, index2]` 的形式返回这两个整数的下标 `index1` 和 `index2` 。
 >   - 你可以假设每个输入只对应唯一的答案，而且你不可以重复使用相同的元素。
 >   - 你所设计的解决方案必须只使用常量级的额外空间。
->   - ***tips:***
+>   - **Tips**
 >     - `2 <= numbers.length <= 3 * 10^4`
 >     - `-1000 <= numbers[i] <= 1000`
 >     - `numbers` 按非递减顺序排列
@@ -39,11 +39,11 @@
 
 ## [LCR 006. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/kLl5u1/)
 
-> - ***Question 4***
+> - **Question 4**
 >   - 给定一个已按照升序排列的整数数组 `numbers` ，请你从数组中找出两个数满足相加之和等于目标数 `target` 。
 >   - 函数应该以长度为 `2` 的整数数组的形式返回这两个数的下标值。 `numbers` 的下标从 `0` 开始计数 ，所以答案数组应当满足 `0 <= answer[0] < answer[1] < numbers.length` 。
 >   - 假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。
->   - ***tips:***
+>   - **Tips**
 >     - `2 <= numbers.length <= 3 * 10^4`
 >     - `-1000 <= numbers[i] <= 1000`
 >     - `numbers` 按非递减顺序排列
@@ -54,9 +54,9 @@
 
 ## [LCR 056. 两数之和 IV - 输入二叉搜索树](https://leetcode.cn/problems/opLdQZ/)
 
-> - ***Question 5***
+> - **Question 5**
 >   - 给定一个二叉搜索树的根节点 `root` 和一个整数 `k` ，请判断该二叉搜索树中是否存在两个节点它们的值之和等于 `k` 。假设二叉搜索树中节点的值均唯一。
->   - ***tips:***
+>   - **Tips**
 >     - 二叉树的节点个数的范围是  `[1, 10^4]`
 >     - `-10^4 <= Node.val <= 10^4`
 >     - `root` 为二叉搜索树
@@ -64,58 +64,58 @@
 
 ## [16. 最接近的三数之和](https://leetcode.cn/problems/3sum-closest/)
 
-> - ***Question 6***
+> - **Question 6**
 >   - 给你一个长度为 `n` 的整数数组 `nums` 和 一个目标值 `target` 。请你从 `nums` 中选出三个整数，使它们的和与 `target` 最接近。
 >   - 返回这三个数的和。
 >   - 假定每组输入只存在恰好一个解。
->   - ***tips:***
+>   - **Tips**
 >     - `3 <= nums.length <= 1000`
 >     - `-1000 <= nums[i] <= 1000`
 >     - `-10^4 <= target <= 10^4`
 
 ## [18. 四数之和](https://leetcode.cn/problems/4sum/)
 
-> - ***Question 7***
+> - **Question 7**
 >   - 给你一个由 `n` 个整数组成的数组 `nums` ，和一个目标值 `target` 。请你找出并返回满足下述全部条件且不重复的四元组 `[nums[a], nums[b], nums[c], nums[d]]` （若两个四元组元素一一对应，则认为两个四元组重复）：
 >     - `0 <= a, b, c, d < n`
 >     - `a, b, c, d` 互不相同
 >     - `nums[a] + nums[b] + nums[c] + nums[d] == target`
 >   - 你可以按任意顺序返回答案。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= nums.length <= 200`
 >     - `-10^9 <= nums[i] <= 10^9`
 >     - `-10^9 <= target <= 10^9`
 
 ## [923. 三数之和的多种可能](https://leetcode.cn/problems/3sum-with-multiplicity/)
 
-> - ***Question 8***
+> - **Question 8**
 >   - 给定一个整数数组 `arr` ，以及一个整数 `target` 作为目标值，返回满足 `i < j < k` 且 `arr[i] + arr[j] + arr[k] == target` 的元组 `i, j, k` 的数量。
 >   - 由于结果会非常大，请返回 `10^9 + 7` 的模。
->   - ***tips:***
+>   - **Tips**
 >     - `3 <= arr.length <= 3000`
 >     - `0 <= arr[i] <= 100`
 >     - `0 <= target <= 300`
 
 ## [面试题 16.24. 数对和](https://leetcode.cn/problems/pairs-with-sum-lcci/)
 
-> - ***Question 9***
+> - **Question 9**
 >   - 设计一个算法，找出数组中两数之和为指定值的所有整数对。一个数只能属于一个数对。
->   - ***tips:***
+>   - **Tips**
 >     - `nums.length <= 100000`
 >     - `-10^5 <= nums[i], target <= 10^5`
 
 ## [1679. K 和数对的最大数目](https://leetcode.cn/problems/max-number-of-k-sum-pairs/)
 
-> - ***Question 10***
+> - **Question 10**
 >   - 给你一个整数数组 `nums` 和一个整数 `k` 。每一步操作中，你需要从数组中选出和为 `k` 的两个整数，并将它们移出数组。返回你可以对数组执行的最大操作数。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= nums.length <= 10^5`
 >     - `1 <= nums[i] <= 10^9`
 >     - `1 <= k <= 10^9`
 
 ## Java
 
-> - ***Question 1: 哈希表***
+> - **Question 1: 哈希表**
 >   - 这样我们创建一个哈希表，对于每一个 `x` ，我们首先查询哈希表中是否存在 `target - x` ，然后将 `x` 插入到哈希表中，即可保证不会让 `x` 和自己匹配。
 >   - 如果哈希表中有 `target - x` ，返回索引结果即可。
 
@@ -136,7 +136,7 @@ class Solution {
 }
 ```
 
-> - ***Question 2: 双指针 + 两数之和***
+> - **Question 2: 双指针 + 两数之和**
 >   - 注意这个两数之和不是 `Question 1` 的。
 
 ```java
@@ -192,7 +192,7 @@ class Solution {
 }
 ```
 
-> - ***Question 3 & Question 4: 双指针***
+> - **Question 3 & Question 4: 双指针**
 >   - 初始时两个指针分别指向第一个元素位置和最后一个元素的位置。每次计算两个指针指向的两个元素之和，并和目标值比较。如果两个元素之和等于目标值，则发现了唯一解。如果两个元素之和小于目标值，则将左侧指针右移一位。如果两个元素之和大于目标值，则将右侧指针左移一位。移动指针之后，重复上述操作，直到找到答案。
 >   - 使用双指针的实质是缩小查找范围。那么会不会把可能的解过滤掉？答案是不会。假设 `numbers[i] + numbers[j] = target` 是唯一解，其中 `0 <= i < j <= numbers.length - 1` 。初始时两个指针分别指向下标 `0` 和下标 `numbers.length - 1` ，左指针指向的下标小于或等于 `i` ，右指针指向的下标大于或等于 `j` 。除非初始时左指针和右指针已经位于下标 `i` 和 `j` ，否则一定是左指针先到达下标 `i` 的位置或者右指针先到达下标 `j` 的位置。
 >   - 如果左指针先到达下标 `i` 的位置，此时右指针还在下标 `j` 的右侧， `sum > target` ，因此一定是右指针左移，左指针不可能移到 `i` 的右侧。
@@ -224,7 +224,7 @@ class Solution {
 }
 ```
 
-> - ***Question 5: 中序遍历 + 双指针***
+> - **Question 5: 中序遍历 + 双指针**
 >   - 注意到二叉搜索树的中序遍历是升序排列的，我们可以将该二叉搜索树的中序遍历的结果记录下来，得到一个升序数组。然后转化为 `Question 3 & Question 4` 使用双指针。
 
 ```java
@@ -281,7 +281,7 @@ class Solution {
 }
 ```
 
-> - ***Question 6: 排序 + 双指针***
+> - **Question 6: 排序 + 双指针**
 
 ```java
 // 首先进行数组排序
@@ -314,7 +314,7 @@ class Solution {
 }
 ```
 
-> - ***Question 7: 排序 + 双指针***
+> - **Question 7: 排序 + 双指针**
 >   - 最朴素的方法是使用四重循环枚举所有的四元组，然后使用哈希表进行去重操作，得到不包含重复四元组的最终答案。假设数组的长度是 `n` ，则该方法中，枚举的时间复杂度为 `O(n^4)` ，去重操作的时间复杂度和空间复杂度也很高，因此需要换一种思路。
 >   - 为了避免枚举到重复四元组，则需要保证每一重循环枚举到的元素不小于其上一重循环枚举到的元素，且在同一重循环中不能多次枚举到相同的元素。
 >   - 为了实现上述要求，可以对数组进行排序，并且在循环过程中遵循以下两点：
@@ -391,7 +391,7 @@ class Solution {
 }
 ```
 
-> - ***Question 8: 三指针***
+> - **Question 8: 三指针**
 >   - 先将数组进行排序，遍历数组下标，对于每个 `i` ，设 `T = target - A[i]` 作为剩余要凑成的目标数。接着用双指针来完成 `A[j] + A[k] == T` 的子任务。
 >   - 考虑到有些元素是重复的，需要小心处理边界条件。在特殊的情况下，比如说 `target = 8` ，数组为 `[2, 2, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6]` ，这个数组就有大量的重复元素可以组成 `target` ，下面来分析一下这种情况该怎么处理。
 >   - 只要 `A[j] + A[k] == T` ，就要算上这一对 `j, k` 组合。在这个例子里面，当 `A[j] == 2, A[k] == 6` ，有 `4 * 2 = 8` 种组合方式。
@@ -443,7 +443,7 @@ class Solution {
 }
 ```
 
-> - ***Question 9: 双指针***
+> - **Question 9: 双指针**
 
 ```java
 import java.util.ArrayList;
@@ -478,7 +478,7 @@ class Solution {
 }
 ```
 
-> - ***Question 10: 排序 + 双指针***
+> - **Question 10: 排序 + 双指针**
 
 ```java
 import java.util.*;

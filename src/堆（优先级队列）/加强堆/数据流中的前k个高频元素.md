@@ -2,7 +2,7 @@
 
 ## [550 · 最常使用的K个单词II](https://www.lintcode.com/problem/top-k-frequent-words-ii/)
 
-> - ***Question***
+> - **Question**
 >   - 设计一个名为 `TopK` 的数据结构，包括一下两个方法：
 >     - `void add(String str)` 接收数据流吐出来的字符串。
 >     - `List<String> topK()` 返回包含前 `k` 个词频最高的字符串，词频相同按照字典序排序，多个字符串词频相同，选加入时间早的单词返回。
@@ -10,7 +10,7 @@
 
 ## Java
 
-> - ***加强堆***
+> - **加强堆**
 
 ```java
 class TopK {

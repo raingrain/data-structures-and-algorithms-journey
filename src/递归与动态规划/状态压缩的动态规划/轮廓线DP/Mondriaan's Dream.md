@@ -2,12 +2,12 @@
 
 ## [Mondriaan's Dream](http://poj.org/problem?id=2411)
 
-> - ***Question***
+> - **Question**
 >   - 给定两个参数 `n` 和 `m` ，表示 `n` 行 `m` 列的空白区域，有无限多的 `1 * 2` 规格的瓷砖，目标是严丝合缝的铺满所有的空白区域，返回有多少种铺满的方法。
 
 ## Java
 
-> - ***轮廓线DP***
+> - **轮廓线DP**
 
 ```java
 import java.io.*;
@@ -90,7 +90,7 @@ public class Main {
 }
 ```
 
-> - ***轮廓线DP + 空间压缩***
+> - **轮廓线DP + 空间压缩**
 
 ```java
 import java.io.*;

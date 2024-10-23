@@ -2,12 +2,12 @@
 
 ## [P3047 [USACO12FEB] Nearby Cows G](https://www.luogu.com.cn/problem/P3047)
 
-> - ***Question***
+> - **Question**
 >   - 给定一棵 `n` 个点的树，每个点有点权。到达每个节点的距离不超过 `k` 的节点就有若干个。把这些节点权值加起来，就是该点不超过距离 `k` 的点权和。打印每个节点不超过距离k的点权和。注意 `k` 并不大。
 
 ## Java
 
-> - ***递归版***
+> - **递归版**
 
 ```java
 import java.io.*;
@@ -120,7 +120,7 @@ public class Main {
 }
 ```
 
-> - ***迭代版***
+> - **迭代版**
 
 ```java
 import java.io.*;

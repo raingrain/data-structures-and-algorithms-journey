@@ -2,9 +2,9 @@
 
 ## [2435. 矩阵中和能被 K 整除的路径](https://leetcode.cn/problems/paths-in-matrix-whose-sum-is-divisible-by-k/)
 
-> - ***Question***
+> - **Question**
 >   - 给你一个下标从 `0` 开始的 `m x n` 整数矩阵 `grid` 和一个整数 `k` 。你从起点 `(0, 0)` 出发，每一步只能往下或者往右，你想要到达终点 `(m - 1, n - 1)` 。请你返回路径和能被 `k` 整除的路径数目，由于答案可能很大，返回答案对 `10^9 + 7` 取余的结果。
->   - ***tips:***
+>   - **Tips**
 >     - `m == grid.length`
 >     - `n == grid[i].length`
 >     - `1 <= m, n <= 5 * 10^4`
@@ -14,7 +14,7 @@
 
 ## Java
 
-> - ***动态规划***
+> - **动态规划**
 
 ```java
 class Solution {

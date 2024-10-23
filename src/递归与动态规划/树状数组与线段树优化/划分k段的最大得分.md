@@ -2,12 +2,12 @@
 
 ## [划分k段的最大得分](https://www.luogu.com.cn/problem/CF833B)
 
-> - ***Question***
+> - **Question**
 >   - 给定一个长度为 `n` 的数组，最多可以分成 `k` 段不重合的子数组。每个子数组获得的分值为内部不同数字的个数。返回能获得的最大分值。
 
 ## Java
 
-> - ***线段树优化***
+> - **线段树优化**
 
 ```java
 import java.io.*;

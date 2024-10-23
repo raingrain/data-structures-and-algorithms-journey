@@ -2,7 +2,7 @@
 
 ## [Tree Painting](https://www.luogu.com.cn/problem/CF1187E)
 
-> - ***Question***
+> - **Question**
 >   - 给定一棵 `n` 个点的树，初始时所有节点全是白点。
 >   - 第一次操作，你可以选择任意点染黑。
 >   - 以后每次操作，必须选择已经染黑的点的相邻点继续染黑，一直到所有的点都被染完。
@@ -11,7 +11,7 @@
 
 ## Java
 
-> - ***换根DP***
+> - **换根DP**
 
 ```java
 import java.io.*;

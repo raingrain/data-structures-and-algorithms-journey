@@ -10,17 +10,17 @@
 
 ## [Balancing Act](http://poj.org/problem?id=1655)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 一共有 `n` 个节点，编号 `1 ~ n` ，有 `n - 1` 条边形成一棵树，返回重心点和重心点最大子树的节点数。
 
 ## [Godfather](http://poj.org/problem?id=3107)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 一共有 `n` 个节点，编号 `1 ~ n` ，有 `n - 1` 条边形成一棵树，返回所有重心点。
 
 ## Java
 
-> - ***Question 1: 性质1***
+> - **Question 1: 性质1**
 
 ```java
 import java.io.*;
@@ -108,7 +108,7 @@ public class Main {
 }
 ```
 
-> - ***Question 2: 性质2***
+> - **Question 2: 性质2**
 
 ```java
 import java.io.*;

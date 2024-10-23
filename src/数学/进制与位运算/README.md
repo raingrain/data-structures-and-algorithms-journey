@@ -8,9 +8,9 @@
 
 ## [面试题 17.01. 不用加号的加法](https://leetcode.cn/problems/add-without-plus-lcci/)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 写一个函数，求两个整数之和，要求在函数体内不得使用 `+, -, *, /, %` 等运算符号。
->   - ***tips:***
+>   - **Tips**
 >     - `a, b` 均可能是负数或 `0`
 >     - 结果不会溢出 `32` 位整数
 
@@ -18,16 +18,16 @@
 
 ## [剑指 Offer II 001. 整数除法](https://leetcode.cn/problems/xoh6Oh/)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 写一个函数，求两个整数之商（小数向下取整），要求在函数体内不得使用 `+, -, *, /, %` 等运算符号。
->   - ***tips:***
+>   - **Tips**
 >     - 被除数和除数均为 `32` 位有符号整数，其数值范围是 `[−2^31, 23^1 − 1]`
 >     - 除数不为 `0`
 >     - 如果除法结果溢出，则返回 `23^1 − 1`
 
 ## [2166. 设计位集](https://leetcode.cn/problems/design-bitset/)
 
-> - ***Question 3***
+> - **Question 3**
 >   - 位集 `Bitset` 是一种能以紧凑形式存储位的数据结构。请你实现 `Bitset` 类：
 >     - `Bitset(int size)` 用 `size` 个位初始化 `Bitset` ，所有位都是 `0` 。
 >     - `void fix(int idx)` 将下标为 `idx` 的位上的值更新为 `1` 。如果值已经是 `1` ，则不会发生任何改变。
@@ -37,7 +37,7 @@
 >     - `boolean one()` 检查 `Bitset` 中是否至少一位的值是 `1` 。如果满足此条件，返回 `true` ；否则，返回 `false` 。
 >     - `int count()` 返回 `Bitset` 中值为 1 的位的 总数 。
 >     - `String toString()` 返回 `Bitset` 的当前组成情况。注意，在结果字符串中，第 `i` 个下标处的字符应该与 `Bitset` 中的第 `i` 位一致。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= size <= 10^5`
 >     - `0 <= idx <= size - 1`
 >     - 至多调用所有方法总共 `10^5` 次
@@ -46,32 +46,32 @@
 
 ## 左老师课堂讲述
 
-> - ***Question 4***
+> - **Question 4**
 >   - 给定一个正数 `x` ，已知用 `m` 个二进制位一定能表示 `x` ，从高位到低位打印 `x` 每一位的状态
-> - ***Question 5***
+> - **Question 5**
 >   - 给定一个正数 `x` ，打印 `<=x` 最大的 `2` 的幂，到底是 `2` 的几次方。
 
 ## Java
 
-> - ***得到状态s第j位的状态***
+> - **得到状态s第j位的状态**
 
 ```java
 (s >> j) & 1
 ```
 
-> - ***把状态s第j位的状态设置成1且其它位置状态不变***
+> - **把状态s第j位的状态设置成1且其它位置状态不变**
 
 ```java
 s = s | (1 << j)
 ```
 
-> - ***把状态s第j位的状态设置成0且其它位置状态不变***
+> - **把状态s第j位的状态设置成0且其它位置状态不变**
 
 ```java
 s = s & (~(1 << j))
 ```
 
-> - ***打印二进制***
+> - **打印二进制**
 
 ```java
 class Solution {
@@ -91,7 +91,7 @@ class Solution {
 }
 ```
 
-> - ***获得相反数***
+> - **获得相反数**
 
 ```java
 class Solution {
@@ -109,7 +109,7 @@ class Solution {
 }
 ```
 
-> - ***位图***
+> - **位图**
 
 ```java
 class Solution {
@@ -177,7 +177,7 @@ class BitMap {
 }
 ```
 
-> - ***纯位运算实现加减乘除***
+> - **纯位运算实现加减乘除**
 
 ```java
 class Solution {
@@ -292,7 +292,7 @@ class Solution {
 }
 ```
 
-> - ***位集***
+> - **位集**
 
 ```java
 class Bitset {
@@ -401,7 +401,7 @@ class Bitset {
 }
 ```
 
-> - ***Question 4 & Question 5***
+> - **Question 4 & Question 5**
 
 ```java
 import java.io.*;

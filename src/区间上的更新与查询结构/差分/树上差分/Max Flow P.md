@@ -2,14 +2,14 @@
 
 ## [P3128 [USACO15DEC] Max Flow P](https://www.luogu.com.cn/problem/P3128)
 
-> - ***Question***
+> - **Question**
 >   - 有 `n` 个节点形成一棵树，一开始所有点权都是 `0` 。
 >   - 给定很多操作，每个操作 `(a, b)` 表示从 `a` 到 `b` 路径上所有点的点权增加 `1` 。
 >   - 所有操作完成后，返回树上的最大点权。
 
 ## Java
 
-> - ***点差分递归版***
+> - **点差分递归版**
 
 ```java
 import java.io.*;
@@ -153,7 +153,7 @@ public class Main {
 }
 ```
 
-> - ***点差分迭代版***
+> - **点差分迭代版**
 
 ```java
 import java.io.*;

@@ -6,39 +6,39 @@
 
 ## [1804. 实现 Trie （前缀树） II](https://leetcode.cn/problems/implement-trie-ii-prefix-tree/)
 
-> - ***Question 1***
+> - **Question 1**
 >   - `Trie` （发音类似 "try"）或者说前缀树是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。
 >   - 请你实现 `Trie` 类：
 >     - `Trie()` 初始化前缀树对象。
 >     - `void insert(String word)` 向前缀树中插入字符串 `word` 。
 >     - `boolean search(String word)` 如果字符串 `word` 在前缀树中，返回 `true`（即在检索之前已经插入）；否则，返回 `false` 。
 >     - `boolean startsWith(String prefix)` 如果之前已经插入的字符串 word 的前缀之一为 `prefix` ，返回 `true` ；否则，返回 `false` 。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= word.length, prefix.length <= 2000`
 >     - `word` 和 `prefix` 仅由小写英文字母组成
 >     - `insert` 、 `search` 和 `startsWith` 调用次数 总计不超过 `3 * 10^4` 次
 
 ## [字典树的实现](https://www.nowcoder.com/practice/7f8a8553ddbf4eaab749ec988726702b)
 
-> - ***Question 2***
+> - **Question 2**
 >   - 字典树又称为前缀树或者 `Trie` 树，是处理字符串常用的数据结构。假设组成所有单词的字符仅是 `a ~ z` ，请实现字典树的结构，并包含以下四个主要的功能：
 >     - `void insert(String word)` ：添加 `word` ，可重复添加；
 >     - `void delete(String word)` ：删除 `word` ，如果 `word` 添加过多次，仅删除一次；
 >     - `boolean search(String word)` ：查询 `word` 是否在字典树中出现过（完整的出现过，前缀式不算）；
 >     - `int prefixNumber(String pre)` ：返回以字符串 `pre` 作为前缀的单词数量。
 >   - 现在给定一个 `m` ，表示有 `m` 次操作，每次操作都为以上四种操作之一。每次操作会给定一个整数 `op` 和一个字符串 `word` ， `op` 代表一个操作码，如果 `op` 为 `1` ，则代表添加 `word` ， `op` 为 `2` 则代表删除 `word` ， `op` 为 `3` 则代表查询 `word` 是否在字典树中， `op` 为 `4` 代表返回以 `word` 为前缀的单词数量（数据保证不会删除不存在的word）。
->   - ***输入描述***
+>   - **输入描述**
 >     - 输入包含多行，第一行一个整数 `m` ，代表操作次数。接下来 `m` 行，每行包含一个整数 `op` ，和一个字符串 `word` 。
->   - ***输出描述***
+>   - **输出描述**
 >     - 对于每次操作，如果 `op` 为 `3` 时，如果 `word` 在字典树中，请输出 `YES` ，否则输出 `NO` ；如果 `op` 为 `4` 时，请输出返回以 `word` 为前缀的单词数量，其它情况不输出。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= m <= 10^5`
 >     - `1 <= op <= 4`
 >     - `1 <= word.length <= 20`
 
 ## Java
 
-> - ***Question 1: 数组或者哈希表实现前缀树***
+> - **Question 1: 数组或者哈希表实现前缀树**
 >   - 代码中多实现了删除一个单词 `void delete(String word)` ，查询前缀 or 单词个数 `int[] searchPrefixAndWordNumber(String s)` 等功能。
 >   - 看懂了插入函数部分的代码，其他都很好理解，都是一个模板的。
 >   - 只有英文字母就用数组，因为 `ASCII` 可以和索引对应起来，否则就用哈希表，直接用 `ASCII` 码作为 `key` 。
@@ -390,7 +390,7 @@ class Solution {
 }
 ```
 
-> - ***Question 2***
+> - **Question 2**
 
 ```java
 // 牛客版本

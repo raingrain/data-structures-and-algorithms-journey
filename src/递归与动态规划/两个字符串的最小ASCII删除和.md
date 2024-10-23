@@ -2,15 +2,15 @@
 
 ## [712. 两个字符串的最小ASCII删除和](https://leetcode.cn/problems/minimum-ascii-delete-sum-for-two-strings/)
 
-> - ***Question***
+> - **Question**
 >   - 给定两个字符串 `s1` 和 `s2` ，返回使两个字符串相等所需删除字符的 `ASCII` 值的最小和。
->   - ***tips:***
+>   - **Tips**
 >     - `0 <= s1.length, s2.length <= 1000`
 >     - `s1` 和 `s2` 由小写英文字母组成
 
 ## Java
 
-> - ***动态规划***
+> - **动态规划**
 >   - ![image](./images/两个字符串的最小ASCII删除和1.png)
 >   - ![image](./images/两个字符串的最小ASCII删除和2.png)
 

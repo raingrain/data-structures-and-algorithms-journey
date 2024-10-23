@@ -2,9 +2,9 @@
 
 ## [862. 和至少为 K 的最短子数组](https://leetcode.cn/problems/shortest-subarray-with-sum-at-least-k/)
 
-> - ***Question 1***
+> - **Question 1**
 >   - 给你一个整数数组 `nums` 和一个整数 `k` ，找出 `nums` 中和至少为 `k` 的最短非空子数组，并返回该子数组的长度。如果不存在这样的子数组 ，返回 `-1` 。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= nums.length <= 10^5`
 >     - `-10^5 <= nums[i] <= 10^5`
 >     - `1 <= k <= 10^9`
@@ -13,16 +13,16 @@
 
 ## [剑指 Offer II 008. 和大于等于 target 的最短子数组](https://leetcode.cn/problems/2VG8Kg/)
 
-> - ***Question 2***
+> - **Question 2**
 >   - `Question 1` 中的数组改为正整数数组。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= target <= 10^9`
 >     - `1 <= nums.length <= 10^5`
 >     - `1 <= nums[i] <= 10^5`
 
 ## Java
 
-> - ***Question 1 & Question 2: 单调双端队列***
+> - **Question 1 & Question 2: 单调双端队列**
 >   - `Question 1` 是通解，满足数组中是任意数值的情况。本质上是前缀和与二分查找的优化，直接一次遍历就搞定了。
 
 ```java
@@ -73,7 +73,7 @@ class Solution {
 }
 ```
 
-> - ***Question 2: 滑动窗口***
+> - **Question 2: 滑动窗口**
 >   - 时间复杂度 `O(n)` ，空间复杂度 `O(1)` 。
 
 ```java

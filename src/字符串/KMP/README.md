@@ -2,15 +2,15 @@
 
 ## [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
 
-> - ***Question***
+> - **Question**
 >   - 给你两个字符串 `haystack` 和 `needle` ，请你在 `haystack` 字符串中找出 `needle` 字符串的第一个匹配项的下标（下标从 `0` 开始）。如果 `needle` 不是 `haystack` 的一部分，则返回 `-1` 。
->   - ***tips:***
+>   - **Tips**
 >     - `1 <= haystack.length, needle.length <= 10^4`
 >     - `haystack` 和 `needle` 仅由小写英文字符组成
 
 ## Java
 
-> - ***KMP大概的原理***
+> - **KMP大概的原理**
 >   - 我们要在 `s1` 中找 `s2` 第一次出现的起始下标：
 >     - 将 `s1` 和 `s2` 转成字符数组 `str1` 和 `str2` 。
 >     - 准备 `str2` 的 `next` 数组， `next[i]` 记录了 `str2[i]` 之前的字符串中的最长相等前缀与后缀的长度，该前缀与后缀不能是字符串整体：
