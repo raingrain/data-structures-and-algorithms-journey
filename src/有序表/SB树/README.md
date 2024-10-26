@@ -1,7 +1,5 @@
 # SB树实现有序表
 
-## 通过SB树实现有序表
-
 ## Java
 
 > - **节点类实现SizeBalancedTree**
