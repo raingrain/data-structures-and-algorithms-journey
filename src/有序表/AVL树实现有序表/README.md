@@ -2,16 +2,35 @@
 
 ## [1382. 将二叉搜索树变平衡](https://leetcode.cn/problems/balance-a-binary-search-tree/)
 
-> - **Question**
+> - **Question 1**
 >   - 给你一棵二叉搜索树，请你返回一棵平衡后的二叉搜索树，新生成的树应该与原来的树有着相同的节点值。如果有多种构造方法，请你返回任意一种。
 >   - 如果一棵二叉搜索树中，每个节点的两棵子树高度差不超过 `1` ，我们就称这棵二叉搜索树是平衡的。
 >   - **Tips**
 >     - 树节点的数目在 `[1, 10^4]` 范围内
 >     - `1 <= Node.val <= 10^5`
 
+## [P3369 【模板】普通平衡树](https://www.luogu.com.cn/problem/P3369)
+
+> - **Question 2**
+>   - 您需要写一种数据结构（可参考题目标题），来维护一些数，其中需要提供以下操作：
+>     1. 插入一个数 `x` 。
+>     2. 删除一个数 `x` （若有多个相同的数，应只删除一个）。
+>     3. 定义排名为比当前数小的数的个数 `+ 1` 。查询 `x` 的排名。
+>     4. 查询数据结构中排名为 `x` 的数。
+>     5. 求 `x` 的前驱（前驱定义为小于 `x` ，且最大的数）。
+>     6. 求 `x` 的后继（后继定义为大于 `x` ，且最小的数）。
+>   - 对于操作 `3, 5, 6` ，不保证当前数据结构中存在数 `x` 。
+>   - **输入描述**
+>     - 第一行为 `n` ，表示操作的个数,下面 `n` 行每行有两个数 `opt` 和 `x` ， `opt` 表示操作的序号（ `1 <= opt <= 6` ）。
+>   - **输出描述**
+>     - 对于操作 `3, 4, 5, 6` 每行输出一个数，表示对应答案。
+>   - **Tips**
+>     - `1 <=n <= 10^5`
+>     - `|x| <= 10^7`
+
 ## Java
 
-> - **节点类实现AVL树**
+> - **Question 1: 节点类实现AVL树**
 >   - 首先这是一颗BST，对于一个节点来说，它的左子树上的所有值都小于它，右子树上的都大于它（在有序表中我们认为这个值是 `key` ），且没有重复值。
 >   - 其次，AVL树的平衡条件是对于任何一个节点来说左右子树之间的高度差不能大于1，为此有四种违规类型和对应的处理方式：
 >     - `LL` ，左子树高度高于右子树的高度，且左子树的左子树较高，对头节点右旋。
@@ -533,5 +552,270 @@ class Solution {
         return head;
     }
     
+}
+```
+
+> - **Question 2: AVL树改有序表新版本**
+
+```java
+import java.io.*;
+import java.util.Arrays;
+
+public class Main {
+
+    public static int MAXN = 100001;
+
+    // 空间使用计数
+    public static int cnt = 0;
+
+    // 整棵树的头节点编号
+    public static int head = 0;
+
+    // 节点的key
+    public static int[] key = new int[MAXN];
+
+    // 子树高度
+    public static int[] height = new int[MAXN];
+
+    // 左孩子
+    public static int[] left = new int[MAXN];
+
+    // 右孩子
+    public static int[] right = new int[MAXN];
+
+    // 节点key的计数
+    public static int[] count = new int[MAXN];
+
+    // 子树的数字总数
+    public static int[] size = new int[MAXN];
+
+    // 修正信息
+    public static void up(int i) {
+        size[i] = size[left[i]] + size[right[i]] + count[i];
+        height[i] = Math.max(height[left[i]], height[right[i]]) + 1;
+    }
+
+    // i节点为头的树左旋，返回左旋后头节点的空间编号
+    public static int leftRotate(int i) {
+        int r = right[i];
+        right[i] = left[r];
+        left[r] = i;
+        up(i);
+        up(r);
+        return r;
+    }
+
+    // i节点为头的树右旋，返回右旋后头节点的空间编号
+    public static int rightRotate(int i) {
+        int l = left[i];
+        left[i] = right[l];
+        right[l] = i;
+        up(i);
+        up(l);
+        return l;
+    }
+
+    // 检查i节点为头的树是否违规
+    // 如果命中了某种违规情况，就进行相应调整
+    // 返回树的头节点的空间编号
+    public static int maintain(int i) {
+        int lh = height[left[i]];
+        int rh = height[right[i]];
+        if (lh - rh > 1) {
+            if (height[left[left[i]]] >= height[right[left[i]]]) {
+                i = rightRotate(i);
+            } else {
+                left[i] = leftRotate(left[i]);
+                i = rightRotate(i);
+            }
+        } else if (rh - lh > 1) {
+            if (height[right[right[i]]] >= height[left[right[i]]]) {
+                i = leftRotate(i);
+            } else {
+                right[i] = rightRotate(right[i]);
+                i = leftRotate(i);
+            }
+        }
+        return i;
+    }
+
+    // 增加数字num，重复加入算多个词频
+    public static void add(int num) {
+        head = add(head, num);
+    }
+
+    // 当前来到i号节点，num这个数字一定会加入以i为头的树
+    // 树结构有可能变化，返回头节点编号
+    public static int add(int i, int num) {
+        if (i == 0) {
+            key[++cnt] = num;
+            count[cnt] = size[cnt] = height[cnt] = 1;
+            return cnt;
+        }
+        if (key[i] == num) {
+            count[i]++;
+        } else if (key[i] > num) {
+            left[i] = add(left[i], num);
+        } else {
+            right[i] = add(right[i], num);
+        }
+        up(i);
+        return maintain(i);
+    }
+
+    // 删除数字num，如果有多个，只删掉一个
+    public static void remove(int num) {
+        if (rank(num) != rank(num + 1)) {
+            head = remove(head, num);
+        }
+    }
+
+    // 当前来到i号节点，以i为头的树一定会减少1个num
+    // 树结构有可能变化，返回头节点编号
+    public static int remove(int i, int num) {
+        if (key[i] < num) {
+            right[i] = remove(right[i], num);
+        } else if (key[i] > num) {
+            left[i] = remove(left[i], num);
+        } else {
+            if (count[i] > 1) {
+                count[i]--;
+            } else {
+                if (left[i] == 0 && right[i] == 0) {
+                    return 0;
+                } else if (left[i] != 0 && right[i] == 0) {
+                    i = left[i];
+                } else if (left[i] == 0 && right[i] != 0) {
+                    i = right[i];
+                } else {
+                    int mostLeft = right[i];
+                    while (left[mostLeft] != 0) {
+                        mostLeft = left[mostLeft];
+                    }
+                    right[i] = removeMostLeft(right[i], mostLeft);
+                    left[mostLeft] = left[i];
+                    right[mostLeft] = right[i];
+                    i = mostLeft;
+                }
+            }
+        }
+        up(i);
+        return maintain(i);
+    }
+
+    // 以i号节点为头的树上，最左节点的编号一定是mostLeft
+    // 删掉这个节点，并保证树的平衡性，返回头节点的编号
+    public static int removeMostLeft(int i, int mostLeft) {
+        if (i == mostLeft) {
+            return right[i];
+        } else {
+            left[i] = removeMostLeft(left[i], mostLeft);
+            up(i);
+            return maintain(i);
+        }
+    }
+
+    // 查询num的排名，比num小的数字个数+1，就是num的排名
+    public static int rank(int num) {
+        return small(head, num) + 1;
+    }
+
+    // 以i为头的树上，比num小的数字有几个
+    public static int small(int i, int num) {
+        if (i == 0) {
+            return 0;
+        }
+        if (key[i] >= num) {
+            return small(left[i], num);
+        } else {
+            return size[left[i]] + count[i] + small(right[i], num);
+        }
+    }
+
+    public static int index(int x) {
+        return index(head, x);
+    }
+
+    public static int index(int i, int x) {
+        if (size[left[i]] >= x) {
+            return index(left[i], x);
+        } else if (size[left[i]] + count[i] < x) {
+            return index(right[i], x - size[left[i]] - count[i]);
+        }
+        return key[i];
+    }
+
+    public static int pre(int num) {
+        return pre(head, num);
+    }
+
+    public static int pre(int i, int num) {
+        if (i == 0) {
+            return Integer.MIN_VALUE;
+        }
+        if (key[i] >= num) {
+            return pre(left[i], num);
+        } else {
+            return Math.max(key[i], pre(right[i], num));
+        }
+    }
+
+    public static int post(int num) {
+        return post(head, num);
+    }
+
+    public static int post(int i, int num) {
+        if (i == 0) {
+            return Integer.MAX_VALUE;
+        }
+        if (key[i] <= num) {
+            return post(right[i], num);
+        } else {
+            return Math.min(key[i], post(left[i], num));
+        }
+    }
+
+    public static void clear() {
+        Arrays.fill(key, 1, cnt + 1, 0);
+        Arrays.fill(height, 1, cnt + 1, 0);
+        Arrays.fill(left, 1, cnt + 1, 0);
+        Arrays.fill(right, 1, cnt + 1, 0);
+        Arrays.fill(count, 1, cnt + 1, 0);
+        Arrays.fill(size, 1, cnt + 1, 0);
+        cnt = 0;
+        head = 0;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        in.nextToken();
+        int n = (int) in.nval;
+        for (int i = 1, op, x; i <= n; i++) {
+            in.nextToken();
+            op = (int) in.nval;
+            in.nextToken();
+            x = (int) in.nval;
+            if (op == 1) {
+                add(x);
+            } else if (op == 2) {
+                remove(x);
+            } else if (op == 3) {
+                out.println(rank(x));
+            } else if (op == 4) {
+                out.println(index(x));
+            } else if (op == 5) {
+                out.println(pre(x));
+            } else {
+                out.println(post(x));
+            }
+        }
+        clear();
+        out.flush();
+        out.close();
+        br.close();
+    }
+
 }
 ```
