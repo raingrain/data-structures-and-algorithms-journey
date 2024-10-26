@@ -8,4 +8,4 @@
 
 ## Using
 
-[![My Skills](https://skillicons.dev/icons?i=java,md,vscode,idea)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=java,idea,md,vscode&perline=2)](https://skillicons.dev)
