@@ -1,1 +1,4 @@
-* text=auto linguist-detectable
+* text=auto
+
+# Markdown Files
+*.md linguist-detectable
