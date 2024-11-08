@@ -21,7 +21,7 @@
 ## Java
 
 > - **Question 1: 数学规律**
->   - ![image](杨辉三角左对齐.jpg)
+>   - ![image](杨辉三角左对齐.png)
 
 ```java
 class Solution {
