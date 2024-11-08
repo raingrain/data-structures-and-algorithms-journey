@@ -29,5 +29,7 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-### Local Java Project ###
+### Local Project ###
 algorithm-journey
+src
+data-structure-and-algorithm-journey.iml
