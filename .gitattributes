@@ -1,4 +1,9 @@
 * text=auto
 
+# Big Files
+*.pdf -text
+*.jpg -text
+*.png -text
+
 # Markdown Files
 *.md linguist-detectable
