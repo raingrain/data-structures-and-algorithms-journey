@@ -229,7 +229,7 @@ class Solution {
 ```
 
 > - **Question 2: Tarjan算法 + 并查集**
->   - ![images](images/Tarjan算法与并查集解决二叉树节点间最近公共祖先的批量查询问题.jpg)
+>   - ![images](images/Tarjan算法与并查集解决二叉树节点间最近公共祖先的批量查询问题.png)
 >   - 如果节点数 `n` ，查询数量 `m` ，过程总的时间复杂度 `O(n + m)` ，但是只能做批量离线查询。
 
 ```java
