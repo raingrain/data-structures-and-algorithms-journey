@@ -3,6 +3,7 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+**/*.iml
 
 ### Eclipse ###
 .apt_generated
@@ -31,4 +32,3 @@ bin/
 
 ### Local Project ###
 algorithm-journey
-data-structure-and-algorithm-journey.iml
