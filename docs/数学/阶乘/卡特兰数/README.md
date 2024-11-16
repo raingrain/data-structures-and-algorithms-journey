@@ -384,7 +384,6 @@ public class Main {
         cnt = 0;
         for (int i = 2; i <= n; i++) {
             // minpf[i] == 0代表i为质数，收集进质数表
-            // minpf数组替代了讲解097中visit数组的作用
             if (minpf[i] == 0) {
                 prime[cnt++] = i;
             }
