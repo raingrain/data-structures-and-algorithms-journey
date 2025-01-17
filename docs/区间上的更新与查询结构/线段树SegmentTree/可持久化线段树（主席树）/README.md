@@ -4,51 +4,54 @@
 - 做一次修改操作，就生成一棵新版本线段树，去处理比较复杂的区间查询问题。
 - 如果生成 `n` 个版本的线段树，有 `m` 个查询操作，那么单次生成、单次查询的时间复杂度 `O(log n)` 。
 
-## [Sequence II](https://acm.hdu.edu.cn/showproblem.php?pid=5919)
+## [P3919 【模板】可持久化线段树 1（可持久化数组）](https://www.luogu.com.cn/problem/P3919)
 
 > - **Question 1**
->   - 给定一个长度为 `n` 的数组 `arr` ，下标 `1 ~ n` ，一共有 `m` 条查询，每条查询格式如下： `l r` 表示 `arr[l ~ r]` 范围上，每个数第一次出现的位置，把这些位置组成一个序列，假设该范围有 `s` 种不同的数，那么序列长度为 `s` ，打印该序列第 `s/2` 个位置（向上取整），对应 `arr` 的什么位置，题目有强制在线的要求，上一次打印的答案为 `lastAns` ，初始时 `lastAns = 0` ，每次给定的 `l` 和 `r` ，按照如下方式得到真实的 `l` 和 `r` ，查询完成后更新 `lastAns` ， `a = (给定l + lastAns) % n + 1, b = (给定r + lastAns) % n + 1, 真实l = min(a, b), 真实r = max(a, b)` 。
+>   - 给定一个长度为 `n` 的数组 `arr` ，下标 `1 ~ n` ，原始数组认为是 `0` 号版本。
+>   - 一共有 `m` 条操作，每条操作是如下两种类型中的一种：
+>     - `v 1 x y` ：基于 `v` 号版本的数组，把 `x` 位置的值设置成 `y` ，生成新版本的数组。
+>     - `v 2 x` ：基于 `v` 号版本的数组，打印 `x` 位置的值，生成新版本的数组和 `v` 版本一致。
+>   - 每条操作后得到的新版本数组，版本编号为操作的计数。
 >   - **Tips**
->     - `1 <= n、m <= 2 *10^5`
->     - `0 <= arr[i] <= 2* 10^5`
+>     - `1 <= n, m <= 10^6`
 
-## [P4137 Rmq Problem / mex](https://www.luogu.com.cn/problem/P4137)
+## [P3834 【模板】可持久化线段树 2](https://www.luogu.com.cn/problem/P3834)
 
 > - **Question 2**
->   - 给定一个长度为 `n` 的数组 `arr` ，下标 `1 ~ n` ，一共有 `m` 条查询，每条查询 `l r` ：打印 `arr[l ~ r]` 内没有出现过的最小自然数，注意 `0` 是自然数，请用在线算法解决该问题，因为可以设计强制在线的要求，让离线算法失效。
+>   - 给定一个长度为 `n` 的数组 `arr` ，下标 `1 ~ n` ，一共有 `m` 条查询，每条查询 `l r k` 打印 `arr[l ~ r]` 中第 `k` 小的数字。
 >   - **Tips**
->     - `1 <= n、m <= 2 *10^5`
->     - `0 <= arr[i] <= 2* 10^5`
+>     - `1 <= n、m <= 2 * 10^5`
+>     - `0 <= arr[i] <= 10^9`
 
-## [P2839 [国家集训队] middle](https://www.luogu.com.cn/problem/P2839)
+## [TTM - To the moon](https://www.luogu.com.cn/problem/SP11470)
 
 > - **Question 3**
->   - 给定一个长度为 `n` 的数组 `arr` ，下标 `1 ~ n` ，一共有 `m` 条查询，每条查询 `a b c d` : 左端点在 `[a, b]` 之间、右端点在 `[c, d]` 之间，保证 `a < b < c < d` ，哪个区间有最大的上中位数，打印最大的上中位数，题目有强制在线的要求，上一次打印的答案为 `lastAns` ，初始时 `lastAns = 0` ，每次给定四个参数，按照如下方式得到 `a, b, c, d` ，查询完成后更新 `lastAns` ， `(给定的每个参数 + lastAns) % n + 1` ，得到四个值，从小到大对应 `a, b, c, d` 。
+>   - 给定一个长度为 `n` 的数组 `arr` ，下标 `1 ~ n` ，时间戳 `t = 0` ， `arr` 认为是 `0` 版本的数组，一共有 `m` 条操作，每条操作为如下四种类型中的一种：
+>     - `C x y z` ：当前时间戳 `t` 版本的数组， `[x ~ y]` 范围每个数字增加 `z` ，得到 `t + 1` 版本数组，并且 `t++` 。
+>     - `Q x y` ：当前时间戳 `t` 版本的数组，打印 `[x ~ y]` 范围累加和。
+>     - `H x y z` ： `z` 版本的数组，打印 `[x ~ y]` 范围的累加和。
+>     - `B x` ：当前时间戳 `t` 设置成 `x` 。
 >   - **Tips**
->     - `1 <= n <= 20000`
->     - `1 <= m <= 25000`
->     - `1 <= arr[i] <= 10^9`
+>     - `-10^9 <= arr[i] <= +10^9`
+>     - `1 <= n、m <= 10^5`
 
-## [P2633 Count on a tree](https://www.luogu.com.cn/problem/P2633)
+## [P3372 【模板】线段树 1](https://www.luogu.com.cn/problem/P3372)
 
 > - **Question 4**
->   - 有 `n` 个节点，编号 `1 ~ n` ，每个节点有权值，有 `n - 1` 条边，所有节点组成一棵树，一共有 `m` 条查询，每条查询 `u v k` : 打印 `u` 号点到 `v` 号点的路径上，第 `k` 小的点权，题目有强制在线的要求，上一次打印的答案为 `lastAns` ，初始时 `lastAns = 0` ，每次给定的 `u, v, k` ，按照如下方式得到真实的 `u, v, k` ，查询完成后更新 `lastAns` 。
+>   - 如题，已知一个数列，你需要进行下面两种操作：
+>     - 将某区间每一个数加上 `x` 。
+>     - 求出某区间每一个数的和。
+>   - **输入描述**
+>     - 第一行包含两个正整数 `n, m` ，分别表示该数列数字的个数和操作的总个数。
+>     - 第二行包含 `n` 个用空格分隔的整数，其中第 `i` 个数字表示数列第 `i` 项的初始值。
+>     - 接下来 `m` 行每行包含 `3` 或 `4` 个整数，表示一个操作，具体如下：
+>       - `1 x y k` ：将区间 `[x, y]` 内每个数加上 `k` 。
+>       - `2 x y` ：输出区间 `[x, y]` 内每个数的和。
+>   - **输出描述**
+>     - 输出包含若干行整数，即为所有操作 `2` 的结果。
 >   - **Tips**
->     - `真实u = 给定u ^ lastAns`
->     - `真实v = 给定v`
->     - `真实k = 给定k`
->     - `1 <= n、m <= 10^5`
->     - `1 <= arr[i] <= 2^32 - 1`
-
-## [P3899 [湖南集训] 更为厉害](https://www.luogu.com.cn/problem/P3899)
-
-> - **Question 5**
->   - 有 `n` 个节点，编号 `1 ~ n` ，给定 `n - 1` 条边，连成一棵树， `1` 号点是树头，如果 `x` 是 `y` 的祖先节点，认为 `x比y更厉害`，如果 `x` 到 `y` 的路径上，边的数量小于等于某个常数，认为 `x和y是邻居`，一共有 `m` 条查询，每条查询 `a k` ：打印有多少三元组 `(a, b, c)` 满足如下规定：
->     - `a, b, c` 为三个不同的点；
->     - `a` 和 `b` 都比 `c` 厉害；
->     - `a` 和 `b` 是邻居，路径边的数量小于等于给定的 `k` 。
->   - **Tips**
->     - `1 <= n、m、k <= 3 * 10^5`
+>     - `1 <= n, m <= 10^5`
+>     - 保证任意时刻数列中所有元素的绝对值之和小于等于 `10^8`
 
 ## Java
 
@@ -69,209 +72,176 @@ import java.util.*;
 
 public class Main {
 
-    public static int MAXN = 200002;
+    public static int MAXN = 1000001;
 
-    public static int MAXT = MAXN * 37;
+    public static int MAXT = MAXN * 23;
 
-    public static int cases, n, m;
+    public static int n, m;
 
+    // 原始数组
     public static int[] arr = new int[MAXN];
 
-    // pos[v] : v这个数字最左出现的位置
-    public static int[] pos = new int[MAXN];
-
     // 可持久化线段树需要
+    // root[i] : i号版本线段树的头节点编号
     public static int[] root = new int[MAXN];
 
     public static int[] left = new int[MAXT];
 
     public static int[] right = new int[MAXT];
 
-    // 数组范围上只记录每种数第一次出现的位置，这样的位置有多少个
-    public static int[] firstSize = new int[MAXT];
+    // value[i] : 节点i的值信息，只有叶节点有这个信息
+    public static int[] value = new int[MAXT];
 
-    public static int cnt;
+    // 可持久化线段树的节点空间计数
+    public static int cnt = 0;
 
+    // 建树，返回头节点编号
     public static int build(int l, int r) {
         int rt = ++cnt;
         if (l == r) {
-            return rt;
+            value[rt] = arr[l];
+        } else {
+            int mid = (l + r) >> 1;
+            left[rt] = build(l, mid);
+            right[rt] = build(mid + 1, r);
         }
-        int mid = (l + r) / 2;
-        left[rt] = build(l, mid);
-        right[rt] = build(mid + 1, r);
         return rt;
     }
 
+    // 线段树范围l~r，信息在i号节点里
+    // 在l~r范围上，jobi位置的值，设置成jobv
+    // 生成的新节点编号返回
     public static int update(int jobi, int jobv, int l, int r, int i) {
         int rt = ++cnt;
         left[rt] = left[i];
         right[rt] = right[i];
-        firstSize[rt] = firstSize[i] + jobv;
+        value[rt] = value[i];
         if (l == r) {
-            return rt;
-        }
-        int mid = (l + r) / 2;
-        if (jobi <= mid) {
-            left[rt] = update(jobi, jobv, l, mid, left[rt]);
+            value[rt] = jobv;
         } else {
-            right[rt] = update(jobi, jobv, mid + 1, r, right[rt]);
+            int mid = (l + r) >> 1;
+            if (jobi <= mid) {
+                left[rt] = update(jobi, jobv, l, mid, left[rt]);
+            } else {
+                right[rt] = update(jobi, jobv, mid + 1, r, right[rt]);
+            }
         }
         return rt;
     }
 
-    public static int querySize(int jobl, int jobr, int l, int r, int i) {
-        if (jobl <= l && r <= jobr) {
-            return firstSize[i];
-        }
-        int mid = (l + r) / 2;
-        int ans = 0;
-        if (jobl <= mid) {
-            ans += querySize(jobl, jobr, l, mid, left[i]);
-        }
-        if (jobr > mid) {
-            ans += querySize(jobl, jobr, mid + 1, r, right[i]);
-        }
-        return ans;
-    }
-
-    public static int queryKth(int jobk, int l, int r, int i) {
+    // 线段树范围l~r，信息在i号节点里
+    // 返回l~r范围上jobi位置的值
+    public static int query(int jobi, int l, int r, int i) {
         if (l == r) {
-            return l;
+            return value[i];
         }
-        int mid = (l + r) / 2;
-        int leftDiff = firstSize[left[i]];
-        if (leftDiff >= jobk) {
-            return queryKth(jobk, l, mid, left[i]);
+        int mid = (l + r) >> 1;
+        if (jobi <= mid) {
+            return query(jobi, l, mid, left[i]);
         } else {
-            return queryKth(jobk - leftDiff, mid + 1, r, right[i]);
+            return query(jobi, mid + 1, r, right[i]);
         }
     }
 
-    public static void prepare() {
-        cnt = 0;
-        Arrays.fill(pos, 0);
-        root[n + 1] = build(1, n);
-        for (int i = n; i >= 1; i--) {
-            if (pos[arr[i]] == 0) {
-                root[i] = update(i, 1, 1, n, root[i + 1]);
+    public static void main(String[] args) {
+        FastIO io = new FastIO(System.in, System.out);
+        n = io.nextInt();
+        m = io.nextInt();
+        for (int i = 1; i <= n; i++) {
+            arr[i] = io.nextInt();
+        }
+        root[0] = build(1, n);
+        for (int i = 1, version, op, x, y; i <= m; i++) {
+            version = io.nextInt();
+            op = io.nextInt();
+            x = io.nextInt();
+            if (op == 1) {
+                y = io.nextInt();
+                root[i] = update(x, y, 1, n, root[version]);
             } else {
-                root[i] = update(pos[arr[i]], -1, 1, n, root[i + 1]);
-                root[i] = update(i, 1, 1, n, root[i]);
+                root[i] = root[version];
+                io.writelnInt(query(x, 1, n, root[i]));
             }
-            pos[arr[i]] = i;
-        }
-    }
-
-    public static void main(String[] args) throws IOException {
-        ReaderWriter io = new ReaderWriter();
-        cases = io.nextInt();
-        for (int t = 1; t <= cases; t++) {
-            n = io.nextInt();
-            m = io.nextInt();
-            for (int i = 1; i <= n; i++) {
-                arr[i] = io.nextInt();
-            }
-            prepare();
-            io.write("Case #");
-            io.writeInt(t);
-            io.write(":");
-            for (int i = 1, a, b, l, r, k, lastAns = 0; i <= m; i++) {
-                a = (io.nextInt() + lastAns) % n + 1;
-                b = (io.nextInt() + lastAns) % n + 1;
-                l = Math.min(a, b);
-                r = Math.max(a, b);
-                k = (querySize(l, r, 1, n, root[l]) + 1) / 2;
-                lastAns = queryKth(k, 1, n, root[l]);
-                io.write(" ");
-                io.writeInt(lastAns);
-            }
-            io.write("\n");
         }
         io.flush();
     }
 
     // 读写工具类
-    static class ReaderWriter {
-        private static final int BUFFER_SIZE = 1 << 9;
-        private byte[] inBuf = new byte[BUFFER_SIZE];
-        private int bId, bSize;
-        private final java.io.InputStream in;
+    static class FastIO {
+        private final InputStream is;
+        private final OutputStream os;
+        private final byte[] inbuf = new byte[1 << 16];
+        private int lenbuf = 0;
+        private int ptrbuf = 0;
+        private final StringBuilder outBuf = new StringBuilder();
 
-        private byte[] outBuf = new byte[BUFFER_SIZE];
-        private int oId;
-        private final java.io.OutputStream out;
-
-        ReaderWriter() {
-            in = System.in;
-            out = System.out;
+        public FastIO(InputStream is, OutputStream os) {
+            this.is = is;
+            this.os = os;
         }
 
-        private byte read() throws IOException {
-            if (bId == bSize) {
-                bSize = in.read(inBuf);
-                bId = 0;
-                if (bSize == -1)
+        private int readByte() {
+            if (ptrbuf >= lenbuf) {
+                ptrbuf = 0;
+                try {
+                    lenbuf = is.read(inbuf);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if (lenbuf == -1) {
                     return -1;
+                }
             }
-            return inBuf[bId++];
+            return inbuf[ptrbuf++] & 0xff;
         }
 
-        public int nextInt() throws IOException {
-            int s = 0;
-            byte c = read();
-            while (c <= ' ') {
-                if (c == -1)
-                    return -1;
-                c = read();
+        private int skip() {
+            int b;
+            while ((b = readByte()) != -1) {
+                if (b > ' ') {
+                    return b;
+                }
             }
-            boolean neg = (c == '-');
-            if (neg)
-                c = read();
-            while (c >= '0' && c <= '9') {
-                s = s * 10 + (c - '0');
-                c = read();
-            }
-            return neg ? -s : s;
+            return -1;
         }
 
-        public void write(String s) throws IOException {
-            for (int i = 0; i < s.length(); i++) {
-                writeByte((byte) s.charAt(i));
+        public int nextInt() {
+            int b = skip();
+            if (b == -1) {
+                throw new RuntimeException("No more integers (EOF)");
             }
+            boolean negative = false;
+            if (b == '-') {
+                negative = true;
+                b = readByte();
+            }
+            int val = 0;
+            while (b >= '0' && b <= '9') {
+                val = val * 10 + (b - '0');
+                b = readByte();
+            }
+            return negative ? -val : val;
         }
 
-        public void writeInt(int x) throws IOException {
-            if (x == 0) {
-                writeByte((byte) '0');
-                return;
-            }
-            if (x < 0) {
-                writeByte((byte) '-');
-                x = -x;
-            }
-            int len = 0;
-            byte[] tmp = new byte[12];
-            while (x > 0) {
-                tmp[len++] = (byte) ((x % 10) + '0');
-                x /= 10;
-            }
-            while (len-- > 0) {
-                writeByte(tmp[len]);
-            }
+        public void write(String s) {
+            outBuf.append(s);
         }
 
-        private void writeByte(byte b) throws IOException {
-            if (oId == BUFFER_SIZE) {
-                flush();
-            }
-            outBuf[oId++] = b;
+        public void writeInt(int x) {
+            outBuf.append(x);
         }
 
-        public void flush() throws IOException {
-            if (oId > 0) {
-                out.write(outBuf, 0, oId);
-                oId = 0;
+        public void writelnInt(int x) {
+            outBuf.append(x).append('\n');
+        }
+
+        public void flush() {
+            try {
+                os.write(outBuf.toString().getBytes());
+                os.flush();
+                outBuf.setLength(0);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -295,25 +265,48 @@ public class Main {
 
     public static int MAXT = MAXN * 22;
 
-    public static int n, m;
+    public static int n, m, s;
 
+    // 原始数组
     public static int[] arr = new int[MAXN];
 
+    // 收集权值排序并且去重做离散化
+    public static int[] sorted = new int[MAXN];
+
+    // 可持久化线段树需要
+    // root[i] : 插入arr[i]之后形成新版本的线段树，记录头节点编号
+    // 0号版本的线段树代表一个数字也没有时，每种名次的数字出现的次数
+    // i号版本的线段树代表arr[1..i]范围内，每种名次的数字出现的次数
     public static int[] root = new int[MAXN];
 
     public static int[] left = new int[MAXT];
 
     public static int[] right = new int[MAXT];
 
-    // last[i] : l~r的信息存在last[i]
-    // 表示该范围每个数字最后出现的位置中，最左在哪
-    public static int[] lateLeft = new int[MAXT];
+    // 排名范围内收集了多少个数字
+    public static int[] size = new int[MAXT];
 
     public static int cnt;
 
+    // 返回num在所有值中排名多少
+    public static int kth(int num) {
+        int left = 1, right = s, mid, ans = 0;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (sorted[mid] <= num) {
+                ans = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return ans;
+    }
+
+    // 排名范围l~r，建立线段树，返回头节点编号
     public static int build(int l, int r) {
         int rt = ++cnt;
-        lateLeft[rt] = 0;
+        size[rt] = 0;
         if (l < r) {
             int mid = (l + r) / 2;
             left[rt] = build(l, mid);
@@ -322,54 +315,56 @@ public class Main {
         return rt;
     }
 
-    // l~r范围，信息在i位置，jobi这个数字，最新出现在jobv位置
+    // 排名范围l~r，信息在i号节点，增加一个排名为jobi的数字
     // 返回新的头节点编号
-    public static int update(int jobi, int jobv, int l, int r, int i) {
+    public static int insert(int jobi, int l, int r, int i) {
         int rt = ++cnt;
         left[rt] = left[i];
         right[rt] = right[i];
-        lateLeft[rt] = lateLeft[i];
-        if (l == r) {
-            lateLeft[rt] = jobv;
-        } else {
+        size[rt] = size[i] + 1;
+        if (l < r) {
             int mid = (l + r) / 2;
             if (jobi <= mid) {
-                left[rt] = update(jobi, jobv, l, mid, left[rt]);
+                left[rt] = insert(jobi, l, mid, left[rt]);
             } else {
-                right[rt] = update(jobi, jobv, mid + 1, r, right[rt]);
+                right[rt] = insert(jobi, mid + 1, r, right[rt]);
             }
-            lateLeft[rt] = Math.min(lateLeft[left[rt]], lateLeft[right[rt]]);
         }
         return rt;
     }
 
-    // 数字在l~r范围上，没有出现的最小自然数，课上重点图解
-    public static int query(int pos, int l, int r, int i) {
+    // 排名范围l~r，老版本信息在u号节点，新版本信息在v号节点
+    // 返回，第jobk小的数字，排名多少
+    public static int query(int jobk, int l, int r, int u, int v) {
         if (l == r) {
             return l;
         }
+        int lsize = size[left[v]] - size[left[u]];
         int mid = (l + r) / 2;
-        if (lateLeft[left[i]] < pos) {
-            // l...mid范围上，每个数字最晚出现的位置中
-            // 最左的位置如果在pos以左，说明l...mid范围上，一定有缺失的数字
-            return query(pos, l, mid, left[i]);
+        if (lsize >= jobk) {
+            return query(jobk, l, mid, left[u], left[v]);
         } else {
-            // 缺失的数字一定在mid+1....r范围
-            // 因为l...r一定有缺失的数字才会来到这个范围的
-            // 如果左侧不缺失，那缺失的数字一定在右侧范围上
-            return query(pos, mid + 1, r, right[i]);
+            return query(jobk - lsize, mid + 1, r, right[u], right[v]);
         }
     }
 
+    // 权值做离散化并且去重 + 生成各版本的线段树
     public static void prepare() {
         cnt = 0;
-        root[0] = build(0, n);
         for (int i = 1; i <= n; i++) {
-            if (arr[i] >= n) {
-                root[i] = root[i - 1];
-            } else {
-                root[i] = update(arr[i], i, 0, n, root[i - 1]);
+            sorted[i] = arr[i];
+        }
+        Arrays.sort(sorted, 1, n + 1);
+        s = 1;
+        for (int i = 2; i <= n; i++) {
+            if (sorted[s] != sorted[i]) {
+                sorted[++s] = sorted[i];
             }
+        }
+        root[0] = build(1, s);
+        for (int i = 1, x; i <= n; i++) {
+            x = kth(arr[i]);
+            root[i] = insert(x, 1, s, root[i - 1]);
         }
     }
 
@@ -386,12 +381,15 @@ public class Main {
             arr[i] = (int) in.nval;
         }
         prepare();
-        for (int i = 1, l, r; i <= m; i++) {
+        for (int i = 1, l, r, k, rank; i <= m; i++) {
             in.nextToken();
             l = (int) in.nval;
             in.nextToken();
             r = (int) in.nval;
-            out.println(query(l, 0, n, root[r]));
+            in.nextToken();
+            k = (int) in.nval;
+            rank = query(k, 1, s, root[l - 1], root[r]);
+            out.println(sorted[rank]);
         }
         out.flush();
         out.close();
@@ -426,178 +424,242 @@ import java.util.*;
 
 public class Main {
 
-    public static int MAXN = 20001;
+    public static int MAXN = 100001;
 
-    public static int MAXT = MAXN * 20;
+    public static int MAXT = MAXN * 70;
 
-    public static int INF = 10000001;
+    public static int n, m, t = 0;
 
-    public static int n, m;
+    public static int[] arr = new int[MAXN];
 
-    // 原始位置、数值
-    public static int[][] arr = new int[MAXN][2];
-
-    // 可持久化线段树需要
     public static int[] root = new int[MAXN];
 
     public static int[] left = new int[MAXT];
 
     public static int[] right = new int[MAXT];
 
-    // 区间内最大前缀和，前缀不能为空
-    public static int[] pre = new int[MAXT];
+    // 累加和信息
+    public static long[] sum = new long[MAXT];
 
-    // 区间内最大后缀和，后缀不能为空
-    public static int[] suf = new int[MAXT];
+    // 懒更新信息，范围增加的懒更新
+    public static long[] add = new long[MAXT];
 
-    // 区间内累加和，区间为空认为累加和是0
-    public static int[] sum = new int[MAXT];
+    public static int cnt = 0;
 
-    public static int cnt;
-
-    // 查询的问题，a、b、c、d
-    public static int[] ques = new int[4];
-
-    // 收集区间信息，pre、suf、sum
-    public static int[] info = new int[3];
-
-    public static int build(int l, int r) {
+    public static int clone(int i) {
         int rt = ++cnt;
-        pre[rt] = suf[rt] = sum[rt] = r - l + 1;
-        if (l < r) {
-            int mid = (l + r) / 2;
-            left[rt] = build(l, mid);
-            right[rt] = build(mid + 1, r);
-        }
+        left[rt] = left[i];
+        right[rt] = right[i];
+        sum[rt] = sum[i];
+        add[rt] = add[i];
         return rt;
     }
 
     public static void up(int i) {
-        pre[i] = Math.max(pre[left[i]], sum[left[i]] + pre[right[i]]);
-        suf[i] = Math.max(suf[right[i]], suf[left[i]] + sum[right[i]]);
         sum[i] = sum[left[i]] + sum[right[i]];
     }
 
-    public static int update(int jobi, int l, int r, int i) {
+    public static void lazy(int i, long v, int n) {
+        sum[i] += v * n;
+        add[i] += v;
+    }
+
+    public static void down(int i, int ln, int rn) {
+        if (add[i] != 0) {
+            left[i] = clone(left[i]);
+            right[i] = clone(right[i]);
+            lazy(left[i], add[i], ln);
+            lazy(right[i], add[i], rn);
+            add[i] = 0;
+        }
+    }
+
+    public static int build(int l, int r) {
         int rt = ++cnt;
-        left[rt] = left[i];
-        right[rt] = right[i];
-        pre[rt] = pre[i];
-        suf[rt] = suf[i];
-        sum[rt] = sum[i];
+        add[rt] = 0;
         if (l == r) {
-            pre[rt] = suf[rt] = sum[rt] = -1;
+            sum[rt] = arr[l];
         } else {
             int mid = (l + r) / 2;
-            if (jobi <= mid) {
-                left[rt] = update(jobi, l, mid, left[rt]);
-            } else {
-                right[rt] = update(jobi, mid + 1, r, right[rt]);
+            left[rt] = build(l, mid);
+            right[rt] = build(mid + 1, r);
+            up(rt);
+        }
+        return rt;
+    }
+
+    public static int add(int jobl, int jobr, long jobv, int l, int r, int i) {
+        int rt = clone(i);
+        if (jobl <= l && r <= jobr) {
+            lazy(rt, jobv, r - l + 1);
+        } else {
+            int mid = (l + r) / 2;
+            down(rt, mid - l + 1, r - mid);
+            if (jobl <= mid) {
+                left[rt] = add(jobl, jobr, jobv, l, mid, left[rt]);
+            }
+            if (jobr > mid) {
+                right[rt] = add(jobl, jobr, jobv, mid + 1, r, right[rt]);
             }
             up(rt);
         }
         return rt;
     }
 
-    public static void initInfo() {
-        info[0] = info[1] = -INF;
-        info[2] = 0;
-    }
-
-    public static void mergeRight(int r) {
-        info[0] = Math.max(info[0], info[2] + pre[r]);
-        info[1] = Math.max(suf[r], info[1] + sum[r]);
-        info[2] += sum[r];
-    }
-
-    public static void query(int jobl, int jobr, int l, int r, int i) {
+    public static long query(int jobl, int jobr, int l, int r, int i) {
         if (jobl <= l && r <= jobr) {
-            mergeRight(i);
-        } else {
-            int mid = (l + r) / 2;
-            if (jobl <= mid) {
-                query(jobl, jobr, l, mid, left[i]);
-            }
-            if (jobr > mid) {
-                query(jobl, jobr, mid + 1, r, right[i]);
-            }
+            return sum[i];
         }
-    }
-
-    public static void prepare() {
-        Arrays.sort(arr, 1, n + 1, (a, b) -> a[1] - b[1]);
-        cnt = 0;
-        root[1] = build(1, n);
-        for (int i = 2; i <= n; i++) {
-            root[i] = update(arr[i - 1][0], 1, n, root[i - 1]);
+        int mid = (l + r) / 2;
+        down(i, mid - l + 1, r - mid);
+        long ans = 0;
+        if (jobl <= mid) {
+            ans += query(jobl, jobr, l, mid, left[i]);
         }
-    }
-
-    public static boolean check(int a, int b, int c, int d, int v) {
-        initInfo();
-        query(a, b, 1, n, root[v]);
-        int best = info[1];
-        initInfo();
-        query(c, d, 1, n, root[v]);
-        best += info[0];
-        if (b + 1 <= c - 1) {
-            initInfo();
-            query(b + 1, c - 1, 1, n, root[v]);
-            best += info[2];
-        }
-        return best >= 0;
-    }
-
-    public static int compute(int a, int b, int c, int d) {
-        int left = 1, right = n, mid, ans = 0;
-        while (left <= right) {
-            mid = (left + right) / 2;
-            if (check(a, b, c, d, mid)) {
-                ans = arr[mid][1];
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+        if (jobr > mid) {
+            ans += query(jobl, jobr, mid + 1, r, right[i]);
         }
         return ans;
     }
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StreamTokenizer in = new StreamTokenizer(br);
-        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
-        in.nextToken();
-        n = (int) in.nval;
+        FastReader in = new FastReader();
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+        n = in.nextInt();
+        m = in.nextInt();
         for (int i = 1; i <= n; i++) {
-            arr[i][0] = i;
-            in.nextToken();
-            arr[i][1] = (int) in.nval;
+            arr[i] = in.nextInt();
         }
-        prepare();
-        in.nextToken();
-        m = (int) in.nval;
-        for (int i = 1, lastAns = 0; i <= m; i++) {
-            in.nextToken();
-            ques[0] = ((int) in.nval + lastAns) % n + 1;
-            in.nextToken();
-            ques[1] = ((int) in.nval + lastAns) % n + 1;
-            in.nextToken();
-            ques[2] = ((int) in.nval + lastAns) % n + 1;
-            in.nextToken();
-            ques[3] = ((int) in.nval + lastAns) % n + 1;
-            Arrays.sort(ques);
-            lastAns = compute(ques[0], ques[1], ques[2], ques[3]);
-            out.println(lastAns);
+        root[0] = build(1, n);
+        String op;
+        for (int i = 1, x, y, z; i <= m; i++) {
+            op = in.next();
+            if (op.equals("C")) {
+                x = in.nextInt();
+                y = in.nextInt();
+                z = in.nextInt();
+                root[t + 1] = add(x, y, z, 1, n, root[t]);
+                t++;
+            } else if (op.equals("Q")) {
+                x = in.nextInt();
+                y = in.nextInt();
+                out.write(query(x, y, 1, n, root[t]) + "\n");
+            } else if (op.equals("H")) {
+                x = in.nextInt();
+                y = in.nextInt();
+                z = in.nextInt();
+                out.write(query(x, y, 1, n, root[z]) + "\n");
+            } else {
+                x = in.nextInt();
+                t = x;
+            }
         }
         out.flush();
         out.close();
-        br.close();
+    }
+
+    // 读写工具类
+    static class FastReader {
+        final private int BUFFER_SIZE = 1 << 16;
+        private final InputStream in;
+        private final byte[] buffer;
+        private int ptr, len;
+
+        public FastReader() {
+            in = System.in;
+            buffer = new byte[BUFFER_SIZE];
+            ptr = len = 0;
+        }
+
+        private boolean hasNextByte() throws IOException {
+            if (ptr < len)
+                return true;
+            ptr = 0;
+            len = in.read(buffer);
+            return len > 0;
+        }
+
+        private byte readByte() throws IOException {
+            if (!hasNextByte())
+                return -1;
+            return buffer[ptr++];
+        }
+
+        public boolean hasNext() throws IOException {
+            while (hasNextByte()) {
+                byte b = buffer[ptr];
+                if (!isWhitespace(b))
+                    return true;
+                ptr++;
+            }
+            return false;
+        }
+
+        public String next() throws IOException {
+            byte c;
+            do {
+                c = readByte();
+                if (c == -1)
+                    return null;
+            } while (c <= ' ');
+            StringBuilder sb = new StringBuilder();
+            while (c > ' ') {
+                sb.append((char) c);
+                c = readByte();
+            }
+            return sb.toString();
+        }
+
+        public int nextInt() throws IOException {
+            int num = 0;
+            byte b = readByte();
+            while (isWhitespace(b))
+                b = readByte();
+            boolean minus = false;
+            if (b == '-') {
+                minus = true;
+                b = readByte();
+            }
+            while (!isWhitespace(b) && b != -1) {
+                num = num * 10 + (b - '0');
+                b = readByte();
+            }
+            return minus ? -num : num;
+        }
+
+        public double nextDouble() throws IOException {
+            double num = 0, div = 1;
+            byte b = readByte();
+            while (isWhitespace(b))
+                b = readByte();
+            boolean minus = false;
+            if (b == '-') {
+                minus = true;
+                b = readByte();
+            }
+            while (!isWhitespace(b) && b != '.' && b != -1) {
+                num = num * 10 + (b - '0');
+                b = readByte();
+            }
+            if (b == '.') {
+                b = readByte();
+                while (!isWhitespace(b) && b != -1) {
+                    num += (b - '0') / (div *= 10);
+                    b = readByte();
+                }
+            }
+            return minus ? -num : num;
+        }
+
+        private boolean isWhitespace(byte b) {
+            return b == ' ' || b == '\n' || b == '\r' || b == '\t';
+        }
     }
 
 }
 ```
 
-> - **Question 4: 标记永久化**
+> - **Question 4**
 
 ```java
 // 标记永久化
@@ -624,206 +686,57 @@ public class Main {
 
     public static int MAXN = 100001;
 
-    public static int MAXH = 20;
+    public static long[] arr = new long[MAXN];
 
-    public static int MAXT = MAXN * MAXH;
+    // 不是真实累加和，而是之前的任务中
+    // 不考虑被上方范围截住的任务，只考虑来到当前范围 或者 往下走的任务
+    // 累加和变成了什么
+    public static long[] sum = new long[MAXN << 2];
 
-    public static int n, m, s;
+    // 不再是懒更新信息，变成标记信息
+    public static long[] addTag = new long[MAXN << 2];
 
-    // 各个节点权值
-    public static int[] arr = new int[MAXN];
-
-    // 收集权值排序并且去重做离散化
-    public static int[] sorted = new int[MAXN];
-
-    // 链式前向星需要
-    public static int[] head = new int[MAXN];
-
-    public static int[] to = new int[MAXN << 1];
-
-    public static int[] next = new int[MAXN << 1];
-
-    public static int cntg = 0;
-
-    // 可持久化线段树需要
-    public static int[] root = new int[MAXN];
-
-    public static int[] left = new int[MAXT];
-
-    public static int[] right = new int[MAXT];
-
-    public static int[] size = new int[MAXT];
-
-    public static int cntt = 0;
-
-    // 树上倍增找lca需要
-    public static int[] deep = new int[MAXN];
-
-    public static int[][] stjump = new int[MAXN][MAXH];
-
-    public static int kth(int num) {
-        int left = 1, right = s, mid;
-        while (left <= right) {
-            mid = (left + right) / 2;
-            if (sorted[mid] == num) {
-                return mid;
-            } else if (sorted[mid] < num) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return -1;
-    }
-
-    public static int build(int l, int r) {
-        int rt = ++cntt;
-        size[rt] = 0;
-        if (l < r) {
-            int mid = (l + r) / 2;
-            left[rt] = build(l, mid);
-            right[rt] = build(mid + 1, r);
-        }
-        return rt;
-    }
-
-    public static void prepare() {
-        for (int i = 1; i <= n; i++) {
-            sorted[i] = arr[i];
-        }
-        Arrays.sort(sorted, 1, n + 1);
-        s = 1;
-        for (int i = 2; i <= n; i++) {
-            if (sorted[s] != sorted[i]) {
-                sorted[++s] = sorted[i];
-            }
-        }
-        root[0] = build(1, s);
-    }
-
-    public static void addEdge(int u, int v) {
-        next[++cntg] = head[u];
-        to[cntg] = v;
-        head[u] = cntg;
-    }
-
-    public static int insert(int jobi, int l, int r, int i) {
-        int rt = ++cntt;
-        left[rt] = left[i];
-        right[rt] = right[i];
-        size[rt] = size[i] + 1;
-        if (l < r) {
-            int mid = (l + r) / 2;
-            if (jobi <= mid) {
-                left[rt] = insert(jobi, l, mid, left[rt]);
-            } else {
-                right[rt] = insert(jobi, mid + 1, r, right[rt]);
-            }
-        }
-        return rt;
-    }
-
-    public static int query(int jobk, int l, int r, int u, int v, int lca, int lcafa) {
+    public static void build(int l, int r, int i) {
         if (l == r) {
-            return l;
-        }
-        int lsize = size[left[u]] + size[left[v]] - size[left[lca]] - size[left[lcafa]];
-        int mid = (l + r) / 2;
-        if (lsize >= jobk) {
-            return query(jobk, l, mid, left[u], left[v], left[lca], left[lcafa]);
+            sum[i] = arr[l];
         } else {
-            return query(jobk - lsize, mid + 1, r, right[u], right[v], right[lca], right[lcafa]);
+            int mid = (l + r) / 2;
+            build(l, mid, i << 1);
+            build(mid + 1, r, i << 1 | 1);
+            sum[i] = sum[i << 1] + sum[i << 1 | 1];
         }
+        addTag[i] = 0;
     }
 
-    // 递归版，C++可以通过，java无法通过，递归会爆栈
-    public static void dfs1(int u, int f) {
-        root[u] = insert(kth(arr[u]), 1, s, root[f]);
-        deep[u] = deep[f] + 1;
-        stjump[u][0] = f;
-        for (int p = 1; p < MAXH; p++) {
-            stjump[u][p] = stjump[stjump[u][p - 1]][p - 1];
-        }
-        for (int ei = head[u]; ei > 0; ei = next[ei]) {
-            if (to[ei] != f) {
-                dfs1(to[ei], u);
+    public static void add(int jobl, int jobr, long jobv, int l, int r, int i) {
+        int a = Math.max(jobl, l), b = Math.min(jobr, r);
+        sum[i] += jobv * (b - a + 1);
+        if (jobl <= l && r <= jobr) {
+            addTag[i] += jobv;
+        } else {
+            int mid = (l + r) / 2;
+            if (jobl <= mid) {
+                add(jobl, jobr, jobv, l, mid, i << 1);
+            }
+            if (jobr > mid) {
+                add(jobl, jobr, jobv, mid + 1, r, i << 1 | 1);
             }
         }
     }
 
-    // 迭代版，都可以通过
-    // 讲解118，详解了从递归版改迭代版
-    public static int[][] ufe = new int[MAXN][3];
-
-    public static int stackSize, u, f, e;
-
-    public static void push(int u, int f, int e) {
-        ufe[stackSize][0] = u;
-        ufe[stackSize][1] = f;
-        ufe[stackSize][2] = e;
-        stackSize++;
-    }
-
-    public static void pop() {
-        --stackSize;
-        u = ufe[stackSize][0];
-        f = ufe[stackSize][1];
-        e = ufe[stackSize][2];
-    }
-
-    // dfs1的迭代版
-    public static void dfs2() {
-        stackSize = 0;
-        push(1, 0, -1);
-        while (stackSize > 0) {
-            pop();
-            if (e == -1) {
-                root[u] = insert(kth(arr[u]), 1, s, root[f]);
-                deep[u] = deep[f] + 1;
-                stjump[u][0] = f;
-                for (int p = 1; p < MAXH; p++) {
-                    stjump[u][p] = stjump[stjump[u][p - 1]][p - 1];
-                }
-                e = head[u];
-            } else {
-                e = next[e];
-            }
-            if (e != 0) {
-                push(u, f, e);
-                if (to[e] != f) {
-                    push(to[e], u, -1);
-                }
-            }
+    public static long query(int jobl, int jobr, long addHistory, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            return sum[i] + addHistory * (r - l + 1);
         }
-    }
-
-    public static int lca(int a, int b) {
-        if (deep[a] < deep[b]) {
-            int tmp = a;
-            a = b;
-            b = tmp;
+        int mid = (l + r) >> 1;
+        long ans = 0;
+        if (jobl <= mid) {
+            ans += query(jobl, jobr, addHistory + addTag[i], l, mid, i << 1);
         }
-        for (int p = MAXH - 1; p >= 0; p--) {
-            if (deep[stjump[a][p]] >= deep[b]) {
-                a = stjump[a][p];
-            }
+        if (jobr > mid) {
+            ans += query(jobl, jobr, addHistory + addTag[i], mid + 1, r, i << 1 | 1);
         }
-        if (a == b) {
-            return a;
-        }
-        for (int p = MAXH - 1; p >= 0; p--) {
-            if (stjump[a][p] != stjump[b][p]) {
-                a = stjump[a][p];
-                b = stjump[b][p];
-            }
-        }
-        return stjump[a][0];
-    }
-
-    public static int kth(int u, int v, int k) {
-        int lca = lca(u, v);
-        int i = query(k, 1, s, root[u], root[v], root[lca], root[stjump[lca][0]]);
-        return sorted[i];
+        return ans;
     }
 
     public static void main(String[] args) throws IOException {
@@ -831,32 +744,34 @@ public class Main {
         StreamTokenizer in = new StreamTokenizer(br);
         PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
         in.nextToken();
-        n = (int) in.nval;
+        int n = (int) in.nval;
         in.nextToken();
-        m = (int) in.nval;
+        int m = (int) in.nval;
         for (int i = 1; i <= n; i++) {
             in.nextToken();
-            arr[i] = (int) in.nval;
+            arr[i] = (long) in.nval;
         }
-        prepare();
-        for (int i = 1, u, v; i < n; i++) {
+        build(1, n, 1);
+        int op, jobl, jobr;
+        long jobv;
+        for (int i = 1; i <= m; i++) {
             in.nextToken();
-            u = (int) in.nval;
-            in.nextToken();
-            v = (int) in.nval;
-            addEdge(u, v);
-            addEdge(v, u);
-        }
-        dfs2(); // 使用迭代版防止爆栈
-        for (int i = 1, u, v, k, lastAns = 0; i <= m; i++) {
-            in.nextToken();
-            u = (int) in.nval ^ lastAns;
-            in.nextToken();
-            v = (int) in.nval;
-            in.nextToken();
-            k = (int) in.nval;
-            lastAns = kth(u, v, k);
-            out.println(lastAns);
+            op = (int) in.nval;
+            if (op == 1) {
+                in.nextToken();
+                jobl = (int) in.nval;
+                in.nextToken();
+                jobr = (int) in.nval;
+                in.nextToken();
+                jobv = (long) in.nval;
+                add(jobl, jobr, jobv, 1, n, 1);
+            } else {
+                in.nextToken();
+                jobl = (int) in.nval;
+                in.nextToken();
+                jobr = (int) in.nval;
+                out.println(query(jobl, jobr, 0, 1, n, 1));
+            }
         }
         out.flush();
         out.close();
@@ -866,7 +781,7 @@ public class Main {
 }
 ```
 
-> - **Question 5: 范围修改 + 标记永久化**
+> - **Question 3**
 
 ```java
 // 标记永久化减少空间占用，但是仅支持修改和查询的性质都有可叠加性，这一类的可持久化线段树
@@ -878,225 +793,213 @@ import java.util.*;
 
 public class Main {
 
-    public static int MAXN = 300001;
+    public static int MAXN = 100001;
 
-    public static int MAXT = MAXN * 22;
+    public static int MAXT = MAXN * 25;
 
-    public static int n, m;
+    public static int n, m, t = 0;
 
-    // 链式前向星需要
-    public static int[] head = new int[MAXN];
+    public static int[] arr = new int[MAXN];
 
-    public static int[] to = new int[MAXN << 1];
-
-    public static int[] next = new int[MAXN << 1];
-
-    public static int cntg = 0;
-
-    // 可持久化线段树需要
     public static int[] root = new int[MAXN];
 
     public static int[] left = new int[MAXT];
 
     public static int[] right = new int[MAXT];
 
+    // 不是真实累加和，而是之前的任务中
+    // 不考虑被上方范围截住的任务，只考虑来到当前范围 或者 往下走的任务
+    // 累加和变成了什么
     public static long[] sum = new long[MAXT];
 
-    public static int cntt = 0;
+    // 不再是懒更新信息，变成标记信息
+    public static long[] addTag = new long[MAXT];
 
-    // dfs需要
-    // deep[i] : i号节点的深度
-    public static int[] deep = new int[MAXN];
-
-    // size[i] : 以i号节点为头的树，有多少个节点
-    public static int[] size = new int[MAXN];
-
-    // dfn[i] : i号节点的dfn序号
-    public static int[] dfn = new int[MAXN];
-
-    public static int cntd = 0;
-
-    public static void addEdge(int u, int v) {
-        next[++cntg] = head[u];
-        to[cntg] = v;
-        head[u] = cntg;
-    }
+    public static int cnt = 0;
 
     public static int build(int l, int r) {
-        int rt = ++cntt;
-        sum[rt] = 0;
-        if (l < r) {
+        int rt = ++cnt;
+        addTag[rt] = 0;
+        if (l == r) {
+            sum[rt] = arr[l];
+        } else {
             int mid = (l + r) / 2;
             left[rt] = build(l, mid);
             right[rt] = build(mid + 1, r);
+            sum[rt] = sum[left[rt]] + sum[right[rt]];
         }
         return rt;
     }
 
-    public static int add(int jobi, long jobv, int l, int r, int i) {
-        int rt = ++cntt;
+    public static int add(int jobl, int jobr, long jobv, int l, int r, int i) {
+        int rt = ++cnt, a = Math.max(jobl, l), b = Math.min(jobr, r);
         left[rt] = left[i];
         right[rt] = right[i];
-        sum[rt] = sum[i] + jobv;
-        if (l < r) {
+        sum[rt] = sum[i] + jobv * (b - a + 1);
+        addTag[rt] = addTag[i];
+        if (jobl <= l && r <= jobr) {
+            addTag[rt] += jobv;
+        } else {
             int mid = (l + r) / 2;
-            if (jobi <= mid) {
-                left[rt] = add(jobi, jobv, l, mid, left[rt]);
-            } else {
-                right[rt] = add(jobi, jobv, mid + 1, r, right[rt]);
+            if (jobl <= mid) {
+                left[rt] = add(jobl, jobr, jobv, l, mid, left[rt]);
+            }
+            if (jobr > mid) {
+                right[rt] = add(jobl, jobr, jobv, mid + 1, r, right[rt]);
             }
         }
         return rt;
     }
 
-    public static long query(int jobl, int jobr, int l, int r, int u, int v) {
+    public static long query(int jobl, int jobr, long addHistory, int l, int r, int i) {
         if (jobl <= l && r <= jobr) {
-            return sum[v] - sum[u];
+            return sum[i] + addHistory * (r - l + 1);
         }
-        long ans = 0;
         int mid = (l + r) / 2;
+        long ans = 0;
         if (jobl <= mid) {
-            ans += query(jobl, jobr, l, mid, left[u], left[v]);
+            ans += query(jobl, jobr, addHistory + addTag[i], l, mid, left[i]);
         }
         if (jobr > mid) {
-            ans += query(jobl, jobr, mid + 1, r, right[u], right[v]);
+            ans += query(jobl, jobr, addHistory + addTag[i], mid + 1, r, right[i]);
         }
-        return ans;
-    }
-
-    // 递归版，C++可以通过，java无法通过，递归会爆栈
-    public static void dfs1(int u, int f) {
-        deep[u] = deep[f] + 1;
-        size[u] = 1;
-        dfn[u] = ++cntd;
-        for (int ei = head[u]; ei > 0; ei = next[ei]) {
-            if (to[ei] != f) {
-                dfs1(to[ei], u);
-            }
-        }
-        for (int ei = head[u]; ei > 0; ei = next[ei]) {
-            if (to[ei] != f) {
-                size[u] += size[to[ei]];
-            }
-        }
-    }
-
-    // 递归版，C++可以通过，java无法通过，递归会爆栈
-    public static void dfs2(int u, int f) {
-        root[dfn[u]] = add(deep[u], size[u] - 1, 1, n, root[dfn[u] - 1]);
-        for (int ei = head[u]; ei > 0; ei = next[ei]) {
-            if (to[ei] != f) {
-                dfs2(to[ei], u);
-            }
-        }
-    }
-
-    // dfs1、dfs2，分别改成迭代版，dfs3、dfs4
-    // 讲解118，详解了从递归版改迭代版
-    public static int[][] ufe = new int[MAXN][3];
-
-    public static int stackSize, u, f, e;
-
-    public static void push(int u, int f, int e) {
-        ufe[stackSize][0] = u;
-        ufe[stackSize][1] = f;
-        ufe[stackSize][2] = e;
-        stackSize++;
-    }
-
-    public static void pop() {
-        --stackSize;
-        u = ufe[stackSize][0];
-        f = ufe[stackSize][1];
-        e = ufe[stackSize][2];
-    }
-
-    // dfs1的迭代版
-    public static void dfs3() {
-        stackSize = 0;
-        push(1, 0, -1);
-        while (stackSize > 0) {
-            pop();
-            if (e == -1) {
-                deep[u] = deep[f] + 1;
-                size[u] = 1;
-                dfn[u] = ++cntd;
-                e = head[u];
-            } else {
-                e = next[e];
-            }
-            if (e != 0) {
-                push(u, f, e);
-                if (to[e] != f) {
-                    push(to[e], u, -1);
-                }
-            } else {
-                for (int ei = head[u]; ei > 0; ei = next[ei]) {
-                    if (to[ei] != f) {
-                        size[u] += size[to[ei]];
-                    }
-                }
-            }
-        }
-    }
-
-    // dfs2的迭代版
-    public static void dfs4() {
-        stackSize = 0;
-        push(1, 0, -1);
-        while (stackSize > 0) {
-            pop();
-            if (e == -1) {
-                root[dfn[u]] = add(deep[u], size[u] - 1, 1, n, root[dfn[u] - 1]);
-                e = head[u];
-            } else {
-                e = next[e];
-            }
-            if (e != 0) {
-                push(u, f, e);
-                if (to[e] != f) {
-                    push(to[e], u, -1);
-                }
-            }
-        }
-    }
-
-    public static long compute(int a, int k) {
-        long ans = query(deep[a] + 1, deep[a] + k, 1, n, root[dfn[a] - 1], root[dfn[a] + size[a] - 1]);
-        ans += (long) (size[a] - 1) * Math.min(k, deep[a] - 1);
         return ans;
     }
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StreamTokenizer in = new StreamTokenizer(br);
-        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
-        in.nextToken();
-        n = (int) in.nval;
-        in.nextToken();
-        m = (int) in.nval;
-        for (int i = 1, u, v; i < n; i++) {
-            in.nextToken();
-            u = (int) in.nval;
-            in.nextToken();
-            v = (int) in.nval;
-            addEdge(u, v);
-            addEdge(v, u);
+        FastReader in = new FastReader();
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+        n = in.nextInt();
+        m = in.nextInt();
+        for (int i = 1; i <= n; i++) {
+            arr[i] = in.nextInt();
         }
         root[0] = build(1, n);
-        dfs3(); // 使用迭代版防止爆栈
-        dfs4(); // 使用迭代版防止爆栈
-        for (int i = 1, a, k; i <= m; i++) {
-            in.nextToken();
-            a = (int) in.nval;
-            in.nextToken();
-            k = (int) in.nval;
-            out.println(compute(a, k));
+        String op;
+        for (int i = 1, x, y, z; i <= m; i++) {
+            op = in.next();
+            if (op.equals("C")) {
+                x = in.nextInt();
+                y = in.nextInt();
+                z = in.nextInt();
+                root[t + 1] = add(x, y, z, 1, n, root[t]);
+                t++;
+            } else if (op.equals("Q")) {
+                x = in.nextInt();
+                y = in.nextInt();
+                out.write(query(x, y, 0, 1, n, root[t]) + "\n");
+            } else if (op.equals("H")) {
+                x = in.nextInt();
+                y = in.nextInt();
+                z = in.nextInt();
+                out.write(query(x, y, 0, 1, n, root[z]) + "\n");
+            } else {
+                x = in.nextInt();
+                t = x;
+            }
         }
         out.flush();
         out.close();
-        br.close();
+    }
+
+    // 读写工具类
+    static class FastReader {
+        final private int BUFFER_SIZE = 1 << 16;
+        private final InputStream in;
+        private final byte[] buffer;
+        private int ptr, len;
+
+        public FastReader() {
+            in = System.in;
+            buffer = new byte[BUFFER_SIZE];
+            ptr = len = 0;
+        }
+
+        private boolean hasNextByte() throws IOException {
+            if (ptr < len)
+                return true;
+            ptr = 0;
+            len = in.read(buffer);
+            return len > 0;
+        }
+
+        private byte readByte() throws IOException {
+            if (!hasNextByte())
+                return -1;
+            return buffer[ptr++];
+        }
+
+        public boolean hasNext() throws IOException {
+            while (hasNextByte()) {
+                byte b = buffer[ptr];
+                if (!isWhitespace(b))
+                    return true;
+                ptr++;
+            }
+            return false;
+        }
+
+        public String next() throws IOException {
+            byte c;
+            do {
+                c = readByte();
+                if (c == -1)
+                    return null;
+            } while (c <= ' ');
+            StringBuilder sb = new StringBuilder();
+            while (c > ' ') {
+                sb.append((char) c);
+                c = readByte();
+            }
+            return sb.toString();
+        }
+
+        public int nextInt() throws IOException {
+            int num = 0;
+            byte b = readByte();
+            while (isWhitespace(b))
+                b = readByte();
+            boolean minus = false;
+            if (b == '-') {
+                minus = true;
+                b = readByte();
+            }
+            while (!isWhitespace(b) && b != -1) {
+                num = num * 10 + (b - '0');
+                b = readByte();
+            }
+            return minus ? -num : num;
+        }
+
+        public double nextDouble() throws IOException {
+            double num = 0, div = 1;
+            byte b = readByte();
+            while (isWhitespace(b))
+                b = readByte();
+            boolean minus = false;
+            if (b == '-') {
+                minus = true;
+                b = readByte();
+            }
+            while (!isWhitespace(b) && b != '.' && b != -1) {
+                num = num * 10 + (b - '0');
+                b = readByte();
+            }
+            if (b == '.') {
+                b = readByte();
+                while (!isWhitespace(b) && b != -1) {
+                    num += (b - '0') / (div *= 10);
+                    b = readByte();
+                }
+            }
+            return minus ? -num : num;
+        }
+
+        private boolean isWhitespace(byte b) {
+            return b == ' ' || b == '\n' || b == '\r' || b == '\t';
+        }
     }
 
 }
+
 ```
