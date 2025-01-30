@@ -155,7 +155,6 @@ public class Main {
     }
 
     // 迭代版，都可以通过
-    // 讲解118，详解了从递归版改迭代版
     public static int[][] ufe = new int[MAXN][3];
 
     public static int stackSize, u, f, e;
