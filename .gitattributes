@@ -1,4 +1,0 @@
-* text=auto
-
-# Make Markdown Files Detectable
-*.md linguist-detectable
