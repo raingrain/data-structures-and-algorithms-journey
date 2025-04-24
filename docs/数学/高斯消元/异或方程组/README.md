@@ -53,7 +53,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("课上图解的例子，有唯一解");
+        System.out.println("例子，有唯一解");
         // x1 ^ x2 ^ x3 = 0
         // x1 ^ x3 ^ x4 = 1
         // x2 ^ x3 ^ x4 = 1
