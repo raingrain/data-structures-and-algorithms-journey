@@ -147,7 +147,7 @@ public class Main {
         gauss(3);
         print(3);
 
-        System.out.println("课上图解的例子，多解");
+        System.out.println("例子，多解");
         System.out.println("只有确定了自由元，才能确定主元的值");
         System.out.println("如果是多解的情况，那么在消元结束后");
         System.out.println("二维矩阵中主元和自由元的关系是正确的");
