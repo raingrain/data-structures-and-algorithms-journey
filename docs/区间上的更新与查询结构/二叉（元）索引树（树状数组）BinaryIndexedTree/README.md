@@ -376,7 +376,7 @@ public class Main {
 
     public static int MAXN = 500001;
 
-    // 原始数组的信息，根据课上说的关系，维护在树状数组中
+    // 原始数组的信息，维护在树状数组中
     // 注意下标一定从1开始，不从0开始
     public static int[] tree = new int[MAXN];
 

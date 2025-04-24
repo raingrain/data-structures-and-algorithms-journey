@@ -151,7 +151,7 @@ public class Main {
         System.out.println("只有确定了自由元，才能确定主元的值");
         System.out.println("如果是多解的情况，那么在消元结束后");
         System.out.println("二维矩阵中主元和自由元的关系是正确的");
-        System.out.println("课上也进行了验证");
+        System.out.println("进行了验证");
         // 1*x1 + 2*x2 + 3*x3 同余 2
         // 2*x1 + 4*x2 + 6*x3 同余 4
         // 0*x1 + 3*x2 + 4*x3 同余 2

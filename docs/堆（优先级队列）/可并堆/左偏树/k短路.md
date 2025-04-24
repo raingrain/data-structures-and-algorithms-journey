@@ -195,7 +195,6 @@ public class Main {
 
     // 在最短路树上的每个节点，生成自己的左偏树
     // 节点u的左偏树 = 节点u自己的非树边左偏树 + 节点u在最短路树上的父亲的左偏树
-    // 课上重点解释了这么做的意义
     public static void mergeRoad() {
         cntd = cnth = 0;
         for (int i = 1; i <= n; i++) {
