@@ -49,7 +49,7 @@ public class Main {
         }
         dp[0] = 0;
         Arrays.fill(dp, 1, m + 1, NA);
-        // 动态规划进行了空间压缩，并且注意本题重量的要求是至少！课上进行了图解
+        // 动态规划进行了空间压缩，并且注意本题重量的要求是至少
         for (int i = 1; i <= n; i++) {
             for (int j = m, t; j >= 0; j--) {
                 t = (int) (j + weight[i]);
