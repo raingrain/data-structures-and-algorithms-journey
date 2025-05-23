@@ -1,5 +1,9 @@
 # 整体二分
 
+![image](./images/整体二分1.png)
+
+![image](./images/整体二分2.png)
+
 ## [P3834 【模板】可持久化线段树 2](https://www.luogu.com.cn/problem/P3834)
 
 > - **Question**
