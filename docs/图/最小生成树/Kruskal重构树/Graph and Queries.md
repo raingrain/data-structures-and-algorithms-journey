@@ -1,6 +1,6 @@
 # Graph and Queries
 
-## [CF1416D Graph and Queries](https://www.luogu.com.cn/problem/CF1416D)
+## [CF1416D Graph and Queries](https://codeforces.com/problemset/problem/1416/D)
 
 > - **Question**
 >   - 图里有 `n` 个点， `m` 条无向边，初始时点权都不同，图里可能有若干个连通的部分，一共有 `q` 条操作，每条操作是如下两种类型中的一种：
