@@ -1,6 +1,6 @@
 # Qpwoeirut and Vertices
 
-## [CF1706E Qpwoeirut and Vertices](https://www.luogu.com.cn/problem/CF1706E)
+## [CF1706E Qpwoeirut and Vertices](https://codeforces.com/problemset/problem/1706/E)
 
 > - **Question**
 >   - 图里有 `n` 个点， `m` 条无向边，点的编号 `1 ~ n` ，边的编号 `1 ~ m` ，所有点都连通，一共有 `q` 条查询，每条查询格式如下：查询 `l r` ：至少要加完编号前多少的边，才能使得 `[l, r]` 中的所有点连通。
