@@ -1,6 +1,6 @@
 # Shortest Path Queries
 
-## [CF938G Shortest Path Queries](https://www.luogu.com.cn/problem/CF938G)
+## [CF938G Shortest Path Queries](https://codeforces.com/problemset/problem/938/G)
 
 > - **Question**
 >   - 一共有 `n` 个节点， `m` 条边，每条边有边权，接下来有 `q` 条操作，每种操作是如下三种类型中的一种：
