@@ -1,6 +1,6 @@
 # Addition on Segments
 
-## [CF981E Addition on Segments](https://www.luogu.com.cn/problem/CF981E)
+## [CF981E Addition on Segments](https://codeforces.com/problemset/problem/981/E)
 
 > - **Question**
 >   - 一个长度为 `n` 的序列，一开始所有值都是 `0` ，一共有 `q` 条操作，每条操作为 `l r k` ：序列 `[l ~ r]` 范围上，每个数字加 `k` ，你可以随意选择操作来执行，但是每条操作只能执行一次，如果你能让序列中的最大值正好为 `v` ，那么 `v` 就算一个合法数，打印 `1 ~ n` 范围内有多少合法数，并且从小到大打印所有的合法数。
