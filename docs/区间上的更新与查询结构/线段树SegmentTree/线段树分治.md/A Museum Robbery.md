@@ -1,6 +1,6 @@
 # A Museum Robbery
 
-## [CF601E A Museum Robbery](https://www.luogu.com.cn/problem/CF601E)
+## [CF601E A Museum Robbery](https://codeforces.com/problemset/problem/601/E)
 
 > - **Question**
 >   - 给定 `n` 件商品，商品有价值 `v` 和重量 `w` ， `1 ~ n` 号商品加入集合 `s` ，接下来有 `q` 个操作，每种操作是如下三种类型中的一种：
