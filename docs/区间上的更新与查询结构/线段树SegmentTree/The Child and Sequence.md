@@ -1,6 +1,6 @@
 # The Child and Sequence
 
-## [The Child and Sequence](https://www.luogu.com.cn/problem/CF438D)
+## [The Child and Sequence](https://codeforces.com/problemset/problem/438/D)
 
 > - **Question**
 >   - 给定一个长度为 `n` 的数组 `arr` ，实现如下三种操作，一共调用 `m` 次：
