@@ -1,6 +1,6 @@
 # Envy
 
-## [CF891C Envy](https://www.luogu.com.cn/problem/CF891C)
+## [CF891C Envy](https://codeforces.com/problemset/problem/891/C)
 
 > - **Question**
 >   - 一共有 `n` 个点， `m` 条无向边，每条边有边权，图保证是连通的。
