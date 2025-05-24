@@ -1,6 +1,6 @@
 # Arpa’s letter-marked tree and Mehrdad’s Dokhtar-kosh paths
 
-## [CF741D Arpa’s letter-marked tree and Mehrdad’s Dokhtar-kosh paths](https://www.luogu.com.cn/problem/CF741D)
+## [CF741D Arpa’s letter-marked tree and Mehrdad’s Dokhtar-kosh paths](https://codeforces.com/problemset/problem/741/D)
 
 > - **Question**
 >   - 一共有 `n` 个节点，编号 `1 ~ n` ，给定 `n - 1` 条边，所有节点连成一棵树， `1` 号节点为树头，每条边上都有一个字符，字符范围 `[a ~ v]` ，字符一共 `22` 种，重排回文路径的定义如下，节点 `a` 到节点 `b` 的路径，如果所有边的字符收集起来，能重新排列成回文串，该路径是重排回文路径，打印 `1 ~ n` 每个节点为头的子树中，最长重排回文路径的长度。
