@@ -1,6 +1,6 @@
 # Blood Cousins
 
-## [CF208E Blood Cousins](https://www.luogu.com.cn/problem/CF208E)
+## [CF208E Blood Cousins](https://codeforces.com/problemset/problem/208/E)
 
 > - **Question**
 >   - 一共有 `n` 个节点，编号 `1 ~ n` ，给定每个节点的父亲节点编号，父亲节点为 `0` ，说明当前节点是某棵树的头，注意， `n` 个节点组成的是森林结构，可能有若干棵树，一共有 `m` 条查询，每条查询 `x k` ，含义如下，如果 `x` 往上走 `k` 的距离，没有祖先节点，打印 `0` ，如果 `x` 往上走 `k` 的距离，能找到祖先节点 `a` ，那么从 `a` 往下走 `k` 的距离，除了 `x` 之外，可能还有其他节点，这些节点叫做 `x` 的 `k` 级表亲，打印这个表亲的数量。
