@@ -1,6 +1,6 @@
 # Pastoral Oddities
 
-## [CF603E Pastoral Oddities](https://www.luogu.com.cn/problem/CF603E)
+## [CF603E Pastoral Oddities](https://codeforces.com/problemset/problem/603/E)
 
 > - **Question**
 >   - 一共有 `n` 个点，初始没有边，依次加入 `m` 条无向边，每条边有边权，每次加入后，询问是否存在一个边集，满足每个点连接的边的数量都是奇数，如果存在，希望边集的最大边权，尽可能小，如果不存在打印 `-1` 。
