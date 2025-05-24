@@ -1,6 +1,6 @@
 # Tree Painting
 
-## [Tree Painting](https://www.luogu.com.cn/problem/CF1187E)
+## [Tree Painting](https://codeforces.com/problemset/problem/1187/E)
 
 > - **Question**
 >   - 给定一棵 `n` 个点的树，初始时所有节点全是白点。
