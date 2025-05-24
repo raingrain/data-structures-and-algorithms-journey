@@ -1,6 +1,6 @@
 # Painting Edges
 
-## [CF576E Painting Edges](https://www.luogu.com.cn/problem/CF576E)
+## [CF576E Painting Edges](https://codeforces.com/problemset/problem/576/E)
 
 > - **Question**
 >   - 一共有 `n` 个点，给定 `m` 条无向边，一开始每条边无颜色，一共有 `k` 种颜色，合法状态的定义为，仅保留染成 `k` 种颜色中的任何一种颜色的边，图都是一张二分图，一共有 `q` 条操作，每条操作格式如下：操作 `e c` : 第 `e` 条边，现在要涂成 `c` 颜色，如果执行此操作之后，整张图还是合法状态，那么执行并打印 `YES` ，如果执行此操作之后，整张图不再是合法状态，那么不执行并打印 `NO` 。
