@@ -1,6 +1,6 @@
 # Unique Occurrences
 
-## [CF1681F Unique Occurrences](https://www.luogu.com.cn/problem/CF1681F)
+## [CF1681F Unique Occurrences](https://codeforces.com/problemset/problem/1681/F)
 
 > - **Question**
 >   - 一共有 `n` 个节点， `n - 1` 条无向边，边给定颜色值，所有节点连成一棵树，定义 `f(u, v)` ：点 `u` 到点 `v` 的简单路径上恰好出现一次的颜色的数量，打印 `∑(u = 1..n) ∑(v = u + 1..n) f(u, v)` 的结果。
