@@ -1,6 +1,6 @@
 # Team-Building
 
-## [CF1444C Team-Building](https://www.luogu.com.cn/problem/CF1444C)
+## [CF1444C Team-Building](https://codeforces.com/problemset/problem/1444/C)
 
 > - **Question**
 >   - 一共有 `n` 个人，每个人给定组号，一共有 `m` 条边，代表两人之间有矛盾，一共有 `k` 个小组，可能有的组没人，但是组依然存在，假设组 `a` 和组 `b` ，两个组的人一起去团建，组 `a` 和组 `b` 的所有人，可以重新打乱，如果所有人最多分成两个集团，每人都要参加划分，并且每个集团的内部不存在矛盾，那么组 `a` 和组 `b` 就叫做一个"合法组对"，注意，组 `b` 和组 `a` 就不用重复计算了，一共有 `k` 个组，随意选两个组的情况很多，计算一共有多少个“合法组对”。
