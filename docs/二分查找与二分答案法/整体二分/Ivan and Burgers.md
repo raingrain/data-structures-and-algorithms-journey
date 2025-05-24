@@ -1,6 +1,6 @@
 # Ivan and Burgers
 
-## [CF1100F Ivan and Burgers](https://www.luogu.com.cn/problem/CF1100F)
+## [CF1100F Ivan and Burgers](https://codeforces.com/problemset/problem/1100/F)
 
 > - **Question**
 >   - 给定一个长度为 `n` 的数组 `arr` ，下标 `1 ~ n` ，接下来有 `q` 条查询，格式如下：查询 `l r : arr[l ~ r]` 中选若干个数，打印最大的异或和。
