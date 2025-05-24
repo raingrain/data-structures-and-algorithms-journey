@@ -1,6 +1,6 @@
 # Blood Cousins Return
 
-## [CF246E Blood Cousins Return](https://www.luogu.com.cn/problem/CF246E)
+## [CF246E Blood Cousins Return](https://codeforces.com/problemset/problem/246/E)
 
 > - **Question**
 >   - 一共有 `n` 个节点，编号 `1 ~ n` ，给定每个节点的名字和父亲节点编号，名字是 `string` 类型，如果父亲节点编号为 `0` ，说明当前节点是某棵树的头节点，注意， `n` 个节点组成的是森林结构，可能有若干棵树，一共有 `m` 条查询，每条查询 `x k` ，含义如下：以 `x` 为头的子树上，到 `x` 距离为 `k` 的所有节点中，打印不同名字的数量。
