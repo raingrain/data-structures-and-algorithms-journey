@@ -1,6 +1,6 @@
 # Lomsat gelral
 
-## [CF600E Lomsat gelral](https://www.luogu.com.cn/problem/CF600E)
+## [CF600E Lomsat gelral](https://codeforces.com/problemset/problem/600/E)
 
 > - **Question**
 >   - 一共有 `n` 个节点，编号 `1 ~ n` ，给定 `n - 1` 条边，所有节点连成一棵树， `1` 号节点为树头，每个节点给定一种颜色值，主导颜色累加和定义如下，以 `x` 为头的子树上，哪种颜色出现最多，那种颜色就是主导颜色，主导颜色可能不止一种，所有主导颜色的值累加起来，每个主导颜色只累加一次，就是该子树的主导颜色累加和，打印 `1 ~ n` 每个节点为头的子树的主导颜色累加和。
