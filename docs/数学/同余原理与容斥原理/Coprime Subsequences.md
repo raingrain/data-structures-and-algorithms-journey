@@ -1,6 +1,6 @@
 # Coprime Subsequences
 
-## [Coprime Subsequences](https://www.luogu.com.cn/problem/CF803F )
+## [Coprime Subsequences](https://codeforces.com/problemset/problem/803/F)
 
 > - **Question**
 >   - 给你一个序列，问你有多少个子序列的 `gcd = 1` 。
