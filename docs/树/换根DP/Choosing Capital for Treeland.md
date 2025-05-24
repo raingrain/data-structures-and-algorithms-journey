@@ -1,6 +1,6 @@
 # Choosing Capital for Treeland
 
-## [Choosing Capital for Treeland](https://www.luogu.com.cn/problem/CF219D)
+## [Choosing Capital for Treeland](https://codeforces.com/problemset/problem/219/D)
 
 > - **Question**
 >   - 给定一棵 `n` 个点的树，但是给定的每条边都是有向的。
