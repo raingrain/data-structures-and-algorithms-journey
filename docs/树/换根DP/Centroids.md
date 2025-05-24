@@ -1,6 +1,6 @@
 # Centroids
 
-## [Centroids](https://www.luogu.com.cn/problem/CF708C)
+## [Centroids](https://codeforces.com/problemset/problem/708/C)
 
 > - **Question**
 >   - 给定一棵 `n` 个点的树，你可以随便删掉一条边，然后随便加上一条边。通过这种方式可以让很多点变成重心。打印所有能变成重心的点。
