@@ -49,7 +49,6 @@ public class Main {
     // dp[s]表示，从u出发到之前子树的节点，路径权值和为s的路径，最少边数是多少
     public static int[] dp = new int[MAXK];
 
-    // 讲解118，递归函数改成迭代所需要的栈
     public static int[][] stack = new int[MAXN][5];
     public static int u, f, dis, edge, e;
     public static int stacksize;

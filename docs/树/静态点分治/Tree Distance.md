@@ -61,7 +61,6 @@ public class Main {
     // 查询的答案
     public static long[] ans = new long[MAXM];
 
-    // 讲解118，递归函数改成迭代所需要的栈
     public static int[][] stack = new int[MAXN][3];
     public static long[] distst = new long[MAXN];
     public static int u, f, e;

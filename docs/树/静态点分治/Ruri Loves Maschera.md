@@ -37,7 +37,6 @@ public class Main {
 
     public static int[] tree = new int[MAXN];
 
-    // 讲解118，递归函数改成迭代所需要的栈
     public static int[][] stack = new int[MAXN][5];
     public static int u, f, maxv, edge, e;
     public static int stacksize;

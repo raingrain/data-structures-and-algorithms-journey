@@ -129,7 +129,6 @@ public class Main {
         ans[u] = query(arr[u] + 1, cntv, 1, cntv, root[u]);
     }
 
-    // 递归函数改迭代需要的栈，不会改去看讲解118
     public static int[][] ufe = new int[MAXN][3];
 
     public static int stacksize, u, f, e;
