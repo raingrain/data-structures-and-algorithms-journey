@@ -1,0 +1,186 @@
+# Going from u to v or from v to u
+
+## [P10944 Going from u to v or from v to u?](https://www.luogu.com.cn/problem/P10944)
+
+> - **Question**
+>   - 给定一张 `n` 个点， `m` 条边的有向图，两点 `u, v` ，不管是从 `u` 出发能到达 `v` ，还是从 `v` 出发能到达 `u` ，都叫两点间有路，判断这个有向图是否能做到，任意两点都有路，能打印"Yes"，不能打印"No"。
+>   - **Tips**
+>     - `1 <= n <= 1000`
+>     - `1 <= m <= 6000`
+
+## Java
+
+> - **Question**
+
+```java
+// 缩点后的建出DAG图，判断是否为一条链
+
+// For Most Online Judge systems
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static int MAXN = 1001;
+    public static int MAXM = 6001;
+    public static int t, n, m;
+    public static int[] a = new int[MAXM];
+    public static int[] b = new int[MAXM];
+
+    public static int[] head = new int[MAXN];
+    public static int[] nxt = new int[MAXM];
+    public static int[] to = new int[MAXM];
+    public static int cntg;
+
+    public static int[] dfn = new int[MAXN];
+    public static int[] low = new int[MAXN];
+    public static int cntd;
+
+    public static int[] sta = new int[MAXN];
+    public static int top;
+
+    public static int[] belong = new int[MAXN];
+    public static int sccCnt;
+
+    public static int[] indegree = new int[MAXN];
+    public static int[] que = new int[MAXN];
+
+    public static void addEdge(int u, int v) {
+        nxt[++cntg] = head[u];
+        to[cntg] = v;
+        head[u] = cntg;
+    }
+
+    public static void tarjan(int u) {
+        dfn[u] = low[u] = ++cntd;
+        sta[++top] = u;
+        for (int e = head[u]; e > 0; e = nxt[e]) {
+            int v = to[e];
+            if (dfn[v] == 0) {
+                tarjan(v);
+                low[u] = Math.min(low[u], low[v]);
+            } else {
+                if (belong[v] == 0) {
+                    low[u] = Math.min(low[u], dfn[v]);
+                }
+            }
+        }
+        if (dfn[u] == low[u]) {
+            sccCnt++;
+            int pop;
+            do {
+                pop = sta[top--];
+                belong[pop] = sccCnt;
+            } while (pop != u);
+        }
+    }
+
+    public static void condense() {
+        cntg = 0;
+        for (int i = 1; i <= sccCnt; i++) {
+            head[i] = 0;
+        }
+        for (int i = 1; i <= m; i++) {
+            int scc1 = belong[a[i]];
+            int scc2 = belong[b[i]];
+            if (scc1 != scc2) {
+                indegree[scc2]++;
+                addEdge(scc1, scc2);
+            }
+        }
+    }
+
+    public static boolean topo() {
+        int l = 1, r = 0;
+        for (int i = 1; i <= sccCnt; i++) {
+            if (indegree[i] == 0) {
+                que[++r] = i;
+            }
+        }
+        while (l <= r) {
+            int siz = r - l + 1;
+            if (siz > 1) {
+                return false;
+            }
+            int u = que[l++];
+            for (int e = head[u]; e > 0; e = nxt[e]) {
+                int v = to[e];
+                if (--indegree[v] == 0) {
+                    que[++r] = v;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastReader in = new FastReader(System.in);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        t = in.nextInt();
+        for (int c = 1; c <= t; c++) {
+            n = in.nextInt();
+            m = in.nextInt();
+            cntg = cntd = sccCnt = 0;
+            for (int i = 1; i <= n; i++) {
+                head[i] = dfn[i] = belong[i] = indegree[i] = 0;
+            }
+            for (int i = 1; i <= m; i++) {
+                a[i] = in.nextInt();
+                b[i] = in.nextInt();
+                addEdge(a[i], b[i]);
+            }
+            for (int i = 1; i <= n; i++) {
+                if (dfn[i] == 0) {
+                    tarjan(i);
+                }
+            }
+            condense();
+            boolean ans = topo();
+            out.println(ans ? "Yes" : "No");
+        }
+        out.flush();
+        out.close();
+    }
+
+    // 读写工具类
+    static class FastReader {
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+        private final InputStream in;
+
+        FastReader(InputStream in) {
+            this.in = in;
+        }
+
+        private int readByte() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0)
+                    return -1;
+            }
+            return buffer[ptr++];
+        }
+
+        int nextInt() throws IOException {
+            int c;
+            do {
+                c = readByte();
+            } while (c <= ' ' && c != -1);
+            boolean neg = false;
+            if (c == '-') {
+                neg = true;
+                c = readByte();
+            }
+            int val = 0;
+            while (c > ' ' && c != -1) {
+                val = val * 10 + (c - '0');
+                c = readByte();
+            }
+            return neg ? -val : val;
+        }
+    }
+
+}
+```
