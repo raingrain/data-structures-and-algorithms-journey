@@ -1,0 +1,211 @@
+# KNIGHTS - Knights of the Round Table
+
+## [SP2878 KNIGHTS - Knights of the Round Table](https://www.luogu.com.cn/problem/SP2878)
+
+> - **Question**
+>   - 一共 `n` 个骑士，有 `m` 条厌恶关系，每条厌恶关系代表两个骑士互相讨厌对方，你可以任选骑士参加圆桌会议，但是厌恶关系的骑士无法在圆桌中相邻，圆桌会议的骑士数量必须是大于1的奇数，以防止赞同票和反对票一样多，也许有的骑士，不管怎么安排都无法参加圆桌会议，打印这个数量。
+>   - **Tips**
+>     - `1 <= n <= 10^3`
+>     - `1 <= m <= 10^6`
+
+## Java
+
+> - **Question**
+
+```java
+// 本题用到二分图的内容，不过比较简单
+// 讨厌关系不连边，不讨厌才连边，表示可以相邻坐着
+// 图中跨过割点的两个骑士，无法一起参加会议
+// 一个点双连通分量中，找到任何节点数量为奇数的环，那么内部每个骑士都可能参加会议
+
+// For Most Online Judge systems
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static int MAXN = 1001;
+    public static int MAXM = 1000001;
+    public static int n, m;
+    public static boolean[][] hate = new boolean[MAXN][MAXN];
+
+    public static int[] head = new int[MAXN];
+    public static int[] nxt = new int[MAXM << 1];
+    public static int[] to = new int[MAXM << 1];
+    public static int cntg;
+
+    public static int[] dfn = new int[MAXN];
+    public static int[] low = new int[MAXN];
+    public static int cntd;
+
+    public static int[] sta = new int[MAXN];
+    public static int top;
+
+    public static int[] vbccArr = new int[MAXN << 1];
+    public static int[] vbccl = new int[MAXN];
+    public static int[] vbccr = new int[MAXN];
+    public static int idx;
+    public static int vbccCnt;
+
+    public static boolean[] curVbcc = new boolean[MAXN];
+    public static int[] color = new int[MAXN];
+    public static boolean[] ok = new boolean[MAXN];
+
+    public static void prepare() {
+        cntg = cntd = top = idx = vbccCnt = 0;
+        for (int i = 1; i <= n; i++) {
+            head[i] = dfn[i] = low[i] = 0;
+            ok[i] = false;
+            for (int j = 1; j <= n; j++) {
+                hate[i][j] = false;
+            }
+        }
+    }
+
+    public static void addEdge(int u, int v) {
+        nxt[++cntg] = head[u];
+        to[cntg] = v;
+        head[u] = cntg;
+    }
+
+    public static void tarjan(int u) {
+        dfn[u] = low[u] = ++cntd;
+        sta[++top] = u;
+        for (int e = head[u]; e > 0; e = nxt[e]) {
+            int v = to[e];
+            if (dfn[v] == 0) {
+                tarjan(v);
+                low[u] = Math.min(low[u], low[v]);
+                if (low[v] >= dfn[u]) {
+                    vbccCnt++;
+                    vbccArr[++idx] = u;
+                    vbccl[vbccCnt] = idx;
+                    int pop;
+                    do {
+                        pop = sta[top--];
+                        vbccArr[++idx] = pop;
+                    } while (pop != v);
+                    vbccr[vbccCnt] = idx;
+                }
+            } else {
+                low[u] = Math.min(low[u], dfn[v]);
+            }
+        }
+    }
+
+    // u表示当前节点，c表示当前分配给u节点的颜色，只有1和2两种颜色
+    // 返回是否发现了节点数量为奇数的环
+    public static boolean oddLoop(int u, int c) {
+        color[u] = c;
+        for (int e = head[u]; e > 0; e = nxt[e]) {
+            int v = to[e];
+            if (curVbcc[v]) {
+                if (color[v] == c) {
+                    return true;
+                }
+                if (color[v] == 0 && oddLoop(v, c == 1 ? 2 : 1)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static int compute() {
+        for (int i = 1; i <= vbccCnt; i++) {
+            for (int j = vbccl[i]; j <= vbccr[i]; j++) {
+                curVbcc[vbccArr[j]] = true;
+                color[vbccArr[j]] = 0;
+            }
+            boolean check = oddLoop(vbccArr[vbccl[i]], 1);
+            for (int j = vbccl[i]; j <= vbccr[i]; j++) {
+                curVbcc[vbccArr[j]] = false;
+                ok[vbccArr[j]] |= check;
+            }
+        }
+        int ans = 0;
+        for (int i = 1; i <= n; i++) {
+            if (!ok[i]) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastReader in = new FastReader(System.in);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        n = in.nextInt();
+        m = in.nextInt();
+        while (n != 0 || m != 0) {
+            prepare();
+            for (int i = 1, u, v; i <= m; i++) {
+                u = in.nextInt();
+                v = in.nextInt();
+                hate[u][v] = true;
+                hate[v][u] = true;
+            }
+            for (int u = 1; u <= n; u++) {
+                for (int v = u + 1; v <= n; v++) {
+                    if (!hate[u][v]) {
+                        addEdge(u, v);
+                        addEdge(v, u);
+                    }
+                }
+            }
+            for (int i = 1; i <= n; i++) {
+                if (dfn[i] == 0) {
+                    tarjan(i);
+                }
+            }
+            int ans = compute();
+            out.println(ans);
+            n = in.nextInt();
+            m = in.nextInt();
+        }
+        out.flush();
+        out.close();
+    }
+
+    // 读写工具类
+    static class FastReader {
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+        private final InputStream in;
+
+        FastReader(InputStream in) {
+            this.in = in;
+        }
+
+        private int readByte() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0)
+                    return -1;
+            }
+            return buffer[ptr++];
+        }
+
+        int nextInt() throws IOException {
+            int c;
+            do {
+                c = readByte();
+            } while (c <= ' ' && c != -1);
+            boolean neg = false;
+            if (c == '-') {
+                neg = true;
+                c = readByte();
+            }
+            int val = 0;
+            while (c > ' ' && c != -1) {
+                val = val * 10 + (c - '0');
+                c = readByte();
+            }
+            return neg ? -val : val;
+        }
+    }
+
+}
+```
