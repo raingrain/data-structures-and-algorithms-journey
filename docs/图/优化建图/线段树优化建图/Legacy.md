@@ -1,0 +1,222 @@
+# Legacy
+
+## [B. Legacy](https://codeforces.com/problemset/problem/786/B)
+
+> - **Question**
+>   - 一共 `n` 个点，给定起点 `s` ，一共 `q` 条操作，操作类型如下：
+>   - 操作 `1 x y w` 从点x到点y增加有向边，边权是 `w` ，
+>   - 操作 `2 x l r w` 从点x到l~r范围的每个点增加有向边，边权都是 `w` ，
+>   - 操作 `3 x l r w` 从l~r范围的每个点到点x增加有向边，边权都是 `w` ，
+>   - 所有操作完成后，计算起点 `` s到每个点的最短距离并打印，如果不连通打印 `-1` 。
+>   - **Tips**
+>     - `1 <= n、q <= 10^5`
+>     - `1 <= w <= 10^9`
+
+## Java
+
+> - **Question: 线段树优化建图 + 区间连单点 + 单点连区间 + dijkstra算法**
+
+```java
+// For Most Online Judge systems
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static int MAXN = 100001;
+    public static int MAXT = MAXN * 10;
+    public static int MAXE = MAXN * 30;
+    public static long INF = 1L << 60;
+    public static int n, q, s;
+
+    public static int[] head = new int[MAXT];
+    public static int[] nxt = new int[MAXE];
+    public static int[] to = new int[MAXE];
+    public static int[] weight = new int[MAXE];
+    public static int cntg;
+
+    // 出树和入树共用ls和rs
+    // 出树的头节点编号rootOut
+    // 入树的头节点编号rootIn
+    // 空间利用cntt计数来分配
+    // 可持久化线段树，即主席树，也是这种设计
+    public static int[] ls = new int[MAXT];
+    public static int[] rs = new int[MAXT];
+    public static int rootOut, rootIn;
+    public static int cntt;
+
+    public static long[] dist = new long[MAXT];
+    public static boolean[] vis = new boolean[MAXT];
+    // 当前点、源点到当前点的代价
+    public static PriorityQueue<long[]> heap = new PriorityQueue<>((x, y) -> Long.compare(x[1], y[1]));
+
+    public static void addEdge(int u, int v, int w) {
+        nxt[++cntg] = head[u];
+        to[cntg] = v;
+        weight[cntg] = w;
+        head[u] = cntg;
+    }
+
+    public static int buildOut(int l, int r) {
+        int rt;
+        if (l == r) {
+            rt = l;
+        } else {
+            rt = ++cntt;
+            int mid = (l + r) >> 1;
+            ls[rt] = buildOut(l, mid);
+            rs[rt] = buildOut(mid + 1, r);
+            addEdge(ls[rt], rt, 0);
+            addEdge(rs[rt], rt, 0);
+        }
+        return rt;
+    }
+
+    public static int buildIn(int l, int r) {
+        int rt;
+        if (l == r) {
+            rt = l;
+        } else {
+            rt = ++cntt;
+            int mid = (l + r) >> 1;
+            ls[rt] = buildIn(l, mid);
+            rs[rt] = buildIn(mid + 1, r);
+            addEdge(rt, ls[rt], 0);
+            addEdge(rt, rs[rt], 0);
+        }
+        return rt;
+    }
+
+    public static void xToRange(int jobx, int jobl, int jobr, int jobw, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            addEdge(jobx, i, jobw);
+        } else {
+            int mid = (l + r) >> 1;
+            if (jobl <= mid) {
+                xToRange(jobx, jobl, jobr, jobw, l, mid, ls[i]);
+            }
+            if (jobr > mid) {
+                xToRange(jobx, jobl, jobr, jobw, mid + 1, r, rs[i]);
+            }
+        }
+    }
+
+    public static void rangeToX(int jobl, int jobr, int jobx, int jobw, int l, int r, int i) {
+        if (jobl <= l && r <= jobr) {
+            addEdge(i, jobx, jobw);
+        } else {
+            int mid = (l + r) >> 1;
+            if (jobl <= mid) {
+                rangeToX(jobl, jobr, jobx, jobw, l, mid, ls[i]);
+            }
+            if (jobr > mid) {
+                rangeToX(jobl, jobr, jobx, jobw, mid + 1, r, rs[i]);
+            }
+        }
+    }
+
+    public static void dijkstra() {
+        for (int i = 1; i <= cntt; i++) {
+            dist[i] = INF;
+        }
+        dist[s] = 0;
+        heap.add(new long[]{s, 0});
+        while (!heap.isEmpty()) {
+            long[] cur = heap.poll();
+            int u = (int) cur[0];
+            long d = cur[1];
+            if (!vis[u]) {
+                vis[u] = true;
+                for (int e = head[u]; e > 0; e = nxt[e]) {
+                    int v = to[e];
+                    int w = weight[e];
+                    if (!vis[v] && dist[v] > d + w) {
+                        dist[v] = d + w;
+                        heap.add(new long[]{v, dist[v]});
+                    }
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastReader in = new FastReader(System.in);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        n = in.nextInt();
+        q = in.nextInt();
+        s = in.nextInt();
+        cntt = n;
+        rootOut = buildOut(1, n);
+        rootIn = buildIn(1, n);
+        for (int i = 1, op, x, y, l, r, w; i <= q; i++) {
+            op = in.nextInt();
+            if (op == 1) {
+                x = in.nextInt();
+                y = in.nextInt();
+                w = in.nextInt();
+                addEdge(x, y, w);
+            } else if (op == 2) {
+                x = in.nextInt();
+                l = in.nextInt();
+                r = in.nextInt();
+                w = in.nextInt();
+                xToRange(x, l, r, w, 1, n, rootIn);
+            } else {
+                x = in.nextInt();
+                l = in.nextInt();
+                r = in.nextInt();
+                w = in.nextInt();
+                rangeToX(l, r, x, w, 1, n, rootOut);
+            }
+        }
+        dijkstra();
+        for (int i = 1; i <= n; i++) {
+            out.print(dist[i] == INF ? -1 : dist[i]);
+            out.print(" ");
+        }
+        out.flush();
+        out.close();
+    }
+
+    // 读写工具类
+    static class FastReader {
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+        private final InputStream in;
+
+        FastReader(InputStream in) {
+            this.in = in;
+        }
+
+        private int readByte() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0)
+                    return -1;
+            }
+            return buffer[ptr++];
+        }
+
+        int nextInt() throws IOException {
+            int c;
+            do {
+                c = readByte();
+            } while (c <= ' ' && c != -1);
+            boolean neg = false;
+            if (c == '-') {
+                neg = true;
+                c = readByte();
+            }
+            int val = 0;
+            while (c > ' ' && c != -1) {
+                val = val * 10 + (c - '0');
+                c = readByte();
+            }
+            return neg ? -val : val;
+        }
+    }
+
+}
+```
