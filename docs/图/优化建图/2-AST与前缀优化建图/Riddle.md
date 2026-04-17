@@ -1,0 +1,231 @@
+# Riddle
+
+## [P6378 [PA 2010] Riddle](https://www.luogu.com.cn/problem/P6378)
+
+> - **Question**
+>   - 无向图中有 `n` 个点、 `m` 条边，一共有 `k` 个阵营，每个阵营拥有一些点，给定每个阵营拥有的节点列表，每个点都会进入且只进一个阵营，选择一些点成为关键点，要求每个阵营必须有一个点成为关键点，同时要求每条边的两个端点中，至少有一个端点成为关键点，如果存在选择方案，打印 `TAK` ，否则打印 `NIE` 。
+>   - **Tips**
+>     - `1 <= n、m、k <= 10^6`
+
+## Java
+
+> - **Question**
+
+```java
+// For Most Online Judge systems
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static int MAXN = 5000001;
+    public static int MAXM = 10000001;
+    public static int n, m, k, w, cntt;
+    public static int[] arr = new int[MAXN];
+
+    public static int[] head = new int[MAXN];
+    public static int[] nxt = new int[MAXM];
+    public static int[] to = new int[MAXM];
+    public static int cntg;
+
+    public static int[] dfn = new int[MAXN];
+    public static int[] low = new int[MAXN];
+    public static int cntd;
+
+    public static int[] sta = new int[MAXN];
+    public static int top;
+
+    public static int[] belong = new int[MAXN];
+    public static int sccCnt;
+
+    public static int[][] stack = new int[MAXN][3];
+    public static int u, status, e;
+    public static int stacksize;
+
+    public static void push(int u, int status, int e) {
+        stack[stacksize][0] = u;
+        stack[stacksize][1] = status;
+        stack[stacksize][2] = e;
+        stacksize++;
+    }
+
+    public static void pop() {
+        stacksize--;
+        u = stack[stacksize][0];
+        status = stack[stacksize][1];
+        e = stack[stacksize][2];
+    }
+
+    public static void addEdge(int u, int v) {
+        nxt[++cntg] = head[u];
+        to[cntg] = v;
+        head[u] = cntg;
+    }
+
+    // 前后缀优化建图
+    public static void link() {
+        cntt++;
+        addEdge(cntt, arr[1] + n);
+        for (int i = 2; i <= w; i++) {
+            cntt++;
+            addEdge(cntt, arr[i] + n);
+            addEdge(arr[i], cntt - 1);
+            addEdge(cntt, cntt - 1);
+        }
+        cntt++;
+        addEdge(cntt, arr[w] + n);
+        for (int i = w - 1; i >= 1; i--) {
+            cntt++;
+            addEdge(cntt, arr[i] + n);
+            addEdge(arr[i], cntt - 1);
+            addEdge(cntt, cntt - 1);
+        }
+    }
+
+    // 递归版
+    public static void tarjan1(int u) {
+        dfn[u] = low[u] = ++cntd;
+        sta[++top] = u;
+        for (int e = head[u]; e > 0; e = nxt[e]) {
+            int v = to[e];
+            if (dfn[v] == 0) {
+                tarjan1(v);
+                low[u] = Math.min(low[u], low[v]);
+            } else {
+                if (belong[v] == 0) {
+                    low[u] = Math.min(low[u], dfn[v]);
+                }
+            }
+        }
+        if (dfn[u] == low[u]) {
+            sccCnt++;
+            int pop;
+            do {
+                pop = sta[top--];
+                belong[pop] = sccCnt;
+            } while (pop != u);
+        }
+    }
+
+    // 迭代版
+    public static void tarjan2(int node) {
+        stacksize = 0;
+        push(node, -1, -1);
+        int v;
+        while (stacksize > 0) {
+            pop();
+            if (status == -1) {
+                dfn[u] = low[u] = ++cntd;
+                sta[++top] = u;
+                e = head[u];
+            } else {
+                v = to[e];
+                if (status == 0) {
+                    low[u] = Math.min(low[u], low[v]);
+                }
+                if (status == 1 && belong[v] == 0) {
+                    low[u] = Math.min(low[u], dfn[v]);
+                }
+                e = nxt[e];
+            }
+            if (e != 0) {
+                v = to[e];
+                if (dfn[v] == 0) {
+                    push(u, 0, e);
+                    push(v, -1, -1);
+                } else {
+                    push(u, 1, e);
+                }
+            } else {
+                if (dfn[u] == low[u]) {
+                    sccCnt++;
+                    int pop;
+                    do {
+                        pop = sta[top--];
+                        belong[pop] = sccCnt;
+                    } while (pop != u);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastReader in = new FastReader(System.in);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        n = in.nextInt();
+        m = in.nextInt();
+        k = in.nextInt();
+        cntt = n << 1;
+        for (int i = 1, u, v; i <= m; i++) {
+            u = in.nextInt();
+            v = in.nextInt();
+            addEdge(u + n, v);
+            addEdge(v + n, u);
+        }
+        for (int i = 1; i <= k; i++) {
+            w = in.nextInt();
+            for (int j = 1; j <= w; j++) {
+                arr[j] = in.nextInt();
+            }
+            link();
+        }
+        for (int i = 1; i <= cntt; i++) {
+            if (dfn[i] == 0) {
+                // tarjan1(i);
+                tarjan2(i);
+            }
+        }
+        boolean check = true;
+        for (int i = 1; i <= n; i++) {
+            if (belong[i] == belong[i + n]) {
+                check = false;
+                break;
+            }
+        }
+        out.println(check ? "TAK" : "NIE");
+        out.flush();
+        out.close();
+    }
+
+    // 读写工具类
+    static class FastReader {
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+        private final InputStream in;
+
+        FastReader(InputStream in) {
+            this.in = in;
+        }
+
+        private int readByte() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0)
+                    return -1;
+            }
+            return buffer[ptr++];
+        }
+
+        int nextInt() throws IOException {
+            int c;
+            do {
+                c = readByte();
+            } while (c <= ' ' && c != -1);
+            boolean neg = false;
+            if (c == '-') {
+                neg = true;
+                c = readByte();
+            }
+            int val = 0;
+            while (c > ' ' && c != -1) {
+                val = val * 10 + (c - '0');
+                c = readByte();
+            }
+            return neg ? -val : val;
+        }
+    }
+
+}
+```
